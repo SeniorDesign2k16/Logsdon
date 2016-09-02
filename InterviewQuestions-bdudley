@@ -1,0 +1,43 @@
+What is currently available?
+What is missing?
+	GUI
+	Time
+Target Audience: Novice biologists and those of greater skill/experience
+
+How much initial user knowledge can be assumed? How much can results be simplified/explained?
+
+How far will the final tool reach (commercially)
+
+How much customization will be available?
+General guidelines
+
+Stakeholders: 
+	Biologists/Researchers
+	Curators of public databases
+	
+Decide upon scope:
+	Scanning entire eukaryotic database = tons of data
+	Scan it all? Filter for relevance?
+	Download or cloud? / High-throughput vs parallel
+	Info vs Speed
+	
+What will user input? Begin with query to db?
+	
+Why is this tool necessary?
+What do biologists hope to learn/demonstrate using this tool that could not be done (at least as easily) with an existing tool?
+
+Further ways to interact with data? (3D graphs?)
+
+Current resources:
+Current BI pipelines
+Genetics Cluster
+CBCB
+Ben Rodgers (high-performance computing)
+Computing resources! CoE, BME, buy our own?
+
+
+How much info to show, to save, etc.? 
+
+Define "semi-automated"
+
+
