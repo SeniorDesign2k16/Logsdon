@@ -2,9 +2,9 @@
 University of Iowa Senior Design Project 2016 Team 16
 
 Contributors:
-Anubhav Balakrishnan
-Rae Ann Corrigan
-Brendan Dudley
+Anubhav Balakrishnan,
+Rae Ann Corrigan,
+Brendan Dudley,
 Austin Ward
 
 Mentor: 
