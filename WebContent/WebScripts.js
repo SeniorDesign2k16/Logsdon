@@ -32,9 +32,19 @@ in HTML code
 </script>*/
 function initialize()
 {
-  var input=[document.getElementById("Name"),  //repeat for how many
-  ];
-  callGeneSpotService(input);
+  alert("Hey were connected lmao");
+  /*
+  var check = getElementsByClassName('box');
+  var organism=' ';
+  for(var i = 0; i<check.length; i++)
+  {
+    if(check.checked)
+    {
+      organism=organism+check[i]+' ';
+    }
+  }
+  var input=[document.getElementById("job_name_text_area"), document.getElementById("fasta_text_area"),organism,document.getElementById('word_length'),document.getElementById('evalue')];  //repeat for how many
+  callGeneSpotService(input);*/
 
 }
 function callGeneSpotService(input)
