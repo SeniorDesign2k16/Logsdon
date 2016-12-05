@@ -1,5 +1,7 @@
 # The Gene-Spot
 University of Iowa Senior Design Project 2016 Team 16
+WebContent=html, js
+src/org/logs...=java
 
 Contributors:
 Anubhav Balakrishnan,
