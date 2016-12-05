@@ -18,20 +18,27 @@ import os
 import time
 import fileinput
 
+def GeneSpot(request):
+    if request.method == 'POST':
+        if 'e_value_thresh' in request.POST:
+            pieFact = request.POST['e_value_thresh']
+            # doSomething with pieFact here...
+            return HttpResponse('success') # if everything is OK
+    # nothing went well
+    return HttpRepsonse('FAIL!!!!!')
+#cgitb.enable()
 
-cgitb.enable()
-
-form = cgi.FieldStorage()
+#form = cgi.FieldStorage()
 
 
-e_value_thresh = form.getvalue('e_value_thresh')
-fasta = form.getvalue('fasta')
-kingdoms = form.getvalue('kingdoms')
+#e_value_thresh = form.getvalue('e_value_thresh')
+#fasta = form.getvalue('fasta')
+#kingdoms = form.getvalue('kingdoms')
 
 
-print e_value_thresh
-print fasta
-print kingdoms
+#sys.stdout(e_value_thresh)
+#sys.stdout(fasta)
+#sys.stdout(kingdoms)
 
 ######################################################################################################
 #                                                                                                    #

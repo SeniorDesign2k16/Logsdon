@@ -32,35 +32,28 @@ in HTML code
 </script>*/
 function initialize()
 {
-  alert("Hey were connected lmao");
-  /*
-  var check = getElementsByClassName('box');
-  var organism=' ';
-  for(var i = 0; i<check.length; i++)
-  {
-    if(check.checked)
-    {
-      organism=organism+check[i]+' ';
-    }
-  }
-  var input=[document.getElementById("job_name_text_area"), document.getElementById("fasta_text_area"),organism,document.getElementById('word_length'),document.getElementById('evalue')];  //repeat for how many
-  callGeneSpotService(input);*/
+  //alert("Hey were connected lmao");
+
+
+  var input=[document.getElementById("job_name_text_area").value, document.getElementById("fasta_text_area").value,document.getElementById('word_length').value,document.getElementById('evalue').value];  //repeat for how many
+  callGeneSpotService(input);
 
 }
-function callGeneSpotService(input)
+function callGeneSpotService(inputArray)
 {
-  //Connect to Java
-    var location = window.location.href+"/location/of/java/from/base"
+
+    var location =window.location.href+"analysis/GeneSpot"
     //Results should be the encrypted job id to be able to access the results on the web page.
-    var results = $.post(location,{input:inputArray})
-    .done(function(uuid)
+    var results = $.post(location,{inputArray:inputArray},function(response){
+    })
+    .done(function(results)
   {
-    alert("Now Processing, please check back in the results section with your job id in a few moments: "+ uuid);
+    alert(results);
+    //alert("Now Processing, please check back in the results section with your job id in a few moments: "+ uuid);
   })
-  .fail(function(response)
+  .fail(function(results)
   {
     alert("Something went wrong please contact the systems administrator for help");
   })
 
 }
-//If we split it up then can just replace name with call firebase and use it to get results

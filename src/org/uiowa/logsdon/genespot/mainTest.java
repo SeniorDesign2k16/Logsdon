@@ -1,3 +1,4 @@
+package org.uiowa.logsdon.genespot;
 /*
  *                    BioJava development code
  *
