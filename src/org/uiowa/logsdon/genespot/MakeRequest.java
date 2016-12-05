@@ -1,3 +1,4 @@
+package org.uiowa.logsdon.genespot;
 
 /*
  *                    BioJava development code
@@ -34,10 +35,10 @@ import org.biojava.nbio.ws.alignment.qblast.NCBIQBlastService;
 
 public class MakeRequest {
 
-	private static final double evalue = 0.0000000010;
+	private static double evalue = 0.0000000010;
 
-	public MakeRequest() {
-
+	public MakeRequest(String evalue) {
+		this.evalue = Integer.parseInt(evalue);
 	}
 
 	public void sendRequest(Genome genome, String geneName) {
@@ -64,6 +65,7 @@ public class MakeRequest {
 		String[] queries = currentGene.getQueries();
 
 		int i = 0;
+		boolean complete = false;
 
 		while (i < queries.length) {
 
@@ -81,7 +83,10 @@ public class MakeRequest {
 
 				String line;
 				while ((line = reader.readLine()) != null) {
-
+					if (i == queries.length - 1) {
+						complete = true;
+					}
+					// Need result object then here we send to database. increase cell number in here
 					System.out.println(line);
 				}
 			}
