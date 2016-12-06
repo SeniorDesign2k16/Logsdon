@@ -35,21 +35,24 @@ public class Job {
 	private final String jobName;
 	private ArrayList<Genome> genomes = new ArrayList<>();
 
-	private final int evalue;
+	private final double evalue;
+	private final String geneName;
 
 	// Job Name Assembly Number FASTA Gene queries
-	public Job(String jobName, String[] genomesOfInterest, String[] speciesName, String[] kingdoms, String[] subTypes,
-			String[] genesOfInterest, String geneName, int evalue, String[] assemblyType, String[] taxIDs) {
+	public Job(String jobName, ArrayList<String> genomesOfInterest, ArrayList<String> speciesName,
+			ArrayList<String> kingdoms, ArrayList<String> subTypes, ArrayList<String> genesOfInterest, String geneName,
+			double evalue, ArrayList<String> assemblyType, ArrayList<String> taxIDs) {
 
 		this.jobName = jobName;
 		this.evalue = evalue;
+		this.geneName = geneName;
 
 		int i = 0;
 
-		while (i < genomesOfInterest.length) {
+		while (i < genomesOfInterest.size()) {
 
-			Genome currentGenome = new Genome(genomesOfInterest[i], speciesName[i], kingdoms[i], subTypes[i],
-					assemblyType[i], taxIDs[i]);
+			Genome currentGenome = new Genome(genomesOfInterest.get(i), speciesName.get(i), kingdoms.get(i),
+					subTypes.get(i), assemblyType.get(i), taxIDs.get(i));
 
 			new Gene(geneName, currentGenome, genesOfInterest); // need to parse which kingdom each query is coming from
 																// in Gene Object
@@ -77,5 +80,35 @@ public class Job {
 	public String getJobName() {
 
 		return jobName;
+	}
+
+	public double getEvalue() {
+
+		return evalue;
+	}
+
+	public String getGeneName() {
+
+		return geneName;
+	}
+
+	public void printGenomes() {
+
+		int i = 0;
+
+		while (i < genomes.size()) {
+
+			System.out.println("Genome:" + genomes.get(i).getGenome());
+			int x = 0;
+			while (x < genomes.get(i).getGenes().size()) {
+
+				System.out.println("     Gene:" + genomes.get(i).getGenes().get(x));
+
+				x++;
+			}
+
+			i++;
+		}
+
 	}
 }

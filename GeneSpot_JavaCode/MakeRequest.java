@@ -26,6 +26,7 @@
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import org.biojava.nbio.ws.alignment.qblast.BlastProgramEnum;
 import org.biojava.nbio.ws.alignment.qblast.NCBIQBlastAlignmentProperties;
@@ -40,57 +41,61 @@ public class MakeRequest {
 
 	}
 
-	public void sendRequest(Genome genome, String geneName) {
+	public void sendRequest(Job currentJob) {
 
 		NCBIQBlastService server = new NCBIQBlastService();
-		server.setEmail("austin-ward@uiowa.edu");
-
 		NCBIQBlastAlignmentProperties props = new NCBIQBlastAlignmentProperties();
 
-		// defining input properties object
-		props.setBlastProgram(BlastProgramEnum.tblastn);
-		props.setBlastDatabase("genomic/" + genome.getTaxID() + "/" + genome.getGenome());
-		props.setBlastExpect(evalue);
+		ArrayList<Genome> genomes = currentJob.getGenomes();
 
-		// defining output properties object
-		NCBIQBlastOutputProperties outputProps = new NCBIQBlastOutputProperties();
+		for (Genome currentGenome : genomes) {
 
-		String rid = null; // blast request ID
+			// defining input properties object
+			props.setBlastProgram(BlastProgramEnum.tblastn);
+			props.setBlastDatabase("genomic/" + currentGenome.getTaxID() + "/" + currentGenome.getGenome());
+			props.setBlastExpect(currentJob.getEvalue());
 
-		BufferedReader reader = null;
+			// defining output properties object
+			NCBIQBlastOutputProperties outputProps = new NCBIQBlastOutputProperties();
 
-		Gene currentGene = genome.getGene(geneName);
+			String rid = null; // blast request ID
 
-		String[] queries = currentGene.getQueries();
+			BufferedReader reader = null;
 
-		int i = 0;
+			Gene currentGene = currentGenome.getGene(currentJob.getGeneName());
 
-		while (i < queries.length) {
+			ArrayList<String> queries = currentGene.getQueries();
 
-			try {
+			int x = 0;
 
-				rid = server.sendAlignmentRequest(queries[i], props);
+			while (x < queries.size()) {
 
-				while (!server.isReady(rid)) {
-					System.out.println("Waiting...");
-					Thread.sleep(5000);
+				try {
+
+					rid = server.sendAlignmentRequest(queries.get(x), props);
+
+					while (!server.isReady(rid)) {
+						System.out.println("Waiting...");
+						Thread.sleep(5000);
+					}
+
+					InputStream input = server.getAlignmentResults(rid, outputProps);
+					reader = new BufferedReader(new InputStreamReader(input));
+
+					String line;
+
+					while ((line = reader.readLine()) != null) {
+
+						System.out.println(line);
+					}
 				}
 
-				InputStream input = server.getAlignmentResults(rid, outputProps);
-				reader = new BufferedReader(new InputStreamReader(input));
-
-				String line;
-				while ((line = reader.readLine()) != null) {
-
-					System.out.println(line);
+				catch (Exception e) {
+					e.printStackTrace();
 				}
-			}
 
-			catch (Exception e) {
-				e.printStackTrace();
+				x++;
 			}
-
-			i++;
 		}
 	}
 }
