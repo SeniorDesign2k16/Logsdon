@@ -38,12 +38,12 @@ public class Genome {
 
 	public Genome(String genome, String species, String type, String subType, String assemblyType, String taxID) {
 
-		this.genome = genome;
-		this.species = species;
-		this.type = type;
-		this.subType = subType;
-		this.assemblyType = assemblyType;
-		this.taxID = taxID;
+		this.genome = genome; // assembly number
+		this.species = species; // species name
+		this.type = type; // kingdom
+		this.subType = subType; // subType
+		this.assemblyType = assemblyType; // level of sequencing data - contig, scaffold, chromosome
+		this.taxID = taxID; // taxID
 	}
 
 	public String getGenome() {
@@ -121,6 +121,11 @@ public class Genome {
 	public int getGeneCount() {
 
 		return genes.size();
+	}
+
+	public ArrayList<Gene> getGenes() {
+
+		return genes;
 	}
 
 	@Override

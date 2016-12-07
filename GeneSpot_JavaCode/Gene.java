@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /*
  *                    BioJava development code
  *
@@ -25,12 +27,13 @@
 public class Gene {
 
 	private final String geneName;
-	private final String[] proteinQueries;
+	private final ArrayList<String> proteinQueries;
 
-	public Gene(String geneName, Genome genome, String[] queryIDs) {
+	public Gene(String geneName, Genome genome, ArrayList<String> queryIDs) {
 
 		this.geneName = geneName;
 
+		// updates genome class to contain a new gene
 		if (!genome.findGene(geneName)) {
 
 			genome.addGene(this);
@@ -49,7 +52,7 @@ public class Gene {
 		return geneName;
 	}
 
-	public String[] getQueries() {
+	public ArrayList<String> getQueries() {
 
 		return proteinQueries;
 
@@ -59,7 +62,7 @@ public class Gene {
 	public String toString() {
 
 		return String.format("Gene: %s\nQuery: %s\n-------------------------------------\n", geneName,
-				proteinQueries[0]);
+				proteinQueries.get(0));
 	}
 
 }
