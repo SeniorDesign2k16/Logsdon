@@ -1,4 +1,5 @@
 package org.uiowa.logsdon.genespot;
+
 import java.util.ArrayList;
 
 /*
@@ -50,6 +51,11 @@ public class Genome {
 	public String getGenome() {
 
 		return genome;
+	}
+
+	public ArrayList<Gene> getGenes() {
+
+		return genes;
 	}
 
 	public String getSpecies() {

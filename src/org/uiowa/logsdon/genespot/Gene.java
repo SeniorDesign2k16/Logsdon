@@ -23,24 +23,26 @@ package org.uiowa.logsdon.genespot;
  *
  */
 
+import java.util.ArrayList;
+
 public class Gene {
 
 	private final String geneName;
-	private final String[] proteinQueries;
+	private final ArrayList<String> proteinQueries;
 
-	public Gene(String geneName, Genome genome, String[] queryIDs) {
+	public Gene(String geneName, Genome genome, ArrayList<String> genesOfInterest) {
 
 		this.geneName = geneName;
 
 		if (!genome.findGene(geneName)) {
 
 			genome.addGene(this);
-			proteinQueries = queryIDs;
+			proteinQueries = genesOfInterest;
 		}
 
 		else {
 
-			proteinQueries = queryIDs;
+			proteinQueries = genesOfInterest;
 		}
 
 	}
@@ -50,7 +52,7 @@ public class Gene {
 		return geneName;
 	}
 
-	public String[] getQueries() {
+	public ArrayList<String> getQueries() {
 
 		return proteinQueries;
 
@@ -60,7 +62,7 @@ public class Gene {
 	public String toString() {
 
 		return String.format("Gene: %s\nQuery: %s\n-------------------------------------\n", geneName,
-				proteinQueries[0]);
+				proteinQueries.get(0));
 	}
 
 }

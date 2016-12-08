@@ -7,7 +7,7 @@
    
   <display-name>The Gene Spot</display-name>
   <welcome-file-list>
-    <welcome-file>test.html</welcome-file>
+    <welcome-file>jobSubmission.html</welcome-file>
   </welcome-file-list>
 
 
@@ -16,7 +16,7 @@
       <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class> 
 <init-param>
     <param-name>com.sun.jersey.config.property.packages</param-name>
-    <param-value>org.uiowa.logsdon.genespot;</param-value>
+    <param-value>org.uiowa.logsdon.genespot</param-value>
   </init-param>
    </servlet>
  
