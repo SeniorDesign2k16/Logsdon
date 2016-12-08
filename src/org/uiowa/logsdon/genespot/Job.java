@@ -1,4 +1,5 @@
 package org.uiowa.logsdon.genespot;
+
 import java.util.ArrayList;
 
 /*
@@ -26,10 +27,7 @@ import java.util.ArrayList;
  */
 
 /*
-
 This object will be made once the server a request from 
-
-
 */
 public class Job {
 

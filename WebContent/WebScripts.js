@@ -34,8 +34,13 @@ function initialize()
 {
   //alert("Hey were connected lmao");
 
-
-  var input=[document.getElementById("job_name_text_area").value, document.getElementById("fasta_text_area").value,document.getElementById('word_length').value,document.getElementById('evalue').value];  //repeat for how many
+	 var kingdomdrop = document.getElementById("select-kingdom");
+	    kingdom=kingdomdrop.options[kingdomdrop.selectedIndex].text;
+	 var subtypedrop=document.getElementById("select-subtype");
+	 subtype=subtypedrop.options[subtypedrop.selectedIndex].text;
+	 var genome_assemdrop=document.getElementById("select-genome-assembiles");
+	 genome_assem=genome_assemdrop.options[genome_assemdrop.selectedIndex].text;
+  var input=[document.getElementById("job_name").value, document.getElementById("fasta_text_area").value,document.getElementById('word_length').value,document.getElementById('evalue').value,kingdom,subtype,genome_assem];  //repeat for how many
   callGeneSpotService(input);
 
 }
@@ -44,7 +49,7 @@ function callGeneSpotService(inputArray)
 
     var location =window.location.href+"analysis/GeneSpot"
     //Results should be the encrypted job id to be able to access the results on the web page.
-    var results = $.post(location,{inputArray:inputArray},function(response){
+    var results = $.post(location,{inputArray:inputArray},function(results){
     })
     .done(function(results)
   {

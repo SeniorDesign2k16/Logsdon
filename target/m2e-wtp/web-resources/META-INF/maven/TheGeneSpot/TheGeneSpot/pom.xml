@@ -33,12 +33,64 @@
       <version>3.1.0</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+    <groupId>org.biojava</groupId>
+    <artifactId>biojava-genome</artifactId>
+    <version>4.2.4</version>
+</dependency>
+<dependency>
+    <groupId>sax</groupId>
+    <artifactId>sax</artifactId>
+    <version>2.0.1</version>
+</dependency>
+<dependency>
+    <groupId>net.sf.saxon</groupId>
+    <artifactId>Saxon-HE</artifactId>
+    <version>9.7.0-14</version>
+</dependency>
+
+    <dependency>
+    <groupId>org.biojava</groupId>
+    <artifactId>biojava-sequencing</artifactId>
+    <version>4.2.4</version>
+</dependency>
+    <dependency>
+    <groupId>org.biojava</groupId>
+    <artifactId>biojava-ws</artifactId>
+    <version>4.2.4</version>
+</dependency>
+    
 <dependency>
     <groupId>com.firebase</groupId>
     <artifactId>firebase-client-jvm</artifactId>
     <version>2.2.4</version>
 </dependency>
 
+<dependency>
+    <groupId>org.biojava</groupId>
+    <artifactId>biojava-alignment</artifactId>
+    <version>4.2.4</version>
+</dependency>
+<dependency>
+    <groupId>org.biojava</groupId>
+    <artifactId>biojava-core</artifactId>
+    <version>4.2.4</version>
+</dependency>
+<dependency>
+    <groupId>org.biojava</groupId>
+    <artifactId>biojava-structure</artifactId>
+    <version>4.2.4</version>
+</dependency>
+<dependency>
+    <groupId>org.biojava</groupId>
+    <artifactId>biojava-ontology</artifactId>
+    <version>4.2.4</version>
+</dependency>
+<dependency>
+    <groupId>org.biojava</groupId>
+    <artifactId>biojava-phylo</artifactId>
+    <version>4.2.4</version>
+</dependency>
 
     <dependency>
       <groupId>org.json</groupId>
