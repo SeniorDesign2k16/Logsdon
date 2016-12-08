@@ -27,6 +27,7 @@ package org.uiowa.logsdon.genespot;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import org.biojava.nbio.ws.alignment.qblast.BlastProgramEnum;
 import org.biojava.nbio.ws.alignment.qblast.NCBIQBlastAlignmentProperties;
@@ -62,16 +63,16 @@ public class MakeRequest {
 
 		Gene currentGene = genome.getGene(geneName);
 
-		String[] queries = currentGene.getQueries();
+		ArrayList<String> queries = currentGene.getQueries();
 
 		int i = 0;
 		boolean complete = false;
 
-		while (i < queries.length) {
+		while (i < queries.size()) {
 
 			try {
 
-				rid = server.sendAlignmentRequest(queries[i], props);
+				rid = server.sendAlignmentRequest(queries.get(i), props);
 
 				while (!server.isReady(rid)) {
 					System.out.println("Waiting...");
@@ -83,7 +84,7 @@ public class MakeRequest {
 
 				String line;
 				while ((line = reader.readLine()) != null) {
-					if (i == queries.length - 1) {
+					if (i == queries.size()) {
 						complete = true;
 					}
 					// Need result object then here we send to database. increase cell number in here
