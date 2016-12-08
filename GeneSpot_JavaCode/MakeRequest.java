@@ -1,3 +1,4 @@
+package org.uiowa.logsdon.genespot;
 
 /*
  *                    BioJava development code
@@ -24,6 +25,8 @@
  */
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -32,70 +35,108 @@ import org.biojava.nbio.ws.alignment.qblast.BlastProgramEnum;
 import org.biojava.nbio.ws.alignment.qblast.NCBIQBlastAlignmentProperties;
 import org.biojava.nbio.ws.alignment.qblast.NCBIQBlastOutputProperties;
 import org.biojava.nbio.ws.alignment.qblast.NCBIQBlastService;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 public class MakeRequest {
 
-	private static final double evalue = 0.0000000010;
+	private final ResultstoFirebase sendToDB;
 
 	public MakeRequest() {
 
+		sendToDB = new ResultstoFirebase();
 	}
 
 	public void sendRequest(Job currentJob) {
 
-		NCBIQBlastService server = new NCBIQBlastService();
-		NCBIQBlastAlignmentProperties props = new NCBIQBlastAlignmentProperties();
+		try {
 
-		ArrayList<Genome> genomes = currentJob.getGenomes();
+			NCBIQBlastService server = new NCBIQBlastService();
+			NCBIQBlastAlignmentProperties props = new NCBIQBlastAlignmentProperties();
 
-		for (Genome currentGenome : genomes) {
+			ArrayList<Genome> genomes = currentJob.getGenomes();
 
-			// defining input properties object
-			props.setBlastProgram(BlastProgramEnum.tblastn);
-			props.setBlastDatabase("genomic/" + currentGenome.getTaxID() + "/" + currentGenome.getGenome());
-			props.setBlastExpect(currentJob.getEvalue());
+			for (Genome currentGenome : genomes) {
 
-			// defining output properties object
-			NCBIQBlastOutputProperties outputProps = new NCBIQBlastOutputProperties();
+				// defining input properties object
+				props.setBlastProgram(BlastProgramEnum.tblastn);
+				props.setBlastDatabase("genomic/" + currentGenome.getTaxID() + "/" + currentGenome.getGenome());
+				props.setBlastExpect(currentJob.getEvalue());
 
-			String rid = null; // blast request ID
+				// defining output properties object
+				NCBIQBlastOutputProperties outputProps = new NCBIQBlastOutputProperties();
 
-			BufferedReader reader = null;
+				String rid = null; // blast request ID
 
-			Gene currentGene = currentGenome.getGene(currentJob.getGeneName());
+				BufferedReader reader = null;
 
-			ArrayList<String> queries = currentGene.getQueries();
+				Gene currentGene = currentGenome.getGene(currentJob.getGeneName());
 
-			int x = 0;
+				ArrayList<String> queries = currentGene.getQueries();
 
-			while (x < queries.size()) {
+				int x = 0;
 
-				try {
+				String hold = "";
 
-					rid = server.sendAlignmentRequest(queries.get(x), props);
+				while (x < queries.size()) {
+					
+					// creates a new handler for the next query
+					XMLHandler handler = new XMLHandler();
+					XMLReader p = XMLReaderFactory.createXMLReader();
+					p.setContentHandler(handler);
 
-					while (!server.isReady(rid)) {
-						System.out.println("Waiting...");
-						Thread.sleep(5000);
+					try {
+
+						rid = server.sendAlignmentRequest(queries.get(x), props);
+						
+						int time = 0;
+						while (!server.isReady(rid)) {
+							System.out.println("Waiting..."+ String.valueOf(time) + " secs");
+							time+=5;
+							Thread.sleep(5000);
+						}
+						
+						time = 0;
+
+						InputStream input = server.getAlignmentResults(rid, outputProps);
+						reader = new BufferedReader(new InputStreamReader(input));
+
+						String line;
+
+						// writing to xml file
+						while ((line = reader.readLine()) != null) {
+							System.out.println(line);
+							hold += (line + "\n");
+						}
 					}
 
-					InputStream input = server.getAlignmentResults(rid, outputProps);
-					reader = new BufferedReader(new InputStreamReader(input));
-
-					String line;
-
-					while ((line = reader.readLine()) != null) {
-
-						System.out.println(line);
+					catch (Exception e) {
+						e.printStackTrace();
 					}
-				}
 
-				catch (Exception e) {
-					e.printStackTrace();
-				}
+					try {
 
-				x++;
+						p.parse(new InputSource(new ByteArrayInputStream(hold.getBytes("utf-8"))));
+						sendToDB.SendtoGenespot(handler.getHits(), currentJob.getJobName(), currentGenome.getSpecies(),
+								queries.get(x), currentJob.getGeneName(), currentGenome.getGenome(),
+								currentGenome.getType());
+						
+						hold = "";
+
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					x++;
+				}
 			}
+
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
