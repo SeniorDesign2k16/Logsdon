@@ -1,9 +1,9 @@
 /*Notes
-When sending to database, can either use curl command in java (prefereed) and convert xml to json
+When sending to database, can either use curl command in java (preferred) and convert xml to json
 OR send each individual piece to the database
 match id
-get all peices of Json
-get ether perent or just a binary yes or no to depect red/green squares. Should be in order, else we need to order it properly
+get all pieces of Json
+get ether present or just a binary yes or no to depict red/green squares. Should be in order, else we need to order it properly
 XML
 job: job id
 {
@@ -42,8 +42,8 @@ function initialize()
 	 genome_assem=genome_assemdrop.options[genome_assemdrop.selectedIndex].text;
   var input=[document.getElementById("job_name").value, document.getElementById("fasta_text_area").value,document.getElementById('word_length').value,document.getElementById('evalue').value,kingdom,subtype,genome_assem];  //repeat for how many
   callGeneSpotService(input);
-
 }
+
 function callGeneSpotService(inputArray)
 {
 
@@ -60,5 +60,20 @@ function callGeneSpotService(inputArray)
   {
     alert("Something went wrong please contact the systems administrator for help");
   })
+}
 
+
+function getResults()
+{
+    //get jobID from user
+    var jobID = document.getElementById('jobId');
+
+    //Reference firebase database
+    var db = firebase.database();
+
+    //Attach listener at job node
+    var results = firebase.database().ref(jobID);
+    results.on('value', function(snapshot) {
+      updateResults(jobId, snapshot.val());
+    });
 }
