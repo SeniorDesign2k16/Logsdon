@@ -15,10 +15,18 @@
 <h2>Results</h2>
 
 <form action="resultsOut.html" method="post">
-    Enter JobID:<br>
-    <input type="text" name="JobID" id="jobId" size="6" required><br><br />
-    <input type="submit" onclick="resultsOut.html"/><br />
-
+    <fieldset>
+        <legend>Job Information:</legend>
+        <br>
+        Enter JobID:<br>
+        <input type="text" name="JobID" id="job-id" size="6" required><br>
+        <br>
+        Enter custom job name:<br>
+        <input type="text" name="JobName" id="job-name"><br>
+        <br>
+        <input type="submit" onclick="resultsOut.html;"/><br>
+        <br />
+    </fieldset>
 </form>
 
 <hr>
