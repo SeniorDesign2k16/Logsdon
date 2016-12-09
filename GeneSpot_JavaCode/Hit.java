@@ -1,5 +1,3 @@
-package org.uiowa.logsdon.genespot;
-
 import java.util.ArrayList;
 
 /*

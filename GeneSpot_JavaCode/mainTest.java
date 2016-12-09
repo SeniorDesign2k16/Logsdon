@@ -1,5 +1,3 @@
-package org.uiowa.logsdon.genespot;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -54,7 +52,7 @@ public class mainTest {
 
 		File file = new File("testingData.txt");
 
-		String jobName = "Prototype";
+		String jobName = "Testing";
 		ArrayList<String> genomesOfInterest = new ArrayList<>();
 		ArrayList<String> speciesName = new ArrayList<>();
 		ArrayList<String> kingdoms = new ArrayList<>();

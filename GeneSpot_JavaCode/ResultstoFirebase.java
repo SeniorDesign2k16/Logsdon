@@ -1,4 +1,3 @@
-package org.uiowa.logsdon.genespot;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -29,16 +28,30 @@ public class ResultstoFirebase {
 		}
 
 		Firebase newRef = Genespot.child(jobId).child(speciesName).child("Query"+String.valueOf(counter)).child(queryNumber);
+		ArrayList<ArrayList> accessionNumber = new ArrayList<>();
+		ArrayList<ArrayList> queryStart = new ArrayList<>();
+		ArrayList<ArrayList> queryEnd = new ArrayList<>();
+		ArrayList<ArrayList> hitStart = new ArrayList<>();
+		ArrayList<ArrayList> hitEnd = new ArrayList<>();
+		ArrayList<ArrayList> frame = new ArrayList<>();
+
 		
 		for (Hit hit : hitInformation) {
 
-			newRef.child("Accession Number").setValue(hit.getAccessionNumber());
-			newRef.child("Query Start").setValue(hit.getQueryFrom());
-			newRef.child("Query End").setValue(hit.getQueryTo());
-			newRef.child("Hit Start").setValue(hit.getHitFrom());
-			newRef.child("Hit End").setValue(hit.getHitTo());
-			newRef.child("Frame").setValue(hit.getHitFrame());
+			accessionNumber.add(hit.getAccessionNumber());
+			queryStart.add(hit.getQueryFrom());
+			queryEnd.add(hit.getQueryTo());
+			hitStart.add(hit.getHitFrom());
+			hitEnd.add(hit.getHitTo());
+			frame.add(hit.getHitFrame());
 		}
+		
+		newRef.child("Accession Number").setValue(accessionNumber);
+		newRef.child("Query Start").setValue(queryStart);
+		newRef.child("Query End").setValue(queryEnd);
+		newRef.child("Hit Start").setValue(hitStart);
+		newRef.child("Hit End").setValue(hitEnd);
+		newRef.child("Frame").setValue(frame);
 		
 		counter++;
 	}
