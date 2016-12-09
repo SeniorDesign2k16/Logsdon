@@ -121,7 +121,7 @@ public class MakeRequest {
 						p.parse(new InputSource(new ByteArrayInputStream(hold.getBytes("utf-8"))));
 						sendToDB.SendtoGenespot(handler.getHits(), currentJob.getJobName(), currentGenome.getSpecies(),
 								queries.get(x), currentJob.getGeneName(), currentGenome.getGenome(),
-								currentGenome.getType());
+								currentGenome.getType(), queries.size());
 						
 						hold = "";
 

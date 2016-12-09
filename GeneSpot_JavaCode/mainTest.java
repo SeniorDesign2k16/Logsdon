@@ -66,6 +66,7 @@ public class mainTest {
 		genesOfInterest.add("4275");
 		genesOfInterest.add("18420327");
 		genesOfInterest.add("511003109");
+		/*
 		genesOfInterest.add("9904315");
 		genesOfInterest.add("159469155");
 		genesOfInterest.add("123408472");
@@ -77,6 +78,7 @@ public class mainTest {
 		genesOfInterest.add("551554835");
 		genesOfInterest.add("569359648");
 		genesOfInterest.add("301098091");
+		*/
 
 		String geneName = "RAD51";
 		double evalue = .00000000001;

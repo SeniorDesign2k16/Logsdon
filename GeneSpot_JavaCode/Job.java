@@ -49,7 +49,7 @@ public class Job {
 		this.geneName = geneName;
 
 		int i = 0;
-
+		
 		while (i < genomesOfInterest.size()) {
 
 			Genome currentGenome = new Genome(genomesOfInterest.get(i), speciesName.get(i), kingdoms.get(i),
