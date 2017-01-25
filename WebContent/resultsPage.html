@@ -11,22 +11,29 @@
 <p style="text-align:center"> <i>Bioinformatics and Evolutionary Biology Tool </i></p>
 </body>
 
-<p></p>
+<br />
 <h2>Results</h2>
 
-<form>
-<p> Enter Job Name </p>
-<input type="text" name="Job Name" id="job_name" required>
-
-<p></p>
-
-<br />
-<input type="submit" onclick="javascript:initialize();"/>
-
-<p></p>
-<a href="jobSubmission.html">Submit a New Job</a>
-
+<form action="resultsOut.html" method="post">
+    <fieldset>
+        <legend>Job Information:</legend>
+        <br>
+        Enter JobID:<br>
+        <input type="text" name="JobID" id="job-id" size="6" required><br>
+        <br>
+        Enter custom job name:<br>
+        <input type="text" name="JobName" id="job-name"><br>
+        <br>
+        <input type="submit" onclick="resultsOut.html;"/><br>
+        <br />
+    </fieldset>
 </form>
 
+<hr>
+<p>
+    <a href="about.html">About</a>
+    |
+    <a href="jobSubmission.html">Submit a New Job</a>
+</p>
 
 </html>
