@@ -23,11 +23,7 @@
  *
  */
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 
 import org.biojava.nbio.ws.alignment.qblast.BlastProgramEnum;
@@ -43,20 +39,137 @@ public class MakeRequest {
 
 	private final ResultstoFirebase sendToDB;
 
+	private final File file = new File("output.txt");
+
 	public MakeRequest() {
 
 		sendToDB = new ResultstoFirebase();
 	}
 
+
 	public void sendRequest(Job currentJob) {
 
+		ArrayList<Genome> genomes = currentJob.getGenomes();
+		ArrayList<String> genes = currentJob.getGeneNames();
+
 		try {
+
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
 
 			NCBIQBlastService server = new NCBIQBlastService();
 			NCBIQBlastAlignmentProperties props = new NCBIQBlastAlignmentProperties();
 
-			ArrayList<Genome> genomes = currentJob.getGenomes();
+			// defining input properties object
+			props.setBlastProgram(BlastProgramEnum.tblastn);
+			props.setBlastExpect(currentJob.getEvalue());
 
+			// defining output properties object
+			NCBIQBlastOutputProperties outputProps = new NCBIQBlastOutputProperties();
+
+
+			// creates a new handler for the next query
+			XMLHandler handler = new XMLHandler();
+			XMLReader p = XMLReaderFactory.createXMLReader();
+
+			for (String currentGeneName : genes) {
+
+				for(Genome currentGenome: genomes) {
+
+					//setting database
+					props.setBlastDatabase("genomic/" + currentGenome.getTaxID() + "/" + currentGenome.getGenome());
+
+					Gene currentGene = currentGenome.getGene(currentGeneName);
+
+					if(currentGene!=null){
+
+						String rid = null; // blast request ID
+
+						BufferedReader reader = null;
+
+						ArrayList<String> queries = currentGene.getQueries();
+
+						int x = 0;
+
+						String hold = "";
+
+						//System.out.println(queries.size());
+
+						while (x < queries.size()) {
+
+							p.setContentHandler(handler);
+
+							try {
+
+								System.out.println(queries.get(x));
+								System.out.println(props.getBlastDatabase());
+								rid = server.sendAlignmentRequest(queries.get(x), props);
+
+								int time = 0;
+
+								while (!server.isReady(rid)) {
+									System.out.println("Waiting..." + String.valueOf(time) + " secs");
+									time += 5;
+									Thread.sleep(5000);
+								}
+
+								System.out.println("Hit Found");
+
+								time = 0;
+
+								InputStream input = server.getAlignmentResults(rid, outputProps);
+								reader = new BufferedReader(new InputStreamReader(input));
+
+								String line;
+
+								// writing to xml file
+								while ((line = reader.readLine()) != null) {
+									//System.out.println(line);
+									hold += (line + "\n");
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+
+							try {
+								writer.write("Genome	" + currentGenome.getGenome() + "\n");
+								writer.write("Species	" + currentGenome.getSpecies()+ "\n");
+								writer.write("Kingdom	" + currentGenome.getKingdom()+ "\n");
+								writer.write("Gene	" + currentGene.getName()+ "\n");
+								writer.write("Query	" + currentGene.getQueries().get(x)+ "\n");
+								writer.flush();
+
+								p.parse(new InputSource(new ByteArrayInputStream(hold.getBytes("utf-8"))));
+
+								/*sendToDB.SendtoGenespot(handler.getHits(), currentJob.getJobName(), currentGenome.getSpecies(),
+										queries.get(x).replace('.', 'v'), currentGeneName, currentGenome.getGenome(),
+										currentGenome.getKingdom(), queries.size());
+
+								*/
+								hold = "";
+
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+							x++;
+
+						}
+					}
+				}
+
+			}
+
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+			/*
 			for (Genome currentGenome : genomes) {
 
 				// defining input properties object
@@ -67,10 +180,11 @@ public class MakeRequest {
 				// defining output properties object
 				NCBIQBlastOutputProperties outputProps = new NCBIQBlastOutputProperties();
 
+
+				/*
 				String rid = null; // blast request ID
 
 				BufferedReader reader = null;
-
 				Gene currentGene = currentGenome.getGene(currentJob.getGeneName());
 
 				ArrayList<String> queries = currentGene.getQueries();
@@ -80,7 +194,7 @@ public class MakeRequest {
 				String hold = "";
 
 				while (x < queries.size()) {
-					
+
 					// creates a new handler for the next query
 					XMLHandler handler = new XMLHandler();
 					XMLReader p = XMLReaderFactory.createXMLReader();
@@ -89,14 +203,14 @@ public class MakeRequest {
 					try {
 
 						rid = server.sendAlignmentRequest(queries.get(x), props);
-						
+
 						int time = 0;
 						while (!server.isReady(rid)) {
-							System.out.println("Waiting..."+ String.valueOf(time) + " secs");
-							time+=5;
+							System.out.println("Waiting..." + String.valueOf(time) + " secs");
+							time += 5;
 							Thread.sleep(5000);
 						}
-						
+
 						time = 0;
 
 						InputStream input = server.getAlignmentResults(rid, outputProps);
@@ -109,19 +223,18 @@ public class MakeRequest {
 							System.out.println(line);
 							hold += (line + "\n");
 						}
-					}
-
-					catch (Exception e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 
 					try {
 
 						p.parse(new InputSource(new ByteArrayInputStream(hold.getBytes("utf-8"))));
+
 						sendToDB.SendtoGenespot(handler.getHits(), currentJob.getJobName(), currentGenome.getSpecies(),
 								queries.get(x), currentJob.getGeneName(), currentGenome.getGenome(),
-								currentGenome.getType(), queries.size());
-						
+								currentGenome.getKingdom(), queries.size());
+
 						hold = "";
 
 					} catch (IOException e) {
@@ -130,12 +243,8 @@ public class MakeRequest {
 					}
 
 					x++;
-				}
-			}
 
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				}
+			*/
 	}
 }
