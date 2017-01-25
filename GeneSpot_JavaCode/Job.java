@@ -28,47 +28,22 @@ import java.util.ArrayList;
 
 This object will be made once the server a request from 
 
-
 */
 public class Job {
 
 	private final String jobName;
 	private ArrayList<Genome> genomes = new ArrayList<>();
+	private ArrayList<String> geneNames = new ArrayList<>();
 
 	private final double evalue;
-	private final String geneName;
 
 	// Job Name Assembly Number FASTA Gene queries
-	public Job(String jobName, ArrayList<String> genomesOfInterest, ArrayList<String> speciesName,
-			ArrayList<String> kingdoms, ArrayList<String> subTypes, ArrayList<String> genesOfInterest, String geneName,
-			double evalue, ArrayList<String> assemblyType, ArrayList<String> taxIDs) {
+	public Job(String jobName, ArrayList<Genome> genomes, double evalue, ArrayList<String> geneNames) {
 
+		this.geneNames = geneNames;
 		this.jobName = jobName;
 		this.evalue = evalue;
-		this.geneName = geneName;
-
-		int i = 0;
-		
-		while (i < genomesOfInterest.size()) {
-
-			Genome currentGenome = new Genome(genomesOfInterest.get(i), speciesName.get(i), kingdoms.get(i),
-					subTypes.get(i), assemblyType.get(i), taxIDs.get(i));
-
-			new Gene(geneName, currentGenome, genesOfInterest); // need to parse which kingdom each query is coming from
-																// in Gene Object
-
-			genomes.add(currentGenome);
-
-			updateDB(); // Initializes database
-
-			i++;
-		}
-	}
-
-	// called after each genome has gone through the MakeRequest protocol
-	public void updateDB() {
-
-		// Anu's code here
+		this.genomes = genomes;
 
 	}
 
@@ -87,26 +62,37 @@ public class Job {
 		return evalue;
 	}
 
-	public String getGeneName() {
+	public ArrayList<String> getGeneNames(){
 
-		return geneName;
+		return geneNames;
 	}
 
-	public void printGenomes() {
+	public void printJob() {
 
 		int i = 0;
 
+		System.out.println("-------------------------------");
+		System.out.println("*                             *");
+		System.out.println("*                             *");
+		System.out.println("*      Job Name: "+getJobName()+"      *");
+		System.out.println("*      E-value: "+getEvalue()+"       *");
+		System.out.println("*                             *");
+		System.out.println("*                             *");
+		System.out.println("-------------------------------");
+
+
 		while (i < genomes.size()) {
 
-			System.out.println("Genome:" + genomes.get(i).getGenome());
 			int x = 0;
+
 			while (x < genomes.get(i).getGenes().size()) {
 
-				System.out.println("     Gene:" + genomes.get(i).getGenes().get(x));
+				System.out.println("Genome:" + genomes.get(i).getGenome());
+				System.out.println("Gene:" + genomes.get(i).getGenes().get(x).getName());
+				genomes.get(i).getGenes().get(x).printQueries();
 
 				x++;
 			}
-
 			i++;
 		}
 

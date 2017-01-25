@@ -28,7 +28,7 @@ public class Genome {
 
 	private final String genome;
 	private final String species;
-	private final String type;
+	private final String kingdom;
 	private final String subType;
 	private final String taxID;
 
@@ -40,7 +40,7 @@ public class Genome {
 
 		this.genome = genome; // assembly number
 		this.species = species; // species name
-		this.type = type; // kingdom
+		this.kingdom = type; // kingdom
 		this.subType = subType; // subType
 		this.assemblyType = assemblyType; // level of sequencing data - contig, scaffold, chromosome
 		this.taxID = taxID; // taxID
@@ -56,9 +56,9 @@ public class Genome {
 		return species;
 	}
 
-	public String getType() {
+	public String getKingdom() {
 
-		return type;
+		return kingdom;
 	}
 
 	public String getSubType() {
@@ -82,10 +82,12 @@ public class Genome {
 
 		while (i < genes.size()) {
 
-			if (genes.get(i).getName() == geneName) {
+			if (genes.get(i).getName().equals(geneName)) {
 
 				return true; // gene has prior data
 			}
+
+			i++;
 
 		}
 
@@ -101,13 +103,14 @@ public class Genome {
 	public Gene getGene(String geneName) {
 
 		int i = 0;
+
 		String currentName;
 
 		while (i < genes.size()) {
 
 			currentName = genes.get(i).getName();
 
-			if (currentName == geneName) {
+			if (currentName.equals(geneName)){
 
 				return genes.get(i);
 			}
@@ -134,7 +137,7 @@ public class Genome {
 		return String.format(
 				"Organism: %s\nTax ID: %s\nType: %s\nSubtype: %s\n\nAssembly: %s\nAssembly Type: %s\n\nGene Count: %d\n\n"
 						+ "-------------------------------------\n",
-				species, taxID, type, subType, genome, assemblyType, this.getGeneCount());
+				species, taxID, kingdom, subType, genome, assemblyType, this.getGeneCount());
 
 	}
 

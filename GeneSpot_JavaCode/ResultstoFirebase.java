@@ -11,6 +11,7 @@ public class ResultstoFirebase {
 	public void SendtoGenespot(ArrayList<Hit> hitInformation, String jobId, String speciesName, String queryNumber,
 			String geneName, String assembly, String kingdom, int queryCount)
 			throws com.firebase.client.FirebaseException, UnsupportedEncodingException {
+
 		Firebase Genespot = new Firebase("https://thegenespot-efb8a.firebaseio.com");
 		// loop through with results from genome class
 
