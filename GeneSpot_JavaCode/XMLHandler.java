@@ -1,4 +1,4 @@
-package org.uiowa.logsdon.genespot;
+import java.io.*;
 import java.util.ArrayList;
 
 import org.xml.sax.Attributes;
@@ -43,7 +43,11 @@ public class XMLHandler extends DefaultHandler {
 	private boolean Hsp_hit_to_Found = false;
 	private boolean Hsp_hit_frame_Found = false;
 
-	public XMLHandler() {
+	private final File file;
+
+	public XMLHandler() throws FileNotFoundException {
+
+		file = new File("output.txt");
 
 	}
 
@@ -92,31 +96,37 @@ public class XMLHandler extends DefaultHandler {
 
 		if (hit_Id_found) {
 			System.out.println("Hit ID: " + hold);
+			writeToFile("Hit ID: " + hold + "\n");
 			newHit.addAccessionNumber(hold);
 		}
 
 		else if (Hsp_query_from_Found) {
 			System.out.println("Query Start: " + hold);
+			writeToFile("Query Start: " + hold+ "\n");
 			newHit.addQueryFrom(hold);
 		}
 
 		else if (Hsp_query_to_Found) {
 			System.out.println("Query End: " + hold);
+			writeToFile("Query End: " + hold+ "\n");
 			newHit.addQueryTo(hold);
 		}
 
 		else if (Hsp_hit_from_Found) {
 			System.out.println("Hit Start: " + hold);
+			writeToFile("Hit Start: " + hold + "\n");
 			newHit.addHitFrom(hold);
 		}
 
 		else if (Hsp_hit_to_Found) {
 			System.out.println("Hit End: " + hold);
+			writeToFile("Hit End: " + hold+ "\n");
 			newHit.addHitEnd(hold);
 		}
 
 		else if (Hsp_hit_frame_Found) {
 			System.out.println("Frame: " + hold);
+			writeToFile("Frame: " + hold+ "\n");
 			newHit.addHitFrame(hold);
 		}
 
@@ -155,5 +165,21 @@ public class XMLHandler extends DefaultHandler {
 	public ArrayList<Hit> getHits() {
 
 		return hits;
+	}
+
+	private void writeToFile(String data){
+
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+
+			writer.write(data);
+			writer.flush();
+
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
 	}
 }

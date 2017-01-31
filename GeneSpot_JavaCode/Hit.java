@@ -1,6 +1,5 @@
-package org.uiowa.logsdon.genespot;
-
 import java.util.ArrayList;
+
 
 /*
  *                    BioJava development code
@@ -22,10 +21,9 @@ import java.util.ArrayList;
  *      http://www.biojava.org/
  *
  * Created on Dec 7, 2016
- * Author: austinward 
+ * Author: austinward
  *
  */
-
 public class Hit {
 
 	private ArrayList<String> accessionNumber = new ArrayList<>();

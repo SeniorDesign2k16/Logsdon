@@ -1,5 +1,3 @@
-package org.uiowa.logsdon.genespot;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -30,58 +28,19 @@ import java.util.ArrayList;
  */
 public class mainTest {
 
+
 	public static void main(String[] argv) {
 
-		MakeRequest requestNCBI = new MakeRequest();
-
-		// see that connection is made to the server
-
-		// user has two options: make query, or get a past job
-
-		// get information from user
-
-		// create new Job object --- takes in job name, genomes of interest, genes of interest
-
-		// see if new Genome and/or Gene objects need to be created
-
-		// if new Gene name found, add newly made Gene Object to Genome object
-
-		// send Genome object to MakeRequest
-
-		// else return information to be presented to user
-
-		// String genome, String species, String type, String subType, String assemblyType, String taxID
+		ArrayList<Genome> genomes = new ArrayList<>();
+		ArrayList<Gene> genes = new ArrayList<>();
+		ArrayList<String> geneName = new ArrayList<>();
 
 		File file = new File("testingData.txt");
+		File file2 = new File("proteinIDs.txt");
 
-		String jobName = "Prototype";
-		ArrayList<String> genomesOfInterest = new ArrayList<>();
-		ArrayList<String> speciesName = new ArrayList<>();
-		ArrayList<String> kingdoms = new ArrayList<>();
-		ArrayList<String> subTypes = new ArrayList<>();
-		ArrayList<String> genesOfInterest = new ArrayList<>();
+		String jobName = "Testing";
 
-		genesOfInterest.add("548663");
-		genesOfInterest.add("514692457");
-		genesOfInterest.add("4275");
-		genesOfInterest.add("18420327");
-		genesOfInterest.add("511003109");
-		genesOfInterest.add("9904315");
-		genesOfInterest.add("159469155");
-		genesOfInterest.add("123408472");
-		genesOfInterest.add("2108337");
-		genesOfInterest.add("395394859");
-		genesOfInterest.add("162605684");
-		genesOfInterest.add("66822135");
-		genesOfInterest.add("923121388");
-		genesOfInterest.add("551554835");
-		genesOfInterest.add("569359648");
-		genesOfInterest.add("301098091");
-
-		String geneName = "RAD51";
 		double evalue = .00000000001;
-		ArrayList<String> assemblyType = new ArrayList<>();
-		ArrayList<String> taxIDs = new ArrayList<>();
 
 		String[] hold;
 		try {
@@ -93,24 +52,75 @@ public class mainTest {
 
 				hold = text.split("\t");
 
-				speciesName.add(hold[0]);
-				taxIDs.add(hold[1]);
-				kingdoms.add(hold[2]);
-				subTypes.add(hold[3]);
-				genomesOfInterest.add(hold[4]);
-				assemblyType.add(hold[5]);
+				Genome newGenome = new Genome(hold[4], hold[0], hold[2], hold[3], hold[5], hold[1]);
+				genomes.add(newGenome);
+			}
+
+			reader = new BufferedReader(new FileReader(file2));
+
+			int i = 0;
+			boolean flag;
+
+			while((text = reader.readLine()) != null) {
+
+				flag = false;
+
+				hold = text.split("\t");
+
+				System.out.println(hold[0] + " " + hold[1]);
+
+				if(genes.size() == 0){
+
+					Gene newGene = new Gene(hold[1]);
+					newGene.addQuery(hold[0]);
+					genes.add(newGene);
+				}
+
+				else{
+					i = 0;
+
+
+					while(i < genes.size()){
+
+						if(genes.get(i).getName().equals(hold[1])){
+							flag = true;
+							genes.get(i).addQuery(hold[0]);
+						}
+
+						i++;
+					}
+				}
+
+				if(!flag){
+
+					geneName.add(hold[1]);
+					Gene newGene = new Gene(hold[1]);
+					newGene.addQuery(hold[0]);
+					genes.add(newGene);
+				}
+			}
+
+			reader.close();
+
+			i = 0;
+
+			for(Genome thisGenome : genomes){
+
+				for(Gene thisGene : genes){
+
+					thisGenome.addGene(thisGene);
+				}
 
 			}
-			reader.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		Job testJob = new Job(jobName, genomesOfInterest, speciesName, kingdoms, subTypes, genesOfInterest, geneName,
-				evalue, assemblyType, taxIDs);
 
-		testJob.printGenomes();
+		Job testJob = new Job(jobName, genomes, evalue, geneName);
+
+		testJob.printJob();
 
 		MakeRequest sendJob = new MakeRequest();
 

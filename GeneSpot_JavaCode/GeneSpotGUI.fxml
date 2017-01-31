@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GeneSpotController">
+   <children>
+      <TextField layoutX="24.0" layoutY="14.0" prefHeight="27.0" prefWidth="389.0" />
+      <Button layoutX="487.0" layoutY="342.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="98.0" text="Submit Job" />
+      <ListView layoutX="33.0" layoutY="100.0" prefHeight="200.0" prefWidth="338.0" />
+      <ChoiceBox fx:id="searchBy" layoutX="436.0" layoutY="14.0" prefWidth="150.0" />
+   </children>
+</Pane>
