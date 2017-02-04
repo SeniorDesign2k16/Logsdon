@@ -18,7 +18,7 @@ function displayContents(contents) {
   var ids = "";
   var lines = [];
     
-  //if data is fasta formatted file
+  //if data is fasta formatted file (probably needs more test than this to determine if it is a valid file)
   if(contents[0] == '>'){
       
       lines = contents.split('\n');
@@ -28,7 +28,6 @@ function displayContents(contents) {
           
           if(lines[i][0] == '>'){
             
-        
               //console.log(lines[i].split(' ')[0].split('>')[1]);
               ids+=(lines[i].split(' ')[0].split('>')[1])+'\n'
               //hold.concat(lines[i].split(' ')[0].split('>')[1]);
@@ -42,4 +41,11 @@ function displayContents(contents) {
   }
 }
 
-document.getElementById('file-input').addEventListener('change', readSingleFile, false);
+window.onload = function(){
+    
+    var el = document.getElementById("file_button")
+    
+    if(el){
+        addEventListener("change", readSingleFile, false);
+    }
+}
