@@ -25,11 +25,11 @@ package org.uiowa.logsdon.NCBI;
 
 import java.io.*;
 import java.util.ArrayList;
-import JobInformation.*;
+import org.uiowa.logsdon.JobInformation.*;
 
-import JobInformation.Gene;
-import JobInformation.Genome;
-import JobInformation.Job;
+import org.uiowa.logsdon.JobInformation.Gene;
+import org.uiowa.logsdon.JobInformation.Genome;
+import org.uiowa.logsdon.JobInformation.Job;
 import org.biojava.nbio.ws.alignment.qblast.BlastProgramEnum;
 import org.biojava.nbio.ws.alignment.qblast.NCBIQBlastAlignmentProperties;
 import org.biojava.nbio.ws.alignment.qblast.NCBIQBlastOutputProperties;
@@ -112,7 +112,7 @@ public class MakeRequest {
 
 
 							String line;
-							String hold = null;
+							String hold = "";
 
 							// writing to xml file
 							while ((line = reader.readLine()) != null) {

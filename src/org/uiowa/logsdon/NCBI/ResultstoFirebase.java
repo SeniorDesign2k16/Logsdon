@@ -3,7 +3,7 @@ package org.uiowa.logsdon.NCBI;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-import JobInformation.Hit;
+import org.uiowa.logsdon.JobInformation.*;
 import com.firebase.client.Firebase;
 
 public class ResultstoFirebase {

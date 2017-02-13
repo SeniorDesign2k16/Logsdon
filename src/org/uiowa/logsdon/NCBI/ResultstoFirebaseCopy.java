@@ -1,7 +1,7 @@
 package org.uiowa.logsdon.NCBI;
 
 import java.io.UnsupportedEncodingException;
-import JobInformation.*;
+import org.uiowa.logsdon.JobInformation.*;
 import com.firebase.client.Firebase;
 
 public class ResultstoFirebaseCopy {

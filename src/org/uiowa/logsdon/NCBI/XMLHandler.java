@@ -3,8 +3,8 @@ package org.uiowa.logsdon.NCBI;
 import java.io.*;
 import java.util.ArrayList;
 
-import JobInformation.Hit;
-import JobInformation.ProteinQuery;
+import org.uiowa.logsdon.JobInformation.Hit;
+import org.uiowa.logsdon.JobInformation.ProteinQuery;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 

@@ -1,14 +1,6 @@
 package org.uiowa.logsdon.JobInformation;
 
-
-
-import NCBI.MakeRequest;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
-
+import org.uiowa.logsdon.NCBI.MakeRequest;
 
 /*
  *                    BioJava development code
