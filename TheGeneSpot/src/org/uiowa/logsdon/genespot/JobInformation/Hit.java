@@ -1,5 +1,7 @@
 package JobInformation;
 
+import NCBI.MakeRequest;
+
 /*
  *
  * Created on Dec 7, 2016
@@ -11,56 +13,26 @@ public class Hit {
 	private final String accesionNumber;
 	private int hitTo;
 	private int hitFrom;
-	private final int hitFrame;
 
-	public Hit(String accesionNumber, String hitTo, String hitFrom, String hitFrame) {
+	public Hit(String accesionNumber, String hitFrom, String hitTo) {
 
 		this.accesionNumber = accesionNumber;
 		this.hitFrom = Integer.parseInt(hitFrom);
 		this.hitTo = Integer.parseInt(hitTo);
-		this.hitFrame = Integer.parseInt(hitFrame);
-
 	}
 
 
-	private boolean compare(String accesionNumber, int hitFrame){
+	public boolean compare(Hit newHit){
 
-		if(this.accesionNumber.equals(accesionNumber) && this.hitFrame == hitFrame){
+		if(this.getAccesionNumber().equals(newHit.getAccesionNumber())){
 
 			return true;
 
 		}
 
-		return false;
-
-	}
-
-	public boolean update(String accesionNumber, String hitTo, String hitFrom, String hitFrame){
-
-		int hitFrameInt = Integer.parseInt(hitFrame);
-		int hitToInt = Integer.parseInt(hitTo);
-		int hitFromInt = Integer.parseInt(hitFrom);
-
-		//need to keep looking for another hit
-		if(!this.compare(accesionNumber, hitFrameInt)){
-
-			return false;
-		}
-
-		//otherwise, trying and update
 		else{
 
-			if(hitToInt < this.hitTo){
-
-				this.hitTo = hitToInt;
-			}
-
-			if(hitFromInt > this.hitFrom){
-
-				this.hitFrom = hitFromInt;
-			}
-
-			return true; //telling the program that the object was updated and to stop searching
+			return false;
 		}
 	}
 
@@ -83,7 +55,42 @@ public class Hit {
 		return hitFrom;
 	}
 
-	public int getHitFrame() {
-		return hitFrame;
+
+	public int getExtendedHitFrom(){
+
+		//500 is our default standard extension -- will be adjustable in the future
+
+		if((this.hitFrom - 500) < 0) {
+
+			return 0;
+		}
+
+		else{
+
+			return (this.hitFrom - 500);
+		}
+	}
+
+	public int getExtendedHitTo(){
+
+		return (this.hitTo + 500);
+
+	}
+
+	public int getCenter(){
+
+		int difference = this.hitTo + this.hitFrom;
+
+
+		return Math.round(difference / 2);
+
+	}
+
+	public void setHitTo(int hitTo) {
+		this.hitTo = hitTo;
+	}
+
+	public void setHitFrom(int hitFrom) {
+		this.hitFrom = hitFrom;
 	}
 }

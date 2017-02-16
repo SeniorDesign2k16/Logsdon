@@ -62,6 +62,5 @@ public class mainTest {
 		MakeRequest request = new MakeRequest();
 
 		request.sendRequest(newJob);
-
 	}
 }
