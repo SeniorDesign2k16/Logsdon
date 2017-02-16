@@ -18,7 +18,7 @@
 </head>
     
 <body>
-    
+<p style="text-align:center"><img onmouseover="Creative Commons Attribution Share Alike 3.0 Unported license" src="evolution.jpg" alt="Evolution" style="width:300px;height:150px;" align="middle" >
 <h1 style="text-align:center"> The Gene Spot </h1>
 <p style="text-align:center"><i>Bioinformatics and Evolutionary Biology Tool </i></p>
 
@@ -33,6 +33,8 @@
 
 <div>
     <p> Enter FASTA Protein Sequences for All Genes of Interest </p>
+    <p style ="color:red"> *Each sequence MUST have a sequence header that matches the following format:* </p>
+    <p><i> > db | accession_number | any_other_desired_identifiers </i></p>
     <input type="file" id="file-input" />
     <h3>Contents of the file:</h3>
     <textarea readonly name="FASTA Gene Sequences" id="fasta_text_area" cols="70" rows="5" required></textarea>
@@ -42,6 +44,9 @@
 
 
 <p></p>
+    <label><input type="checkbox" id="cbox1" value="first_checkbox"> All Sequences Found on NCBI Database </label><br>
+    <label><input type="checkbox" id="cbox2" value="second_checkbox"> Personal Sequences Uploaded </label><br>
+    <p></p>
 
 <p> Enter Word Length (Recommended: 3)</p>
 <input type="number" name="Word Length" id="word_length" required>
@@ -52,6 +57,14 @@
 <input type="number" name="Evalue" id="evalue" max="1" required>
 
 <p></p>
+    <p>Assembly Level </p>
+    <select id="select-assembly-level">
+        <option value=""></option>
+        <option value="Chromosome" id="Chromosome">Chromosome</option>
+        <option value="Scaffold" id="Scaffold">Scaffold</option>
+        <option value="Contig" id="Contig">Contig</option>
+    </select>
+    <p></p>
 
 <p>Select Kingdom</p>
 <select id="select-kingdom">
@@ -64,44 +77,11 @@
 </select>
 <p></p>
 
-<p>Select Subtype</p>
-<select id="select-subtype">
-    <option value=""></option>
-    <option value="Birds" id="Birds">Birds</option>
-    <option value="Fishes" id="Fishes">Fishes</option>
-    <option value="Flatworms" id="Flatworms">Flatworms</option>
-    <option value="Insects" id="Insects">Insects</option>
-    <option value="Mammals" id="Mammals">Mammals</option>
-    <option value="Roundworms" id="Roundworms">Roundworms</option>
-    <option value="Other-animals" id="Other-animals">Other Animals</option>
-    <option value="Green-algae" id="Green-algae">Green Algae</option>
-    <option value="Land-plants" id="Land-plants">Land Plants</option>
-    <option value="Ascomycetes" id="Ascomycetes">Ascomycetes (Fungi)</option>
-    <option value="Basidiomycetes" id="Basidiomycetes">Basidiomycetes (Fungi)</option>
-    <option value="Kinetoplasts" id="Kinetoplasts">Kinetoplasts (Protists)</option>
-    <option value="Apicomplexans" id="Apicomplexans">Apicomplexans (Protists)</option>
-    <option value="Other-protists" id="Other-protists">Other Protists</option>
-    <option value="Other" id="Other-subtype">Other</option>
-</select>
+    <p>Search for Genome Assembly</p>
+    <input type="text" name="Genome Assembly Search" id="genome_assembly_search">
 
-<p>Select Genome Assembly</p>
-<select id="select-genome-assembiles">
-    <option value=""></option>
-    <option value="bird-test" id="bird-test">GCA_000002315.3 (Gallus gallus)</option>
-    <option value="Zebra-fish" id="Zebra-fish">GCA_000767325.1 (Danio rerio)</option>
-    <option value="flatworm-test" id="flatworm-test">GCA_000181075.1 (Schmidtea mediterranea)</option>
-    <option value="insect-test" id="insect-test">GCA_001485765.1 (Heliconius cydno cordula)</option>
-    <option value="Human" id="human">GCA_000001405.24 (Homo sapiens)</option>
-    <option value="Mouse" id="mouse">GCA_000001635.7 (Mus musculus)</option>
-    <option value="roundworm-test" id="roundworm-test">GCA_001447575.1 (Trichinella pseudospiralis)</option>
-    <option value="green-algae-test" id="green-algae-test">GCA_000002595.2 (Chlamydomonas reinhardtii)</option>
-    <option value="land-plant-test" id="land-plant-test">GCA_000002775.2 (Populus trichocarpa)</option>
-    <option value="ascomycetes-test" id="ascomycetes-test">GCA_000002525.1 (Yarrowia lipolytica)</option>
-    <option value="basidiomycetes-test" id="basidiomycetes-test">GCA_000827275.1 (Pisolithus microcarpus)</option>
-    <option value="kinetoplasts-test" id="kinetoplasts-test">GCA_000210295.1 (Trypanosoma brucei gambiense)</option>
-    <option value="apicomplexans-test" id="apicomplexans-test">GCA_000002765.1 (Plasmodium falciparum)</option>
-    <option value="other" id="other-genome-assembly">Other</option>
-</select>
+    <p></p>
+    <p></p>
 
 <p></p>
 <br />
@@ -111,7 +91,7 @@
  <p>
      <a href="about.html">About</a>
      |
-     <a href="resultsPage.html">Results</a>
+     <a href="resultsPage.html">Get Results</a>
  </p>
 
 </html>
