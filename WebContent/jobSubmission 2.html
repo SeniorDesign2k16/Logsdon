@@ -26,47 +26,51 @@
 
 <p></p>
 
-<p> Enter Job Name </p>
-<input type="text" name="Job Name" id="job_name" required>
-
+<p> Enter Job Name: <input type="text" name="Job Name" id="job_name" required> </p>
+    <p> ________________________________________________________________________________________________________ </p>
 <p></p>
 
-<div>
-    <p> Enter FASTA Protein Sequences for All Genes of Interest </p>
+    <script src="addInput.js" language="JavaScript" type="text/javascript"></script>
+
+    <div id="dynamicInput">
+    <p> Enter FASTA Protein Sequences for a Gene of Interest </p>
     <p style ="color:red"> *Each sequence MUST have a sequence header that matches the following format:* </p>
     <p><i> > db | accession_number | any_other_desired_identifiers </i></p>
+    <p> -------------------------------------------------------------------------------------------------------- </p>
+    Gene Name: <input type="text" name="Gene Name" id="gene_name" required>
     <input type="file" id="file-input" />
     <h3>Contents of the file:</h3>
     <textarea readonly name="FASTA Gene Sequences" id="fasta_text_area" cols="70" rows="5" required></textarea>
     <script type="text/javascript" src="ReadFile.js"></script>
 
-</div>
-
-
 <p></p>
     <label><input type="checkbox" id="cbox1" value="first_checkbox"> All Sequences Found on NCBI Database </label><br>
     <label><input type="checkbox" id="cbox2" value="second_checkbox"> Personal Sequences Uploaded </label><br>
     <p></p>
+</div>
+    <input type="button" value="Add another gene" onClick="addInput('dynamicInput');">
 
-<p> Enter Word Length (Recommended: 3)</p>
-<input type="number" name="Word Length" id="word_length" required>
-
-<p></p>
-
-<p> Enter E Value (Recommended: 1E-15)</p>
-<input type="number" name="Evalue" id="evalue" max="1" required>
+    <p> ________________________________________________________________________________________________________ </p>
+<p> Enter Word Length (Recommended: 3): <input type="number" name="Word Length" id="word_length" required> </p>
 
 <p></p>
-    <p>Assembly Level </p>
+    <p> ________________________________________________________________________________________________________ </p>
+
+<p> Enter E Value (Recommended: 1E-6): <input type="number" name="Evalue" id="evalue" max="1" required> </p>
+    <p> ________________________________________________________________________________________________________ </p>
+
+<p></p>
+    <p>Assembly Level:
     <select id="select-assembly-level">
         <option value=""></option>
         <option value="Chromosome" id="Chromosome">Chromosome</option>
         <option value="Scaffold" id="Scaffold">Scaffold</option>
         <option value="Contig" id="Contig">Contig</option>
-    </select>
+    </select></p>
     <p></p>
+    <p> ________________________________________________________________________________________________________ </p>
 
-<p>Select Kingdom</p>
+<p>Select Kingdom:
 <select id="select-kingdom">
     <option value=""></option>
     <option value="Animalia" id="Animalia">Animalia</option>
@@ -74,11 +78,11 @@
     <option value="Fungi" id="Fungi">Fungi</option>
     <option value="Protista" id="Protista">Protista</option>
     <option value="Other" id="Other-kingdom">Other</option>
-</select>
+</select></p>
 <p></p>
+    <p> ________________________________________________________________________________________________________ </p>
 
-    <p>Search for Genome Assembly</p>
-    <input type="text" name="Genome Assembly Search" id="genome_assembly_search">
+    <p>Search for Genome Assembly: <input type="text" name="Genome Assembly Search" id="genome_assembly_search"></p>
 
     <p></p>
     <p></p>
