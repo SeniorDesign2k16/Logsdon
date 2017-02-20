@@ -19,12 +19,14 @@ package NCBI;
  *      http://www.biojava.org/
  *
  * Created on Nov 30, 2016
- * Author: austinward 
+ * Update: on Feb. 15, 2016
+ * Author: Austin Ward
  *
  */
 
 import java.io.*;
 import java.util.ArrayList;
+
 import JobInformation.*;
 
 import JobInformation.Gene;
@@ -41,9 +43,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 public class MakeRequest {
 
-	private final ResultstoFirebaseCopy sendToDB;         //uses results from NCBI to update database
-	private BufferedReader reader;
-
+	private ResultstoFirebaseCopy sendToDB;         //uses results from NCBI to update database
 
 	//constructor
 	public MakeRequest() {
@@ -55,96 +55,92 @@ public class MakeRequest {
 	//takes in job object and makes request to NCBI
 	public void sendRequest(Job currentJob) {
 
-		Genome[] genomes = currentJob.getGenomesOfInterest();   //getting the array of genomes the job is holding
-
-		try {
-
-			NCBIQBlastService server = new NCBIQBlastService();
-			NCBIQBlastAlignmentProperties props = new NCBIQBlastAlignmentProperties();
-
-			// defining input properties object
-			props.setBlastProgram(BlastProgramEnum.tblastn);
-			props.setBlastExpect(currentJob.getEvalue());
-
-			// defining output properties object
-			NCBIQBlastOutputProperties outputProps = new NCBIQBlastOutputProperties();
+		NCBIQBlastService server = new NCBIQBlastService();     //setting connection to ncbi's server
+		NCBIQBlastAlignmentProperties intputProperties = new NCBIQBlastAlignmentProperties();
+		NCBIQBlastOutputProperties outputProperties = new NCBIQBlastOutputProperties();
 
 
-			// creates a new handler for the next query
-			XMLReader p = XMLReaderFactory.createXMLReader();
+		intputProperties.setBlastProgram(BlastProgramEnum.tblastn);        //setting blast type
+		intputProperties.setBlastExpect(currentJob.getEvalue());           //setting client specified e-value
+
+		//getting the genomes of interest;
+		Genome[] genomes = currentJob.getGenomesOfInterest();
 
 
-			//looping through Genome by Genome
-			for (Genome currentGenome : genomes) {
+		for (Genome currentGenome : genomes) {
 
-				Gene[] geneOfInterest = currentGenome.getGenesOfInterest(); // getting the genes
-
-				//looping throught Gene by Gene
-				for (Gene currentGene : geneOfInterest) {
-
-					ProteinQuery[] proteinQueries = currentGene.getProteinQueries();
-
-					for (ProteinQuery currentQuery : proteinQueries) {
-
-						XMLHandler handler = new XMLHandler(currentQuery);
+			intputProperties.setBlastDatabase("genomic/" + currentGenome.getTaxID() + "/" + currentGenome.getGenome());
 
 
-						props.setBlastDatabase("genomic/" + currentGenome.getTaxID() + "/" + currentGenome.getGenome());
+			Gene[] genes = currentGenome.getGenesOfInterest();
 
-						p.setContentHandler(handler);
+			for (Gene currentGene : genes) {
 
-						String rid = null; // blast request ID
+				ProteinQuery[] proteinQueries = currentGene.getProteinQueries();
+
+				for (ProteinQuery currentQuery : proteinQueries) {
+
+					try {
+						XMLHandler handler = new XMLHandler(currentGene);
+						XMLReader parse = XMLReaderFactory.createXMLReader();
+
+						String rid = server.sendAlignmentRequest(currentQuery.getQueryID(), intputProperties);
 
 						int time = 0;
 
-						try {
+						//waiting on alignment
+						while (!server.isReady(rid)) {
+							System.out.println("Waiting..." + String.valueOf(time) + "secs");
 
-							rid = server.sendAlignmentRequest(currentQuery.getQueryNumber(), props);
-
-							while (!server.isReady(rid)) {
-								System.out.println("Waiting..." + String.valueOf(time) + " secs");
-								time += 5;
-								Thread.sleep(5000);
-							}
-
-							InputStream input = server.getAlignmentResults(rid, outputProps);
-							reader = new BufferedReader(new InputStreamReader(input));
-
-
-							String line;
-							String hold = null;
-
-							// writing to xml file
-							while ((line = reader.readLine()) != null) {
-								//System.out.println(line);
-								hold += (line + "\n");
-							}
-
-
-							System.out.println("here");
-							p.parse(new InputSource(new ByteArrayInputStream(hold.getBytes("utf-8"))));
-
-
-							//Job name --- Current Genome --- Current Gene ---
-
-							sendToDB.SendtoGenespot(currentJob.getJobName(), currentGenome, currentGene);
-
-							/*
-							sendToDB.SendtoGenespot(handler.getHits(), currentJob.getJobName(), currentGenome.getSpecies(),
-									queries.get(x).replace('.', 'v'), currentGeneName, currentGenome.getGenome(),
-									currentGenome.getKingdom(), queries.size());
-							*/
-
-
-						} catch (Exception e) {
-
+							Thread.sleep(5000);
+							time += 5;
 						}
-					}
 
+
+						//getting alignment data
+						InputStream input = server.getAlignmentResults(rid, outputProperties);
+
+						//reading alignment data
+						BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+
+						String line;
+						String hold = "";
+
+
+						while ((line = reader.readLine()) != null) {
+							//System.out.println(line);
+							hold += (line + "\n");
+						}
+
+						System.out.println(hold);
+
+						parse.setContentHandler(handler);
+						parse.parse(new InputSource(new ByteArrayInputStream(hold.getBytes("utf-8"))));
+
+					} catch (SAXException e) {
+						e.printStackTrace();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+				Hit[] hits = currentGene.getHits();
+
+				System.out.println("-------------------------------------");
+				System.out.println("Genome: " + currentGenome.getGenome());
+				System.out.println("Tax ID: " + currentGenome.getTaxID());
+				System.out.println("Kingdom: " + currentGenome.getKingdom());
+				System.out.println();
+				System.out.println("-------------------------------------");
+
+				for(Hit currentHit : hits){
+
+					System.out.println("Gene: " + currentGene.getName());
+					System.out.println("Acession Number: " + currentHit.getAccesionNumber());
+					System.out.println("Hit From: " + currentHit.getHitFrom());
+					System.out.println("Hit To: " + currentHit.getHitTo());
 				}
 			}
-		}catch (Exception e){
-
 		}
 	}
 }

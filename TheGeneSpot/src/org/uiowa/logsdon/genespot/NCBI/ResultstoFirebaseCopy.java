@@ -12,7 +12,7 @@ public class ResultstoFirebaseCopy {
         Firebase Genespot = new Firebase("https://thegenespot-efb8a.firebaseio.com");
         // loop through with results from genome class
 
-
+        System.out.println("here");
         Firebase cellref = Genespot.child(jobName).child(currentGenome.getKingdom()).child(currentGenome.getSubType())
                 .child(currentGenome.getTaxID()).child(currentGenome.getGenome()).child(currentGene.getName());
 
@@ -26,8 +26,11 @@ public class ResultstoFirebaseCopy {
 
         while(i < queries.length){
 
-            cellref.child("Query"+(i+1)).child("Protein ID").setValue(queries[i].getQueryNumber());
+            System.out.println("here1");
 
+            cellref.child("Query"+(i+1)).child("Protein ID").setValue(queries[i].getQueryID());
+
+            /*
             Hit[] hits = queries[i].getHitObjects();
 
             cellref.child("Query"+(i+1)).child("Hit Count").setValue(hits.length);
@@ -36,6 +39,8 @@ public class ResultstoFirebaseCopy {
 
             for(Hit currentHit : hits){
 
+                System.out.println("here2");
+
                 cellref.child("Query"+(i+1)).child("Hit"+x).child("Accesion Number").setValue(currentHit.getAccesionNumber());
                 cellref.child("Query"+(i+1)).child("Hit"+x).child("Hit Start").setValue(currentHit.getHitFrom());
                 cellref.child("Query"+(i+1)).child("Hit"+x).child("Hit End").setValue(currentHit.getHitTo());
@@ -43,6 +48,7 @@ public class ResultstoFirebaseCopy {
 
                 x++;
             }
+            */
 
             i++;
         }

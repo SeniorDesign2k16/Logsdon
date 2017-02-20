@@ -1,35 +1,20 @@
 package JobInformation;
 
-import java.util.ArrayList;
-
 /**
  * Created by austinward on 2/11/17.
  */
 public class ProteinQuery {
 
-    private final String queryNumber;
-
-    private Hit[] hits; // should be the unique hits from all the queries used
+    private final String queryID;
 
     public ProteinQuery(String queryNumber){
 
-        this.queryNumber = queryNumber;
+        this.queryID = queryNumber;
 
     }
 
-    public void setHits(Hit[] hits){
+    public String getQueryID(){
 
-        this.hits = hits;
-    }
-
-    public String getQueryNumber(){
-
-        return this.queryNumber;
-    }
-
-
-    public Hit[] getHitObjects(){
-
-        return this.hits;
+        return this.queryID;
     }
 }

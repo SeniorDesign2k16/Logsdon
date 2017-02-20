@@ -3,20 +3,24 @@ package NCBI;
 import java.io.*;
 import java.util.ArrayList;
 
+import JobInformation.Gene;
 import JobInformation.Hit;
 import JobInformation.ProteinQuery;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+
+
 /*
- *                    BioJava development code
+ *                 BioJava development code
  *
  * This code may be freely distributed and modified under the
  * terms of the GNU Lesser General Public Licence.  This should
  * be distributed with the code.  If you do not have a copy,
  * see:
  *
- *      http://www.gnu.org/copyleft/lesser.html
+ *       http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the individual
  * authors.  These should be listed in @author doc comments.
@@ -34,24 +38,22 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class XMLHandler extends DefaultHandler {
 
-	private final ProteinQuery query;
-	private ArrayList<Hit> hits = new ArrayList<>();
-
-	private String hold;
+	private final Gene currentGene;
 
 	private String id;
 	private String from;
 	private String to;
-	private String frame;
+
+	private String hold;
 
 	private boolean hit_Id_found = false;
 	private boolean Hsp_hit_from_Found = false;
 	private boolean Hsp_hit_to_Found = false;
 	private boolean Hsp_hit_frame_Found = false;
 
-	public XMLHandler(ProteinQuery query) throws FileNotFoundException {
+	public XMLHandler(Gene gene){
 
-		this.query = query;
+		this.currentGene = gene;
 	}
 
 	@Override
@@ -60,15 +62,12 @@ public class XMLHandler extends DefaultHandler {
 	}
 
 	@Override
-	public void endDocument() {
-
+	public void endDocument(){
 		System.out.println("end parsing document..");
-
-		query.setHits(hits.toArray(new Hit[0]));
 	}
 
 	@Override
-	public void startElement(String nameSpaceURI, String localName, String qName, Attributes atts) {
+	public void startElement(String nameSpaceURI, String localName, String qName, Attributes atts){
 
 		switch (qName) {
 
@@ -94,24 +93,22 @@ public class XMLHandler extends DefaultHandler {
 
 
 		if (hit_Id_found) {
-			System.out.println("JobInformation.Hit ID: " + hold);
+			System.out.println("Hit ID: " + hold);
 			id = hold.trim();
 		}
 
 		else if (Hsp_hit_from_Found) {
-			System.out.println("JobInformation.Hit Start: " + hold);
+			System.out.println("Hit Start: " + hold);
 			from = hold.trim();
 		}
 
 		else if (Hsp_hit_to_Found) {
-			System.out.println("JobInformation.Hit End: " + hold);
+			System.out.println("Hit End: " + hold);
 			to = hold.trim();
-
 		}
 
-		else if (Hsp_hit_frame_Found) {
-			System.out.println("Frame: " + hold);
-			frame = hold.trim();
+		else if (Hsp_hit_frame_Found){
+			System.out.println("Hit frame: " + hold);
 		}
 	}
 
@@ -132,41 +129,14 @@ public class XMLHandler extends DefaultHandler {
 			case "Hsp_hit-frame":
 				Hsp_hit_frame_Found = false;
 
-				//creating new Hit object
-				if(hits.isEmpty()){
-
-					Hit newHit = new Hit(id, to, from, frame);
-					hits.add(newHit);
-
+				//first hit added
+				if(currentGene.getHits().length == 0){
+					System.out.println("Here1 (should only see this one)");
+					currentGene.addHit(new Hit(id, from, to));
 				}
 
 				else{
-
-					boolean found = false;
-
-					//looking through hits
-					for(Hit currentHit : hits){
-
-						//found similar hit
-						if(currentHit.update(id, to, from, frame)){
-
-							found = true;
-
-							id = null;
-							frame = null;
-							to = null;
-							from = null;
-
-							break;
-						}
-					}
-
-					//adding new hit
-					if(!found){
-
-						hits.add(new Hit(id , to, from, frame));
-
-					}
+					currentGene.compareHits(new Hit(id, from, to));
 				}
 
 				break;
