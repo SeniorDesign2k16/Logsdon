@@ -1,14 +1,15 @@
-<!DOCTYPE>
-<input>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="WebScripts.js"></script>
+<!doctype HTML>
 <head>
     <title> The Gene Spot </title>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="WebScripts.js"></script>
+    <script type="text/javascript" src="ReadFile.js"></script>
+    
 </head>
 
 <body>
-<p style="text-align:center"><img src="evolution.jpg" alt="Evolution" style="width:300px;height:150px;" align="middle" onmouseover="Creative Commons Attribution Share Alike 3.0 Unported license">
-</p>
+<p style="text-align:center"><img src="evolution.jpg" alt="Evolution" style="width:300px;height:150px;" align="middle" onmouseover="Creative Commons Attribution Share Alike 3.0 Unported license"></p>
 <h1 style="text-align:center"> The Gene Spot </h1>
 <p style="text-align:center"><i>Bioinformatics and Evolutionary Biology Tool </i></p>
 
@@ -22,16 +23,12 @@
 <p></p>
 
 <p> Enter FASTA Protein Sequences for All Genes of Interest </p>
-<textarea name="FASTA Gene Sequences" id="fasta_text_area" cols="50" rows="5" required>
-
-</textarea>
-
+<textarea name="FASTA Gene Sequences" id="fasta_text_area" cols="50" rows="5" required></textarea>
 <p></p>
-<p> or Upload FASTA Protein Sequences File</p>
- <input type="file" name="file_button" id="file_button">
 
- <p> </p>
-<p> </p>
+<p> or Upload FASTA Protein Sequences File</p>
+<input type="file" name="file_button" id="file_button">
+
 
 <p> Enter Word Length (Recommended: 3)</p>
 <input type="number" name="Word Length" id="word_length" required>
