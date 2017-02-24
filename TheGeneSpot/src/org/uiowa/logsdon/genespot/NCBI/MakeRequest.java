@@ -140,6 +140,13 @@ public class MakeRequest {
 					System.out.println("Hit From: " + currentHit.getHitFrom());
 					System.out.println("Hit To: " + currentHit.getHitTo());
 				}
+
+
+				try {
+					sendToDB.SendtoGenespot(currentJob.getJobName(), currentGenome, currentGene);
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

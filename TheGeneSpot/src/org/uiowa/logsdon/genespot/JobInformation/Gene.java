@@ -42,7 +42,6 @@ public class Gene {
 		//no hits on the same contig found
 		if(similarHits.isEmpty()){
 
-			System.out.println("Here3");
 			addHit(hit);
 		}
 
@@ -107,7 +106,6 @@ public class Gene {
 
 		//if no updates were made, a unique hit was found
 		addHit(newHit);
-		System.out.println("Here2");
 	}
 
 	public String getName() {
