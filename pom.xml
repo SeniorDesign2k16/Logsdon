@@ -26,6 +26,23 @@
     </plugins>
   </build>
   <dependencies>
+<dependency>
+    <groupId>com.google.api-client</groupId>
+    <artifactId>google-api-client</artifactId>
+    <version>1.22.0</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/com.google.http-client/google-http-client -->
+<dependency>
+    <groupId>com.google.http-client</groupId>
+    <artifactId>google-http-client</artifactId>
+    <version>1.22.0</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/com.google.http-client/google-http-client-jackson2 -->
+<dependency>
+    <groupId>com.google.http-client</groupId>
+    <artifactId>google-http-client-jackson2</artifactId>
+    <version>1.22.0</version>
+</dependency>
 
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -61,9 +78,9 @@
 </dependency>
     
 <dependency>
-    <groupId>com.firebase</groupId>
-    <artifactId>firebase-client-jvm</artifactId>
-    <version>2.2.4</version>
+  <groupId>com.google.firebase</groupId>
+  <artifactId>firebase-admin</artifactId>
+  <version>4.1.2</version>
 </dependency>
 
 <dependency>
