@@ -5,6 +5,7 @@ match id
 get all pieces of Json
 get ether present or just a binary yes or no to depict red/green squares. Should be in order, else we need to order it properly
 XML
+*/
 job: job id
 {
   gene:
@@ -13,11 +14,12 @@ job: job id
   Present: (1,0 or yes/no. 1,0 is faster)
 
 }
+/*
 Need to check
 IP issue with web hosting
 dynamic table in html/css
 in HTML code
-
+*/
 <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
 <script>
   // Initialize Firebase
