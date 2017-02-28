@@ -83,7 +83,7 @@ function displayContents(contents) {
 
 window.onload = function(){
     
-    var el = document.getElementById("file_button")
+    var el = document.getElementById("file-input");
     
     if(el){
         addEventListener("change", readSingleFile, false);

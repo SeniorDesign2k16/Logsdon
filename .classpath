@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/Saxon-HE-9.7.0-14.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/biojava-ws-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/biojava-sequencing-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/biojava-genome-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/biojava-phylo-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/biojava-ontology-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/biojava-structure-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/biojava-core-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/biojava-alignment-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/jackson-mapper-asl-1.9.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/httpclient-4.3.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/json-20140107.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/ExternalJars/jersey-servlet-1.19.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/biojava-aa-prop-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/biojava-alignment-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/biojava-core-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/biojava-genome-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/biojava-modfinder-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/biojava-ontology-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/biojava-phylo-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/biojava-protein-disorder-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/biojava-sequencing-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/biojava-structure-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/biojava-structure-gui-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/biojava-survival-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/biojava-ws-4.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/jackson-annotations-2.8.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/jackson-core-2.8.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/jackson-databind-2.8.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/JAXP_160.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/jcl-over-slf4j-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/jcl-over-slf4j-1.7.21-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/jersey-bundle-1.19.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/jersey-core-1.19.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/jersey-server-1.19.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/jul-to-slf4j-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/jul-to-slf4j-1.7.21-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/log4j-over-slf4j-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/log4j-over-slf4j-1.7.21-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/osgi-over-slf4j-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/osgi-over-slf4j-1.7.21-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-android-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-android-1.7.21-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-api-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-api-1.7.21-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-ext-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-ext-1.7.21-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-jcl-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-jcl-1.7.21-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-jdk14-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-jdk14-1.7.21-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-log4j12-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-log4j12-1.7.21-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-migrator-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-nop-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-nop-1.7.21-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-simple-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/Genespot/Logsdon/jarfiles/slf4j-simple-1.7.21-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/firebase-admin-4.1.2.jar" sourcepath="C:/Users/AnubhavPC/.m2/repository/com/google/firebase/firebase-admin/4.1.2/firebase-admin-4.1.2-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/google-api-client-1.22.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/google-http-client-1.22.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/AnubhavPC/Desktop/google-http-client-jackson2-1.22.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
