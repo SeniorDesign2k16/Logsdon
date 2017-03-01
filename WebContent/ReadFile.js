@@ -11,11 +11,15 @@ function readSingleFile(e) {
   reader.readAsText(file);
 }
 
+var counter = 1;
+
 function displayContents(contents) {
     
   console.log("-------Sequences in file-------");
     
-  var element = document.getElementById('fasta_text_area');
+  var element = document.getElementById('fasta_text_area'+ window.counter);
+    
+    counter++;
 
   var hold = [];
   var ids = "";
@@ -83,7 +87,9 @@ function displayContents(contents) {
 
 window.onload = function(){
     
+
     var el = document.getElementById("file-input")
+
     
     if(el){
         addEventListener("change", readSingleFile, false);
