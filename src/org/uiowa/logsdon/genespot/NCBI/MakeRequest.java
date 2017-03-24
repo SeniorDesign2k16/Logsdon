@@ -49,7 +49,7 @@ public class MakeRequest {
 	private ResultstoFirebaseCopy sendToDB; // uses results from NCBI to update database
 
 	// constructor
-	public MakeRequest() {
+	public MakeRequest() throws FileNotFoundException {
 
 		this.sendToDB = new ResultstoFirebaseCopy();
 	}

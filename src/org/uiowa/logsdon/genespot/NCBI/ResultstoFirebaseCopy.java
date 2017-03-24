@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ResultstoFirebaseCopy {
 	DatabaseReference Genespot;
 
-	public void SendtoGenespot(String jobName, Genome currentGenome, Gene currentGene) throws FileNotFoundException {
+	public ResultstoFirebaseCopy() throws FileNotFoundException {
 		FileInputStream serviceAccount = new FileInputStream(ResultstoFirebaseCopy.class.getClassLoader()
 				.getResource("thegenespot-efb8a-firebase-adminsdk-1phn3-cbe3ab49a4.json").getPath()
 				.replaceAll("%20", " "));
@@ -29,6 +29,10 @@ public class ResultstoFirebaseCopy {
 		FirebaseApp.initializeApp(options);
 
 		Genespot = FirebaseDatabase.getInstance().getReference();
+	}
+
+	public void SendtoGenespot(String jobName, Genome currentGenome, Gene currentGene) throws FileNotFoundException {
+
 		// loop through with results from genome class
 
 		DatabaseReference cellref = Genespot.child(jobName).child(currentGenome.getKingdom())
