@@ -36,8 +36,15 @@ import org.uiowa.logsdon.genespot.NCBI.MakeRequest;
 @Path("/GeneSpot")
 public class GeneSpotAnalysis {
 
+	//create genome objects and add them to an array list
+	//create job object
+	//create jobHandler object
+	//submit job object to jobHandler object method addJob
+	//done
+
 	@POST
 	public String Genespot(@FormParam("inputArray[]") List<String> datalist)
+
 			throws UnsupportedEncodingException, FileNotFoundException {
 		// [JobName,geneNmae, sequences,evalue,kingdom, subtype, (need genome), assembly level]
 		String[] inputs = datalist.toArray(new String[0]);

@@ -20,7 +20,7 @@ public class test {
         //send job information to ncbi -- tblastn --> tblastx --> update firebase (gene database)
 
         MakeRequestNonBiojava request = new MakeRequestNonBiojava();
-        request.makeRequestTBLASTN();
+        //request.makeRequestTBLASTN();
 
     }
 }
