@@ -46,12 +46,12 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 public class MakeRequest {
 
-	private ResultstoFirebaseCopy sendToDB; // uses results from NCBI to update database
+	private ResultstoFirebase sendToDB; // uses results from NCBI to update database
 
 	// constructor
 	public MakeRequest() {
 
-		this.sendToDB = new ResultstoFirebaseCopy();
+		this.sendToDB = new ResultstoFirebase();
 	}
 
 	// takes in job object and makes request to NCBI
@@ -80,6 +80,7 @@ public class MakeRequest {
 				for (ProteinQuery currentQuery : proteinQueries) {
 
 					try {
+
 						XMLHandler handler = new XMLHandler(currentGene);
 						XMLReader parse = XMLReaderFactory.createXMLReader();
 
@@ -137,7 +138,11 @@ public class MakeRequest {
 					System.out.println("Hit To: " + currentHit.getHitTo());
 				}
 
-				sendToDB.SendtoGenespot(currentJob.getJobName(), currentGenome, currentGene);
+				//SequenceRetrieval sequenceRetrieval = new SequenceRetrieval();
+				//sequenceRetrieval.getSequence(currentGene.getHits());
+
+
+				//blastx
 			}
 		}
 	}

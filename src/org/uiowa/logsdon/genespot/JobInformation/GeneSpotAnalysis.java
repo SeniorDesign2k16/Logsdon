@@ -35,6 +35,7 @@ import org.uiowa.logsdon.genespot.NCBI.MakeRequest;
 
 @Path("/GeneSpot")
 public class GeneSpotAnalysis {
+
 	@POST
 	public String Genespot(@FormParam("inputArray[]") List<String> datalist)
 			throws UnsupportedEncodingException, FileNotFoundException {
