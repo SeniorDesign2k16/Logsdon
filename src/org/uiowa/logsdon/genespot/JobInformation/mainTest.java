@@ -32,6 +32,7 @@ public class mainTest {
 
 	public static void main(String[] argv) throws UnsupportedEncodingException, FileNotFoundException {
 
+		/*
 		String jobName = "UpdatedTest2";
 
 		double evalue = .00000000001;
@@ -58,6 +59,7 @@ public class mainTest {
 		MakeRequest request = new MakeRequest();
 
 		request.sendRequest(newJob);
+		*/
 
 	}
 }
