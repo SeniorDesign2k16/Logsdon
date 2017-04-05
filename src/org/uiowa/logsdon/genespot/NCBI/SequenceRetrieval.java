@@ -70,7 +70,8 @@ public class SequenceRetrieval {
 
                 }
 
-
+                System.out.println(sequenceTitle.toString());
+                
                 currentHit.setSequence(sequence.toString());                            //setting the found found sequence
                 currentHit.setSequenceTitle(sequenceTitle.toString());                  //setting the sequence title
 

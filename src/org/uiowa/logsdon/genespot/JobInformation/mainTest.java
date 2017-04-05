@@ -2,8 +2,7 @@ package org.uiowa.logsdon.genespot.JobInformation;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
-
-import org.uiowa.logsdon.genespot.NCBI.MakeRequest;
+import java.util.ArrayList;
 
 /*
  *                    BioJava development code
@@ -32,34 +31,20 @@ public class mainTest {
 
 	public static void main(String[] argv) throws UnsupportedEncodingException, FileNotFoundException {
 
-		/*
-		String jobName = "UpdatedTest2";
+		JobHandler jobHandler = new JobHandler();
+		ProteinQuery[] queries = new ProteinQuery[1];
 
-		double evalue = .00000000001;
+		ProteinQuery query1 = new ProteinQuery("548663");
+		queries[0] = query1;
 
-		ProteinQuery[] queries = new ProteinQuery[2];
-		queries[0] = new ProteinQuery("548663");
-		queries[1] = new ProteinQuery("514692457");
+		Genome newGenome = new Genome("GCA_000180675.1", "IDK", "IDK", "IDK", "69293", "RAD51", queries);
 
-		Gene[] genes = new Gene[1];
-		Gene gene = new Gene("Rad51", queries);
+		ArrayList<Genome> genomes = new ArrayList<>();
+		genomes.add(newGenome);
 
-		genes[0] = gene;
+		Job testJob = new Job("austin-test", .00000001, genomes);
 
-		Genome[] genomes = new Genome[1];
-
-		// Gasterosteus aculeatus 69293 Animals Fishes GCA_000180675.1 Contig -
-		// ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/180/675/GCA_000180675.1_ASM18067v1
-		Genome genome = new Genome("GCA_000180675.1", "Animal", "Fishes", "Contig", "69293", genes);
-
-		genomes[0] = genome;
-
-		Job newJob = new Job(jobName, evalue, genomes);
-
-		MakeRequest request = new MakeRequest();
-
-		request.sendRequest(newJob);
-		*/
+		jobHandler.addJob(testJob);
 
 	}
 }

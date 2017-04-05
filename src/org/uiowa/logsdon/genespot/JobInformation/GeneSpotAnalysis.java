@@ -31,8 +31,6 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
-import org.uiowa.logsdon.genespot.NCBI.MakeRequest;
-
 @Path("/GeneSpot")
 public class GeneSpotAnalysis {
 
@@ -46,6 +44,7 @@ public class GeneSpotAnalysis {
 	public String Genespot(@FormParam("inputArray[]") List<String> datalist)
 
 			throws UnsupportedEncodingException, FileNotFoundException {
+		/*
 		// [JobName,geneNmae, sequences,evalue,kingdom, subtype, (need genome), assembly level]
 		String[] inputs = datalist.toArray(new String[0]);
 		String jobName = inputs[0];
@@ -98,5 +97,7 @@ public class GeneSpotAnalysis {
 
 		return jobName;
 
+		*/
+		return null;
 	}
 }

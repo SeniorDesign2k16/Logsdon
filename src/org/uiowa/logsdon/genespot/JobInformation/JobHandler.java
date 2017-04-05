@@ -1,7 +1,9 @@
 package org.uiowa.logsdon.genespot.JobInformation;
 
+import org.uiowa.logsdon.genespot.NCBI.GeneDatabase;
 import org.uiowa.logsdon.genespot.NCBI.MakeRequestNonBiojava;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -21,11 +23,10 @@ public class JobHandler {
 
     //send job information to ncbi -- tblastn --> tblastx --> update firebase (gene database)
 
-    //MakeRequestNonBiojava request = new MakeRequestNonBiojava();
-    //request.makeRequestTBLASTN();
-
     private final MakeRequestNonBiojava request = new MakeRequestNonBiojava();
+    private final GeneDatabase geneDatabase = new GeneDatabase();
 
+    //can take one job at a time - eventually need to a add a multithread so new jobs can be added to a queue
     public void addJob(Job newJob){
 
         ArrayList<Genome> genomes = newJob.getGenomesOfInterest();
@@ -33,10 +34,19 @@ public class JobHandler {
         while (genomes.size() > 0){
 
             submitGenome(genomes.get(0));
-            genomes.remove(0);
+            Genome currentGenome = genomes.remove(0);
 
+            //update gene database database
+            if(currentGenome != null){
+
+                try {
+                    geneDatabase.update(newJob.getJobName(), currentGenome);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            }
         }
-
     }
 
 
