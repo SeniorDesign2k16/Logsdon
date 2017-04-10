@@ -45,7 +45,7 @@ public class GeneSpotAnalysis {
 	public String Genespot(@FormParam("inputArray[]") List<String> datalist)
 
 			throws UnsupportedEncodingException, FileNotFoundException {
-		/*
+
 		// [JobName,geneNmae, sequences,evalue,kingdom, subtype, (need genome), assembly level]
 		String[] inputs = datalist.toArray(new String[0]);
 		String jobName = inputs[0];
@@ -94,8 +94,5 @@ public class GeneSpotAnalysis {
 		request.addJob(newJob);
 
 		return jobName;
-
-		*/
-		return null;
 	}
 }

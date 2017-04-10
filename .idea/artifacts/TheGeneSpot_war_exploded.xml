@@ -51,6 +51,7 @@
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-server:1.19.3" />
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-core:1.19.3" />
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-servlet:1.19.3" />
+          <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.9.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

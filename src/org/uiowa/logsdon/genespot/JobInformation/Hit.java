@@ -3,6 +3,7 @@ package org.uiowa.logsdon.genespot.JobInformation;
 import javax.swing.text.html.HTMLDocument;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 /*
@@ -136,7 +137,7 @@ public class Hit{
 
 	public String getScoreSequenceString(){
 
-		return this.scoreSequence.toString();
+		return Arrays.toString(this.scoreSequence);
 
 	}
 

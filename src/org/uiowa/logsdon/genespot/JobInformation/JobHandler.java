@@ -29,6 +29,7 @@ public class JobHandler {
     //can take one job at a time - eventually need to a add a multithread so new jobs can be added to a queue
     public void addJob(Job newJob){
 
+        System.out.println("Here");
         ArrayList<Genome> genomes = newJob.getGenomesOfInterest();
 
         while (genomes.size() > 0){
@@ -44,19 +45,17 @@ public class JobHandler {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-
             }
         }
     }
 
+    private void submitGenome(Genome genome){
 
-    public void submitGenome(Genome genome){
-
+        System.out.println("Here2");
+        System.out.println(genome.getGenome());
         request.makeRequestTBLASTN(genome);
 
         //update GeneDatabase
 
     }
-
-
 }

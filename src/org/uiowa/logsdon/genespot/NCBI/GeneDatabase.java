@@ -23,6 +23,7 @@ public class GeneDatabase {
     DatabaseReference Genespot;
 
     public void update(String jobName, Genome currentGenome) throws FileNotFoundException {
+
         FileInputStream serviceAccount = new FileInputStream(ResultstoFirebase.class.getClassLoader()
                 .getResource("thegenespot-efb8a-firebase-adminsdk-1phn3-cbe3ab49a4.json").getPath()
                 .replaceAll("%20", " "));
@@ -32,6 +33,7 @@ public class GeneDatabase {
                 .setDatabaseUrl("https://thegenespot-efb8a.firebaseio.com/").build();
 
         FirebaseApp.initializeApp(options);
+
 
         Genespot = FirebaseDatabase.getInstance().getReference();
         // loop through with results from genome class
@@ -53,20 +55,24 @@ public class GeneDatabase {
         int queryCount = currentGenome.getQueryCount();
         Hit[] hits = currentGenome.getHits();
 
-        ArrayList<String[]> hitArray = new ArrayList<>();
+        int count = 1;
+
+        cellref.child("Hit Count").setValue(hits.length);
 
         for(Hit currentHit : hits){
 
-            String[] array = new String[3];
-            array[0] = currentHit.getSequence();
-            array[1] = String.valueOf(queryCount);
-            array[2] = currentHit.getScoreSequenceString();
+            StringBuilder stringBuilder = new StringBuilder();
 
-            hitArray.add(array);
+            stringBuilder.append(currentHit.getSequence());
+            stringBuilder.append("|");
+            stringBuilder.append(String.valueOf(queryCount));
+            stringBuilder.append("|");
+            stringBuilder.append(currentHit.getScoreSequenceString());
+
+            cellref.child("Hit"+count).setValue(stringBuilder.toString());
+
+            count++;
         }
-
-        cellref.child("Hits").setValue(hitArray.toArray());
-
         /*
 
         cellref.child("Hit" + (i + 1)).child("Accession Number").setValue(
