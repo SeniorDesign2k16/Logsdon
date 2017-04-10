@@ -25,7 +25,7 @@ package org.uiowa.logsdon.genespot.JobInformation;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.FormParam;
@@ -40,24 +40,16 @@ public class GeneSpotAnalysis {
 		// [JobName,geneNmae, sequences,evalue,kingdom, subtype, (need genome), assembly level]
 		String[] inputs = datalist.toArray(new String[0]);
 		String jobName = inputs[0];
-		System.out.println(jobName);
 		String[] geneName = inputs[1].split("%");
-		System.out.println(Arrays.toString(geneName));
 		String[] sequences = inputs[2].split("%");
-		System.out.println(Arrays.toString(sequences));
 		String evaluestring = inputs[3];
-		System.out.println(evaluestring);
 		String kingdom = inputs[4];
-		System.out.println(kingdom);
 		String subtype = inputs[5];
-		System.out.println(subtype);
 		String genomeName = inputs[6];
-		System.out.println(genomeName);
 		String assembly = inputs[7];
-		System.out.println(assembly);
 		Gene[] genes = new Gene[geneName.length];
 		// change to size of genome array
-		Genome[] genomes = new Genome[1];
+		ArrayList<Genome> genomes = new ArrayList<Genome>();
 		double evalue = Double.parseDouble(evaluestring);
 		for (int i = 0; i < sequences.length; i++) {
 			String[] queriesTotal = sequences[i].split("\n");
@@ -79,18 +71,18 @@ public class GeneSpotAnalysis {
 			// put in Genome class
 			Genome genome = new Genome(genomeName, kingdom, subtype, assembly, "69293", geneName[i], queries);
 
-			genomes[i] = genome;
+			genomes.add(genome);
 		}
 
 		// Gasterosteus aculeatus 69293 Animals Fishes GCA_000180675.1 Contig -
 		// //ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/180/675/GCA_000180675.1_ASM18067v1 subtype = "Fishes";
-		// Need to get tax id from parsing big ass file.
+		// Need to get tax id from parsing big file.
 
-		// Job newJob = new Job(jobName, evalue, genomes);
+		Job newJob = new Job(jobName, evalue, genomes);
 
-		// MakeRequest request = new MakeRequest();
+		JobHandler request = new JobHandler();
 
-		// request.sendRequest(newJob);
+		request.addJob(newJob);
 
 		return jobName;
 
