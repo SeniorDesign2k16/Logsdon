@@ -12,30 +12,51 @@
 <h4>GeneSpot Results for: </h4>
 <p>Job Name: <span id="jobname"></span></p>
 <p>Job ID: <span id="jobid"></span></p>
-<script>
-            //take in POSTed form data
-
-            document.getElementById("jobname").innerHTML = jname;
-            document.getElementById("jobid").innerHTML = jid;
-
-            //retrieve results and store as a JSON
-            var db = firebase.database().ref(id);
-            var jobob = db.once('value').val();
-            /*var db = firebase.database().ref(id);
-            db.once('value', function(snapshot) {
-                snapshot.forEach();
-            });*/
-
-           //reference JSON to build data for Plotly
-
-        </script>
 
 <div id="resultTable"><!-- Plotly chart will be drawn inside this DIV --></div>
-<script> <!-- Display Job Results -->
-        <!-- Ready data for Plotly -->
-        var data = readSnap();
 
-        <!-- Draw Results -->
+<script>
+        //take in form data
+        document.getElementById("jobname").innerHTML = jname;
+        document.getElementById("jobid").innerHTML = jid;
+
+        //reference database at job-parent node
+        var db = firebase.database().ref(id);
+        //retrieve results and store as a JSON
+        var jobstr = db.once('value').val();
+        var jobob = JSON.parse(jobstr);
+        //sort data in job JSON
+        var kingdom = [];
+        var species = [];
+        var tax = [];
+        var accession = [];
+        var gene = [];
+        var hitCount = [];
+        var hitInfo = [];
+        //get top-level keys for each entry (kingdom) and length for loop
+        kingdom = Object.keys(jobob);
+        var numEntry = kingdom.length();
+        for (i=0; i < numEntry; i++) {
+            species.push(Object.keys(jobob[i]));
+            tax.push(Object.keys(jobob[i][i]));
+            accession.push(Object.keys(jobob[i][i][i]));
+            gene.push(Object.keys(jobob[i][i][i][i]));
+            //at cell level
+            hitCount.push(jobob[i][i][i][i]["Hit Count"]);
+            hitInfo.push(jobob[i][i][i][i]);
+        }
+
+        //Ready data for Plotly
+        var data = [
+        {
+          z: hitCount,
+          x: gene,
+          y: species,
+          type: 'heatmap',
+          showscale: true
+        }
+        ];
+
 
             var layout = {
                 title: 'GeneSpot Results',

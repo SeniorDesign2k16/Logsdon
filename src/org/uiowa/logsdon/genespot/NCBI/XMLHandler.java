@@ -121,15 +121,17 @@ public class XMLHandler extends DefaultHandler {
 		case "Hsp_hit-frame":
 			Hsp_hit_frame_Found = false;
 
+			/*
 			// first hit added
 			if (currentGene.getHits().length == 0) {
-				System.out.println("Here1 (should only see this one)");
+				//System.out.println("Here1 (should only see this one)");
 				currentGene.addHit(new Hit(id, from, to));
 			}
 
 			else {
 				currentGene.compareHits(new Hit(id, from, to));
 			}
+			*/
 
 			break;
 		}

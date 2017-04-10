@@ -31,13 +31,20 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
-import org.uiowa.logsdon.genespot.NCBI.MakeRequest;
-
 @Path("/GeneSpot")
 public class GeneSpotAnalysis {
+
+	//create genome objects and add them to an array list
+	//create job object
+	//create jobHandler object
+	//submit job object to jobHandler object method addJob
+	//done
+
 	@POST
 	public String Genespot(@FormParam("inputArray[]") List<String> datalist)
+
 			throws UnsupportedEncodingException, FileNotFoundException {
+		/*
 		// [JobName,geneNmae, sequences,evalue,kingdom, subtype, (need genome), assembly level]
 		String[] inputs = datalist.toArray(new String[0]);
 		String jobName = inputs[0];
@@ -59,18 +66,10 @@ public class GeneSpotAnalysis {
 		double evalue = Double.parseDouble(evaluestring);
 		String[] queriesTotal = sequences.split("\n");
 		// System.out.println(queriesTotal[0]);
-		int n = 0;
-		if (queriesTotal.length > 30) {
-			n = 31;
-		} else {
-			n = queriesTotal.length;
-		}
-		System.out.print(n);
 		ProteinQuery[] queries = new ProteinQuery[queriesTotal.length];
 		// giant loop for counter
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < queriesTotal.length - 1; i++) {
 			String[] sequence = queriesTotal[i].split("[|]");
-			System.out.println(sequence[1]);
 			queries[i] = new ProteinQuery(sequence[1]);
 
 		}
@@ -98,5 +97,7 @@ public class GeneSpotAnalysis {
 
 		return jobName;
 
+		*/
+		return null;
 	}
 }
