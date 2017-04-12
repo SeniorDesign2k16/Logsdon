@@ -3,81 +3,117 @@
 <html>
 <head>
     <title>GeneSpot Results</title>
+
+    <script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCvLxY6fjWaS2BNaYjsVlFoj-368w8V-1s",
+            authDomain: "thegenespot-efb8a.firebaseapp.com",
+            databaseURL: "https://thegenespot-efb8a.firebaseio.com",
+            projectId: "thegenespot-efb8a",
+            storageBucket: "thegenespot-efb8a.appspot.com",
+            messagingSenderId: "139442074898"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <!-- Hosted GeneSpot JS files -->
     <script src="results.js"></script>
+    <script src="resultsCookies.js"></script>
     <!-- Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 
 <body>
-<h4>GeneSpot Results for: </h4>
-<p>Job Name: <span id="jobname"></span></p>
-<p>Job ID: <span id="jobid"></span></p>
+<!-- Generic GeneSpot Header -->
+<div style="text-align: center" id="project-header">
+    <img src="evolution.jpg" alt="Evolution" style="width: 300px; height: 150px;">
+    <h1>The GeneSpot</h1>
+    <p><i>Bioinformatics and Evolutionary Biology Tool </i></p>
+    <br>
+    <br />
+</div>
 
-<div id="resultTable"><!-- Plotly chart will be drawn inside this DIV --></div>
+<!-- Display Job Info -->
+<h2>GeneSpot Alignment and Scoring Results for Job: <span id="insertjn"></span></h2>
 
 <script>
-        //take in form data
-        document.getElementById("jobname").innerHTML = jname;
-        document.getElementById("jobid").innerHTML = jid;
+    //grab and display Job Name
+    var jname = getCookie("cJobName");
+    document.getElementById("insertjn").innerHTML = jname;
 
-        //reference database at job-parent node
-        var db = firebase.database().ref(id);
-        //retrieve results and store as a JSON
-        var jobstr = db.once('value').val();
-        var jobob = JSON.parse(jobstr);
-        //sort data in job JSON
-        var kingdom = [];
-        var species = [];
-        var tax = [];
-        var accession = [];
-        var gene = [];
-        var hitCount = [];
-        var hitInfo = [];
-        //get top-level keys for each entry (kingdom) and length for loop
-        kingdom = Object.keys(jobob);
-        var numEntry = kingdom.length();
-        for (i=0; i < numEntry; i++) {
-            species.push(Object.keys(jobob[i]));
-            tax.push(Object.keys(jobob[i][i]));
-            accession.push(Object.keys(jobob[i][i][i]));
-            gene.push(Object.keys(jobob[i][i][i][i]));
-            //at cell level
-            hitCount.push(jobob[i][i][i][i]["Hit Count"]);
-            hitInfo.push(jobob[i][i][i][i]);
+    //use Job Name to reference database at job-parent node
+    var db = firebase.database().ref(jname);
+    //retrieve results and store in JSON string (jobstr)
+    var jobstr = db.once('value').val();
+    //parse JSON string into Java object (jobob)
+    var jobob = JSON.parse(jobstr);
+
+    //sort through Java Object to ready arrays for Plotly (and compartmentalize for onhover's, etc.)
+    //TODO: clean this mess up if possible (hoping prototype class will aid greatly in this)
+    // declare arrays to use for plotly data construction
+    var kingdom = [];
+    var species = [];
+    var tax = [];
+    var accession = [];
+    var genes = [];
+    var hitCount = [];
+    var hitInfo = [];
+
+    //get key-list from jobob
+    genes.push(Object.keys(jobob));     //add in `.hasOwnProperty()` check ??
+    var numCol = genes.length;
+
+</script>
+
+
+<!-- Job data readied for Visualization -->
+<div id="resultTable">
+    <!-- Plotly chart will be drawn inside this DIV -->
+</div>
+
+
+
+
+<script>
+    // HARD-CODED TEST DATA
+    //----------------------
+    hitCount = [[2, 1],[7, 5]];
+    var gene = ['Rad51', 'Dmc1'];
+    species = ['Mus', 'Fish'];
+    //---------------------
+    // HARD-CODED TEST DATA
+
+    //Ready data for Plotly
+    var data = {
+      z: hitCount,
+      x: gene,
+      y: species,
+      type: 'heatmap',
+      showscale: true
+    };
+
+    //Configure plot/table layout
+    var layout = {
+        title: "Results for :"+jname,
+        font: {
+            family: 'Arial',
+            size: 18
+        },
+        annotations: [],
+        xaxis: {
+          ticks: '',
+          side: 'top'
+        },
+        yaxis: {
+          ticks: '',
+          ticksuffix: ' '
         }
+      };
 
-        //Ready data for Plotly
-        var data = [
-        {
-          z: hitCount,
-          x: gene,
-          y: species,
-          type: 'heatmap',
-          showscale: true
-        }
-        ];
-
-
-            var layout = {
-                title: 'GeneSpot Results',
-                font: {
-                    family: 'Arial',
-                    size: 18
-                },
-                annotations: [],
-                xaxis: {
-                  ticks: '',
-                  side: 'top'
-                },
-                yaxis: {
-                  ticks: '',
-                  ticksuffix: ' '
-                }
-              };
-
-        // draw resultTable
-        Plotly.newPlot('resultTable', data, layout);
-        </script>
+    // draw resultTable
+    Plotly.newPlot('resultTable', data, layout);
+</script>
 
 </body>
 </html>

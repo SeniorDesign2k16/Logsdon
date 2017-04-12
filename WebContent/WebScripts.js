@@ -64,20 +64,6 @@ function callGeneSpotService(inputArray)
 }
 
 
-function getResults()
-{
-    //get jobID from user
-    var jobID = document.getElementById('jobId');
-
-    //Reference firebase database
-    var db = firebase.database();
-
-    //Attach listener at job node
-    var results = firebase.database().ref(jobID);
-    results.on('value', function(snapshot) {
-      updateResults(jobId, snapshot.val());
-    });
-}
 function readSingleFile(e) {
 	  var file = e.target.files[0];
 	  if (!file) {
