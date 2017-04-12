@@ -9,10 +9,11 @@ package org.uiowa.logsdon.genespot.JobInformation;
 
 import java.util.ArrayList;
 
-public class Gene {
+public abstract class Gene {
 
 	private final String geneName;
 	private final ProteinQuery[] proteinQueries;
+	private final int queryCount;
 
 	private ArrayList<Hit> hits;
 
@@ -20,6 +21,7 @@ public class Gene {
 
 		this.geneName = geneName;
 		this.proteinQueries = proteinQueries;
+		this.queryCount = proteinQueries.length;
 	}
 
 	public String getName() {
@@ -41,5 +43,13 @@ public class Gene {
 
 		return hits.toArray(new Hit[0]);
 
+	}
+
+	public String getGeneName() {
+		return geneName;
+	}
+
+	public int getQueryCount() {
+		return queryCount;
 	}
 }

@@ -117,7 +117,7 @@
 
 <p>
 	Search for Genome Assembly: <input type="text"
-		name="Genome Assembly Search" id="genome_assembly_search">
+		name="Genome Assembly Search" id="genome_assembly_search" placeholder="Organism name or taxid...">
 </p>
 <!-- defaulting for now" -->
 <p></p>
@@ -128,6 +128,19 @@
 <input type="submit" onclick="javascript:initialize();" />
 <br />
 <hr>
+<!-- search bar stuff: works with jobSubmission2.css (in theory...maybe?) -->
+<section class="main">
+	<form class="search" method="post" action="index.html" >
+		<input type="text" name="q" placeholder="Search..." />
+		<ul class="results" >
+			<li><a href="index.html">Search Result #1<br /><span>Description...</span></a></li>
+			<li><a href="index.html">Search Result #2<br /><span>Description...</span></a></li>
+			<li><a href="index.html">Search Result #3<br /><span>Description...</span></a></li>
+			<li><a href="index.html">Search Result #4</a></li>
+		</ul>
+	</form>
+</section>
+
 <p>
 	<a href="about.html">About</a> | <a href="resultsPage.html">Get
 		Results</a>

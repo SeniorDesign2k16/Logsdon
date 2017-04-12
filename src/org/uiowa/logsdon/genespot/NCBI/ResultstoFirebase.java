@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class ResultstoFirebase {
+
 	DatabaseReference Genespot;
 
 	public void SendtoGenespot(String jobName, Genome currentGenome, Gene currentGene) throws FileNotFoundException {
@@ -31,9 +32,20 @@ public class ResultstoFirebase {
 		Genespot = FirebaseDatabase.getInstance().getReference();
 		// loop through with results from genome class
 
-		DatabaseReference cellref = Genespot.child(jobName).child(currentGenome.getKingdom())
+		//JobName
+			//GeneName
+				//Kingdom
+					//subtype
+						//taxID
+							//assembly Number 1
+									//Hits : {{sequence, score}}
+							//assembly Number 2
+									//Hits : {{sequence, score}}
+
+		DatabaseReference cellref = Genespot.child(jobName).child(currentGene.getName()).child(currentGenome.getKingdom())
 				.child(currentGenome.getSubType()).child(currentGenome.getTaxID())
-				.child(currentGenome.getGenome().replace('.', '_')).child(currentGene.getName());
+				.child(currentGenome.getGenome().replace('.', '_'));
+
 
 		Hit[] hits = currentGene.getHits();
 

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class MakeRequestNonBiojava {
 
     private static final String newline = "%0D%0A";
-    private String QUERIES;
+    private String QUERIES = "";
     private String DATABASE = "genomic/";
     private Genome genome;
 
@@ -43,13 +43,14 @@ public class MakeRequestNonBiojava {
 
                 if(i != proteinQueries.length - 1){
 
-                    QUERIES+=(proteinQueries[i]+newline);
+
+                    QUERIES+=(proteinQueries[i].getQueryID()+newline);
 
                 }
 
                 else{
 
-                    QUERIES+=proteinQueries[i];
+                    QUERIES+=proteinQueries[i].getQueryID();
                 }
 
 
@@ -69,6 +70,8 @@ public class MakeRequestNonBiojava {
             Document doc2 = Jsoup.connect("https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Get&RID="+rid+"&FORMAT_TYPE=xml").get();
             //Document doc2 = Jsoup.connect("https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Get&RID=DWZZJM4G016&FORMAT_TYPE=xml" + id).get();
 
+            //System.out.println(doc2);
+
             try{
 
                 //waiting for job to complete
@@ -80,6 +83,7 @@ public class MakeRequestNonBiojava {
                     //doc2 = Jsoup.connect("https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Get&RID=DWZZJM4G016&FORMAT_TYPE=xml").get();
 
                     doc2 = Jsoup.connect("https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Get&RID="+rid+"&FORMAT_TYPE=xml").get();
+                    //System.out.println(doc2);
                 }
 
             }

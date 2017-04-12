@@ -17,9 +17,8 @@ function displayContents(contents) {
     
   console.log("-------Sequences in file-------");
     
-  var element = document.getElementById('fasta_text_area'+ window.counter);
-    
-    counter++;
+  var element = document.getElementById('fasta_text_area'+counter);
+ // alert(counter+"Fasta");
 
   var hold = [];
   var ids = "";
@@ -81,15 +80,14 @@ function displayContents(contents) {
       }
 
       console.log(ids);
-      element.innerHTML = ids;   
+      element.innerHTML = ids; 
+      counter=counter+1;
   }
 }
 
 window.onload = function(){
     
-
-    var el = document.getElementById("file-input")
-
+    var el = document.getElementById("file-input");
     
     if(el){
         addEventListener("change", readSingleFile, false);

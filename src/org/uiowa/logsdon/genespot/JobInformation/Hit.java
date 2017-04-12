@@ -1,7 +1,9 @@
 package org.uiowa.logsdon.genespot.JobInformation;
 
 import javax.swing.text.html.HTMLDocument;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 /*
@@ -131,6 +133,12 @@ public class Hit{
 
 	public void setHitFrom(int hitFrom) {
 		this.hitFrom = hitFrom;
+	}
+
+	public String getScoreSequenceString(){
+
+		return Arrays.toString(this.scoreSequence);
+
 	}
 
 	public void setSequence(String sequence) {
