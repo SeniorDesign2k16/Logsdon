@@ -7,15 +7,7 @@
     <script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
     <script>
         // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyCvLxY6fjWaS2BNaYjsVlFoj-368w8V-1s",
-            authDomain: "thegenespot-efb8a.firebaseapp.com",
-            databaseURL: "https://thegenespot-efb8a.firebaseio.com",
-            projectId: "thegenespot-efb8a",
-            storageBucket: "thegenespot-efb8a.appspot.com",
-            messagingSenderId: "139442074898"
-        };
-        firebase.initializeApp(config);
+
     </script>
     <!-- Hosted GeneSpot JS files -->
     <script src="results.js"></script>
@@ -38,14 +30,69 @@
 <h2>GeneSpot Alignment and Scoring Results for Job: <span id="insertjn"></span></h2>
 
 <script>
+
     //grab and display Job Name
     var jname = getCookie("cJobName");
     document.getElementById("insertjn").innerHTML = jname;
 
-    //use Job Name to reference database at job-parent node
-    var db = firebase.database().ref(jname);
+    var config = {
+        apiKey: "AIzaSyCvLxY6fjWaS2BNaYjsVlFoj-368w8V-1s",
+        authDomain: "thegenespot-efb8a.firebaseapp.com/",
+        databaseURL: "https://thegenespot-efb8a.firebaseio.com",
+        projectId: "thegenespot-efb8a",
+        storageBucket: "thegenespot-efb8a.appspot.com",
+        //messagingSenderId: "139442074898"
+    };
+
+    firebase.initializeApp(config);
+
+    //job name needs to come in and go in .ref(" ")
+    var node = firebase.database().ref('acward');
+
+    //this works for getting data - idk how to parse
+    var value = node.once('value').then(function(snapshot){
+        var object = snapshot.val();
+        snapshot.forEach(function (geneLevel) {
+
+            console.log(geneLevel.val());
+            console.log(geneLevel.key);
+
+            geneLevel.forEach(function (kingdomLevel){
+
+                console.log(kingdomLevel.val());
+
+                kingdomLevel.forEach(function (typeLevel){
+
+                    console.log(typeLevel.val());
+
+                    typeLevel.forEach(function(idLevel){
+
+                        console.log(idLevel.val())
+
+                        idLevel.forEach(function (assemblyLevel) {
+
+                            console.log(assemblyLevel.val());
+
+                            assemblyLevel.forEach(function (hitLevel){
+
+                                console.log(hitLevel.val());
+
+                            });
+
+                        });
+
+                    });
+
+                });
+
+            });
+        });
+    });
+
+
+
     //retrieve results and store in JSON string (jobstr)
-    var jobstr = db.once('value').val();
+    //var jobstr = db.once('value').val();
     //parse JSON string into Java object (jobob)
     var jobob = JSON.parse(jobstr);
 
@@ -110,9 +157,11 @@
           ticksuffix: ' '
         }
       };
-
     // draw resultTable
     Plotly.newPlot('resultTable', data, layout);
+
+
+
 </script>
 
 </body>
