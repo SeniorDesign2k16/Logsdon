@@ -3,12 +3,8 @@
 <html>
 <head>
     <title>GeneSpot Results</title>
-
+    <!-- firebase.js -->
     <script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
-    <script>
-        // Initialize Firebase
-
-    </script>
     <!-- Hosted GeneSpot JS files -->
     <script src="results.js"></script>
     <script src="resultsCookies.js"></script>
@@ -29,120 +25,199 @@
 <!-- Display Job Info -->
 <h2>GeneSpot Alignment and Scoring Results for Job: <span id="insertjn"></span></h2>
 
-<script>
+<div id="resultTable">
+    <!-- Plotly chart will be drawn inside this DIV -->
+</div>
 
-    //grab and display Job Name
+<div id="testarea"></div>
+<div id="testarea1"></div>
+<br />
+<br />
+<div id="testarea2"></div>
+
+<script>
+    //store jobname locally to insert into html and use as reference in firebase
     var jname = getCookie("cJobName");
     document.getElementById("insertjn").innerHTML = jname;
 
+    //configure connection to firebase
     var config = {
         apiKey: "AIzaSyCvLxY6fjWaS2BNaYjsVlFoj-368w8V-1s",
         authDomain: "thegenespot-efb8a.firebaseapp.com/",
         databaseURL: "https://thegenespot-efb8a.firebaseio.com",
         projectId: "thegenespot-efb8a",
-        storageBucket: "thegenespot-efb8a.appspot.com",
+        storageBucket: "thegenespot-efb8a.appspot.com"
         //messagingSenderId: "139442074898"
     };
+    firebase.initializeApp(config); //connect web app to database
 
-    firebase.initializeApp(config);
+    //test for localStorage availability and access
+    if (storageAvailable('localStorage')) {
+        // Yippee! We can use localStorage awesomeness
+    }
+    else if (storageAvailable('sessionStorage')) {
+        // okay
+        alert("Session storage is erased when the window is closed.");
+    }
+    else {
+        alert("Either your browser is outdated, or something is blocking us from delivering your job info :(");
+    }
 
-    //job name needs to come in and go in .ref(" ")
-    var node = firebase.database().ref('acward');
+    // declare arrays to use for plotly data construction
+    var genes = [];
+    var kingdom = [];
+    var species = [];
+    var subtype = [];
+    var tax = [];
+    var assembly = [];
+    var hitCount = [];
+    var hitInfo = [];
 
+    //reference job parent node
+    var node = firebase.database().ref(jname);
+
+    //counters
+    var gcount = 0;
+    assemblyCount = 0;
     //this works for getting data - idk how to parse
     var value = node.once('value').then(function(snapshot){
         var object = snapshot.val();
         snapshot.forEach(function (geneLevel) {
 
-            console.log(geneLevel.val());
-            console.log(geneLevel.key);
+            //console.log(geneLevel.key);
+            var tg = geneLevel.key;
 
             geneLevel.forEach(function (kingdomLevel){
 
-                console.log(kingdomLevel.val());
+                //console.log(kingdomLevel.val());
+                //kingdom.push(kingdomLevel.key);
+                var tk = kingdomLevel.key;
 
                 kingdomLevel.forEach(function (typeLevel){
 
-                    console.log(typeLevel.val());
+                    //subtype.push(typeLevel.key);
+                    //console.log(typeLevel.val());
+                    var tt = typeLevel.key;
 
                     typeLevel.forEach(function(idLevel){
 
-                        console.log(idLevel.val())
+                        //tax.push(idLevel.key);
+                        //console.log(idLevel.val());
+                        var ti = idLevel.key;
 
                         idLevel.forEach(function (assemblyLevel) {
 
-                            console.log(assemblyLevel.val());
-
+                            //assembly.push(assemblyLevel.key);
+                            //console.log(assemblyLevel.val());
+                            var ta = assemblyLevel.key;
+                            var tha = [];
+                            //var thc = assemblyLevel.numChildren();
                             assemblyLevel.forEach(function (hitLevel){
 
-                                console.log(hitLevel.val());
+                                //hitInfo.push(hitLevel.val());
+                                //console.log(hitLevel.val());
+                                //var th = new HitInformation(hitLevel.val());
+                                tha.push(hitLevel.val());
 
-                            });
-
-                        });
-
+                            }); // END HIT LEVEL
+                            var th = new HitInformation(tha);
+                            var tgi = new CellInformation(tg,tk,tt,ti,ta,th);
+                            console.log(tgi);
+                            //store in local
+                            localStorage.setItem(assemblyCount.toString(),JSON.stringify(tgi));
+                        }); // END ASSEMBLY LEVEL
+                        //increment assembly counter
+                        assemblyCount++;
                     });
-
                 });
-
             });
-        });
+
+            //store job info in localStorage with parallel geneName index
+            var gn = geneLevel.key;
+            genes.push(gn.toString());
+            var gc = "g"+gcount.toString();
+            //index gene names in localStorage, then store info
+            localStorage.setItem(gc,gn);
+            var gi = JSON.stringify(geneLevel.val());
+            localStorage.setItem(gn,gi); // all info concerning gene saved here in JSON
+            //increment counter
+            gcount++;
+        }); //end of snapshot.forEach gene
     });
 
+    var count = 0;
+    //parse data gene by gene (col by col) for plotly
+    //for(count=0; count<gcount; count++){
+        var gindex = localStorage.getItem("g"+count.toString()); //get indexed gene name
+        var gstring = localStorage.getItem(gindex); //use gene name to get info from localStorage
+        //parse gstring
+        var gob = JSON.parse(gstring); //references db (inner values not evaluated)
 
+    //try to force evaluation..
+    /*geneInfo = [];
+        for(elem in gob){
+            if(Object.hasOwnProperty(elem)) {
+                geneInfo.push(Object.keys(elem));
+            } else {
+                hitInfo.push(elem);
+            }
+        }
+    */
+    //} // end for loop through genes
 
-    //retrieve results and store in JSON string (jobstr)
-    //var jobstr = db.once('value').val();
-    //parse JSON string into Java object (jobob)
-    var jobob = JSON.parse(jobstr);
+    //console.log(gstring);
+    //var gob = JSON.parse(gstring);
+    //console.log(gob);
 
-    //sort through Java Object to ready arrays for Plotly (and compartmentalize for onhover's, etc.)
-    //TODO: clean this mess up if possible (hoping prototype class will aid greatly in this)
-    // declare arrays to use for plotly data construction
-    var kingdom = [];
-    var species = [];
-    var tax = [];
-    var accession = [];
-    var genes = [];
-    var hitCount = [];
-    var hitInfo = [];
-
-    //get key-list from jobob
-    genes.push(Object.keys(jobob));     //add in `.hasOwnProperty()` check ??
-    var numCol = genes.length;
+    document.getElementById("testarea2").innerHTML = "gstring from localStorage: "+gstring;
+    // --- by assembly below is better ---
+    document.getElementById("testarea1").innerHTML = "GeneName from localStorage: "+gindex.toString()+"... ... counter: "+count.toString();
+    var temp = localStorage.getItem("0");//will be a loop through assemblyCount
+    var tempit = JSON.parse(temp);
+    console.log(tempit);
+    document.getElementById("testarea").innerHTML = "AssemblyLevel Info reconstructed from localStorage string into key-value object: Type: "+tempit['subtype']+"... ... ...Assembly: "+tempit['assembly']+"";
 
 </script>
 
-
-<!-- Job data readied for Visualization -->
-<div id="resultTable">
-    <!-- Plotly chart will be drawn inside this DIV -->
-</div>
-
-
-
+<!-- Draw Plot: -->
 
 <script>
+
     // HARD-CODED TEST DATA
     //----------------------
     hitCount = [[2, 1],[7, 5]];
     var gene = ['Rad51', 'Dmc1'];
     species = ['Mus', 'Fish'];
     //---------------------
-    // HARD-CODED TEST DATA
 
-    //Ready data for Plotly
-    var data = {
+    //TODO: scale cell-info-building for multiple db entries and polish construction for plotly
+    //console.log(tempit['hitInfo']['hitAmal'][0]['max']);
+    //console.log(tempit['subtype']);
+    //build data for plotly
+    var maxScores, gNames, orgNames = [];
+    maxScores = [Number(tempit['hitInfo']['hitAmal'][0]['max'])];
+    gNames = tempit['geneName'];
+    orgNames = tempit['kingdom']+": "+tempit['subtype'];
+    //insert data
+    var data = [{
+        z: maxScores,
+        x: gNames,
+        y: orgNames,
+        type: 'heatmap',
+        showscale: true
+    }];
+
+    var data = [{
       z: hitCount,
       x: gene,
       y: species,
       type: 'heatmap',
       showscale: true
-    };
+    }];
 
     //Configure plot/table layout
     var layout = {
-        title: "Results for :"+jname,
+        title: '"'+jname.toString()+'" GeneSpot Results',
         font: {
             family: 'Arial',
             size: 18
@@ -157,10 +232,9 @@
           ticksuffix: ' '
         }
       };
+
     // draw resultTable
     Plotly.newPlot('resultTable', data, layout);
-
-
 
 </script>
 

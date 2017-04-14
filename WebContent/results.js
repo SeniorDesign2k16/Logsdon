@@ -99,17 +99,70 @@ function readCookies() {
 */
 
 
-/* ------------------------------------------------------------------
- * Stop eating cookies -- this is the important stuff:
- * ------------------------------------------------------------------*/
-function fetchJobInfo(jname){
-    //reference database at job-parent node
-    var db = firebase.database().ref(jname);
-    //retrieve results and store in JSON
-    var jobstr = db.once('value').val();
-    //parse job into Java object
-    var jobob = JSON.parse(jobstr);
+/**
+ * storageAvailable(type)
+ * Checks to ensure local/session storage is both supported and available
+ * source: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+ *
+ * @param type
+ * @returns {boolean}
+ */
+function storageAvailable(type) {
+    try {
+        var storage = window[type],
+            x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return false;
+    }
+}
 
-    //TODO: explore possible avenues with local/session storage || build a prototype analysis class to alleviate traversal issues
+/**
+ * parse out hit info into java object with key-value pairs for all info
+ * @constructor
+ */
+function HitInformation(info){
+    this.hitCount = info.shift();
+    this.hitAmal = [];
+    for(i=0;i<info.length;i++) {
+        this.hitAmal.push(new DetailedHitInformation(info[i])); //use DHI
+    }
+    //use average of max score of hits for heatmap?
+}
 
+/**
+ *
+ * @param input
+ * @constructor
+ */
+function DetailedHitInformation(input){
+    var hitsplit = input.split("|");
+    this.sequence = hitsplit[0];
+    this.max = hitsplit[1];
+    this.scores = hitsplit[2];
+}
+
+/**
+ * store keys from db as values
+ * @constructor
+ */
+function CellInformation(tg, tk, tt, ti, ta, th) {
+    this.geneName = tg;
+    this.kingdom = tk;
+    this.subtype = tt;
+    this.taxid = ti;
+    this.assembly = ta;
+    this.hitInfo = th;
+}
+
+
+
+
+
+
+function printInfo(val){
+    console.log(val);
 }
