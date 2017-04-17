@@ -126,9 +126,9 @@ function storageAvailable(type) {
  */
 function HitInformation(info){
     this.hitCount = info.shift();
-    this.hitAmal = [];
+    this.hitSeq = [];
     for(i=0;i<info.length;i++) {
-        this.hitAmal.push(new DetailedHitInformation(info[i])); //use DHI
+        this.hitSeq.push(new DetailedHitInformation(info[i])); //use DHI
     }
     //use average of max score of hits for heatmap?
 }
@@ -159,10 +159,19 @@ function CellInformation(tg, tk, tt, ti, ta, th) {
 }
 
 
+function cellBuild(jobString){
+    var jobObject = JSON.parse(jobString);
+}
 
 
 
 
+
+
+
+
+/*
 function printInfo(val){
     console.log(val);
 }
+*/

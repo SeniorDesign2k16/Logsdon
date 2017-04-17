@@ -63,125 +63,91 @@
         alert("Either your browser is outdated, or something is blocking us from delivering your job info :(");
     }
 
-    // declare arrays to use for plotly data construction
-    var genes = [];
-    var kingdom = [];
-    var species = [];
-    var subtype = [];
-    var tax = [];
-    var assembly = [];
-    var hitCount = [];
-    var hitInfo = [];
 
     //reference job parent node
     var node = firebase.database().ref(jname);
 
+    //establish variables
+    var jobInfoByGene = [];
+    var jobString = "";
     //counters
-    var gcount = 0;
-    assemblyCount = 0;
-    //this works for getting data - idk how to parse
-    var value = node.once('value').then(function(snapshot){
-        var object = snapshot.val();
+    //var gcount = 0;
+    var geneCount = 0;
+    var assemblyCount = 0;
+
+    var value = node.once('value').then(function(snapshot){     // value == Firebase 'Promise'
+        jobString = JSON.stringify(snapshot.toJSON());
+        //console.log(jobObject);
         snapshot.forEach(function (geneLevel) {
 
-            //console.log(geneLevel.key);
             var tg = geneLevel.key;
 
             geneLevel.forEach(function (kingdomLevel){
 
-                //console.log(kingdomLevel.val());
-                //kingdom.push(kingdomLevel.key);
                 var tk = kingdomLevel.key;
 
                 kingdomLevel.forEach(function (typeLevel){
 
-                    //subtype.push(typeLevel.key);
-                    //console.log(typeLevel.val());
                     var tt = typeLevel.key;
 
                     typeLevel.forEach(function(idLevel){
 
-                        //tax.push(idLevel.key);
-                        //console.log(idLevel.val());
                         var ti = idLevel.key;
 
                         idLevel.forEach(function (assemblyLevel) {
 
-                            //assembly.push(assemblyLevel.key);
-                            //console.log(assemblyLevel.val());
                             var ta = assemblyLevel.key;
                             var tha = [];
                             //var thc = assemblyLevel.numChildren();
                             assemblyLevel.forEach(function (hitLevel){
 
-                                //hitInfo.push(hitLevel.val());
-                                //console.log(hitLevel.val());
-                                //var th = new HitInformation(hitLevel.val());
                                 tha.push(hitLevel.val());
 
                             }); // END HIT LEVEL
+
                             var th = new HitInformation(tha);
                             var tgi = new CellInformation(tg,tk,tt,ti,ta,th);
-                            console.log(tgi);
-                            //store in local
-                            localStorage.setItem(assemblyCount.toString(),JSON.stringify(tgi));
+                            //console.log(tgi);
+                            var tempCell = JSON.stringify(tgi);
+                            //console.log(tempCell);
+
+                            //reference global jobInfoByGene array
+                            jobInfoByGene.push(tempCell);
+                            //currently pushing to local array
+
+                            /*
+                            var jobArrayRef = window.jobInfoByGene;
+                            if ((jobArrayRef.length) !== 0){
+                                window.jobInfoByGene.push(tempCell); // error caught in promise -- no 'push' firebase function
+                            } else {
+                                window.jobInfoByGene = tempCell;
+                            }
+                            */
+
+                            console.log("assemblyCount: "+assemblyCount);
+                            console.log(jobInfoByGene[assemblyCount]);
+
                         }); // END ASSEMBLY LEVEL
                         //increment assembly counter
                         assemblyCount++;
                     });
                 });
-            });
+            }); // END KINGDOM LEVEL
 
-            //store job info in localStorage with parallel geneName index
-            var gn = geneLevel.key;
-            genes.push(gn.toString());
-            var gc = "g"+gcount.toString();
-            //index gene names in localStorage, then store info
-            localStorage.setItem(gc,gn);
-            var gi = JSON.stringify(geneLevel.val());
-            localStorage.setItem(gn,gi); // all info concerning gene saved here in JSON
-            //increment counter
-            gcount++;
-        }); //end of snapshot.forEach gene
+            geneCount++;
+
+        }); // END of snapshot.forEach geneLevel
+
     });
 
-    var count = 0;
-    //parse data gene by gene (col by col) for plotly
-    //for(count=0; count<gcount; count++){
-        var gindex = localStorage.getItem("g"+count.toString()); //get indexed gene name
-        var gstring = localStorage.getItem(gindex); //use gene name to get info from localStorage
-        //parse gstring
-        var gob = JSON.parse(gstring); //references db (inner values not evaluated)
+    //TODO: fix hoisting of jobInfoByGene Array (line 114)
+    console.log("Global jobInfoByGene Array length: "+window.jobInfoByGene.length);
+    //for parsing here:
 
-    //try to force evaluation..
-    /*geneInfo = [];
-        for(elem in gob){
-            if(Object.hasOwnProperty(elem)) {
-                geneInfo.push(Object.keys(elem));
-            } else {
-                hitInfo.push(elem);
-            }
-        }
-    */
-    //} // end for loop through genes
+    //then complete functions pulling out values to plotly arrays
 
-    //console.log(gstring);
-    //var gob = JSON.parse(gstring);
-    //console.log(gob);
 
-    document.getElementById("testarea2").innerHTML = "gstring from localStorage: "+gstring;
-    // --- by assembly below is better ---
-    document.getElementById("testarea1").innerHTML = "GeneName from localStorage: "+gindex.toString()+"... ... counter: "+count.toString();
-    var temp = localStorage.getItem("0");//will be a loop through assemblyCount
-    var tempit = JSON.parse(temp);
-    console.log(tempit);
-    document.getElementById("testarea").innerHTML = "AssemblyLevel Info reconstructed from localStorage string into key-value object (see console): Type: "+tempit['subtype']+"... ... ...Assembly: "+tempit['assembly']+"";
-
-</script>
-
-<!-- Draw Plot: -->
-
-<script>
+    /* Draw Plot --- Draw Plot --- Draw Plot --- ------------------- --- Draw Plot --- Draw Plot --- Draw Plot */
 
     // HARD-CODED TEST DATA
     //----------------------
@@ -190,12 +156,11 @@
     species = ['Mus', 'Fish'];
     //---------------------
 
-    //TODO: scale cell-info-building for multiple db entries and polish construction for plotly
-    //console.log(tempit['hitInfo']['hitAmal'][0]['max']);
-    //console.log(tempit['subtype']);
+
     //build data for plotly
     var maxScores, gNames, orgNames = [];
-    maxScores = [Number(tempit['hitInfo']['hitAmal'][0]['max'])];
+
+/*    maxScores = [Number(tempit['hitInfo']['hitAmal'][0]['max'])];
     gNames = tempit['geneName'];
     orgNames = tempit['kingdom']+": "+tempit['subtype'];
     //insert data
@@ -206,7 +171,7 @@
         type: 'heatmap',
         showscale: true
     }];
-
+*/
     var data = [{
       z: hitCount,
       x: gene,
