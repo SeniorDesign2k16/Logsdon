@@ -60,7 +60,7 @@
         alert("Session storage is erased when the window is closed.");
     }
     else {
-        alert("Either your browser is outdated, or something is blocking us from delivering your job info :(");
+        alert("Either your browser is outdated, or something is blocking us from saving your job info :(");
     }
 
 
@@ -71,12 +71,12 @@
     var jobInfoByGene = [];
     var jobString = "";
     //counters
-    //var gcount = 0;
     var geneCount = 0;
     var assemblyCount = 0;
+    //may need to move into function? shouldn't matter if only used in snapshot function -> would be nice to use elsewhere
 
     var value = node.once('value').then(function(snapshot){     // value == Firebase 'Promise'
-        jobString = JSON.stringify(snapshot.toJSON());
+        jobString = JSON.stringify(snapshot.toJSON());      // jobString == JSON String of entire Job
         //console.log(jobObject);
         snapshot.forEach(function (geneLevel) {
 
@@ -109,6 +109,8 @@
                             var tgi = new CellInformation(tg,tk,tt,ti,ta,th);
                             //console.log(tgi);
                             var tempCell = JSON.stringify(tgi);
+                            // print internal cellInfo to console ----> want external
+                            //console.log(JSON.parse(tempCell));
                             //console.log(tempCell);
 
                             //reference global jobInfoByGene array
@@ -124,8 +126,9 @@
                             }
                             */
 
-                            console.log("assemblyCount: "+assemblyCount);
-                            console.log(jobInfoByGene[assemblyCount]);
+                            //console.log("assemblyCount: "+assemblyCount);
+                            console.log(JSON.parse(jobInfoByGene[assemblyCount]));  // local jobInfoByGene, local assemblyCount
+                            // remove JSON.parse here
 
                         }); // END ASSEMBLY LEVEL
                         //increment assembly counter
@@ -141,7 +144,7 @@
     });
 
     //TODO: fix hoisting of jobInfoByGene Array (line 114)
-    console.log("Global jobInfoByGene Array length: "+window.jobInfoByGene.length);
+    //console.log("Global jobInfoByGene Array length: "+window.jobInfoByGene.length);
     //for parsing here:
 
     //then complete functions pulling out values to plotly arrays
