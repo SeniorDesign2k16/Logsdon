@@ -1,8 +1,8 @@
 var counter = 1;
-var limit = 10;
+var limit = 24;
 function addInput(divName){
-     if (counter == limit)  {
-          alert("You have reached the limit of adding " + counter + " inputs");
+     if (document.getElementById(divName).childElementCount == limit)  {
+          alert("You have reached the limit of adding " + (document.getElementById(divName).childElementCount -14) + " inputs");
      }
      else {
           var newdiv = document.createElement('div');

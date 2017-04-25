@@ -4,14 +4,18 @@
 <head>
     <!--this style sheet was provided by: "http://tablestyler.com/#"-->
     <style>.datagrid table { border-collapse: collapse; text-align: left; width: 100%; } .datagrid {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 1px solid #36752D; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }.datagrid table td, .datagrid table th { padding: 3px 10px; }.datagrid table thead th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #36752D), color-stop(1, #275420) );background:-moz-linear-gradient( center top, #36752D 5%, #275420 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#36752D', endColorstr='#275420');background-color:#36752D; color:#FFFFFF; font-size: 15px; font-weight: bold; border-left: 1px solid #36752D; } .datagrid table thead th:first-child { border: none; }.datagrid table tbody td { color: #275420; border-left: 1px solid #C6FFC2;font-size: 12px;font-weight: normal; }.datagrid table tbody .alt td { background: #DFFFDE; color: #275420; }.datagrid table tbody td:first-child { border-left: none; }.datagrid table tbody tr:last-child td { border-bottom: none; }.datagrid table tfoot td div { border-top: 1px solid #36752D;background: #DFFFDE;} .datagrid table tfoot td { padding: 0; font-size: 12px } .datagrid table tfoot td div{ padding: 2px; }.datagrid table tfoot td ul { margin: 0; padding:0; list-style: none; text-align: right; }.datagrid table tfoot  li { display: inline; }.datagrid table tfoot li a { text-decoration: none; display: inline-block;  padding: 2px 8px; margin: 1px;color: #FFFFFF;border: 1px solid #36752D;-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #36752D), color-stop(1, #275420) );background:-moz-linear-gradient( center top, #36752D 5%, #275420 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#36752D', endColorstr='#275420');background-color:#36752D; }.datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { text-decoration: none;border-color: #275420; color: #FFFFFF; background: none; background-color:#36752D;}div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
-
-        
-        
-        
     </style>
-    
+    <!-- style for hit Class -->
+    <style>
+        span.hit {
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+    <!-- import javascript files -->
     <script src='https://code.jquery.com/jquery-2.1.1.js'></script>
     <script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
+    <script src="resultsEncode.js"></script>
     <script type="text/javascript">
             
         var node;
@@ -39,6 +43,7 @@
             
             var sequence = "";
             var scoreSequence;
+            var scoreArray = [];
             var maxScore = 0;
             
             var node = firebase.database().ref(jobName.concat("/").concat(address));
@@ -49,13 +54,37 @@
                     
                     var array = hit.val().split("|");
                     sequence = array[0];
-                    scoreSequence = array[2].replace("[", "").replace("]", "").replace(" ", "").split(",")
-                    
-                    document.getElementById("sequenceDisplay").innerHTML = document.getElementById("sequenceDisplay").innerHTML + ">" + sequence + "\n\n";
+                    scoreSequence = array[2].replace("[", "").replace("]", "").replace(" ", "").split(",");
+
+                    console.log(scoreSequence);
+                    //either traverse scoreSequence as is, or parse into single array
+                    //call parseSequence before writing to document:
+                    var classedSequence = parseSequence(sequence, scoreSequence);
+                    document.getElementById("sequenceDisplay").innerHTML = document.getElementById("sequenceDisplay").innerHTML + ">" + classedSequence + "\n\n";
                 })
             })
         }
-        
+
+        // identify and class hits within a requested alignment/sequence
+        function parseSequence(seq, scores){
+            // html string to be passed back and written:
+            var cSeq = "";
+            // split sequence into single character array
+            var charArray = seq.split();
+
+            for(var i=0; i<charArray.length; i++){
+                if(scores[i] == 1){
+                    var temp = htmlEncode("<span class='hit'>" + charArray[i] + "</span>");
+                    cSeq = cSeq.concat(temp);
+                }
+                else{
+                    cSeq = cSeq.concat(charArray[i]);
+                }
+            }
+            console.log(cSeq);
+            return cSeq;
+        }
+
         //makes table correctly -- need to work on have the color button change the background color of the cell
         function makeTable(){
             

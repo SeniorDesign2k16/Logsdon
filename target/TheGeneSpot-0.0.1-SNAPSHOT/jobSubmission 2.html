@@ -7,20 +7,6 @@
 .box__dragndrop, .box__uploading, .box__success, .box__error {
 	display: none;
 }
-
-#outer-container {
-	position: relative;
-}
-
-#scrollable {
-	overflow-y: auto;
-	/* Styles for your scrollable div here. */
-}
-
-#fixed-button {
-	position: absolute;
-	/* Left/right and top/bottom offsets etc. */
-}
 </style>
 
 <head>
@@ -52,6 +38,7 @@
 <p></p>
 
 <script src="addInput.js" language="JavaScript" type="text/javascript"></script>
+<script src="deleteInput.js" language="JavaScript" type="text/javascript"></script>
 <script src="searchFile.js" language="JavaScript" type="text/javascript"></script>
 
 <div id="dynamicInput">
@@ -78,6 +65,9 @@
     <p></p>
 
 </div>
+
+<input type="button" value="Delete gene"
+	   onClick="deleteInput('dynamicInput');">
 <input type="button" value="Add another gene"
 	onClick="addInput('dynamicInput');">
 
@@ -158,20 +148,9 @@
 <br />
 <hr>
 
-
 <p>
 	<a href="about.html">About</a> | <a href="resultsShowNew.html">Get
 		Results</a>
 </p>
-
-<div id="outer-container">
-	<div id="scrollable">
-		<!-- Scrollable content in here. -->
-		<button>b1</button>
-		<button>b2</button>
-	</div>
-	<button id="fixed-button">The button</button>
-</div>
-
 
 </html>

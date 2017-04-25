@@ -33,8 +33,8 @@ File Structure:
     KINGDOM[1]
     TYPE[2]
     ASSEMBLY[3]
-    LEVEL[4]
-    ID[5]
+    LEVEL[5]
+    ID[6]
  */
 
 public class UpdateGenomeDB {
@@ -67,8 +67,8 @@ public class UpdateGenomeDB {
                 String kingdom = lineArray[1];
                 String type = lineArray[2];
                 String assembly = lineArray[3].replace('.', 'v');
-                String level = lineArray[4];
-                String id = lineArray[5];
+                String level = lineArray[5];
+                String id = lineArray[6];
                 DatabaseReference Genespot = FirebaseDatabase.getInstance().getReference();
                 Genespot.child(kingdom).child(type).child(level).child(id).child(assembly).child("Species").setValue(species);
             }

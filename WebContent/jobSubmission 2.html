@@ -38,6 +38,7 @@
 <p></p>
 
 <script src="addInput.js" language="JavaScript" type="text/javascript"></script>
+<script src="deleteInput.js" language="JavaScript" type="text/javascript"></script>
 <script src="searchFile.js" language="JavaScript" type="text/javascript"></script>
 
 <div id="dynamicInput">
@@ -64,6 +65,9 @@
     <p></p>
 
 </div>
+
+<input type="button" value="Delete gene"
+	   onClick="deleteInput('dynamicInput');">
 <input type="button" value="Add another gene"
 	onClick="addInput('dynamicInput');">
 
@@ -143,7 +147,6 @@
 <input type="submit" onclick="javascript:initialize();" />
 <br />
 <hr>
-
 
 <p>
 	<a href="about.html">About</a> | <a href="resultsShowNew.html">Get

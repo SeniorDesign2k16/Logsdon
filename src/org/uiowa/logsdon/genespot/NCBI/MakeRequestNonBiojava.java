@@ -27,6 +27,9 @@ public class MakeRequestNonBiojava {
     //eventually will take in current genome and current gene
     public void makeRequestTBLASTN(Genome genome){
 
+        DATABASE = "genomic/";
+        QUERIES = "";
+
         SequenceRetrieval sequenceRetrieval = new SequenceRetrieval();
         DATABASE+=(genome.getTaxID()+"/" + genome.getAssembly());
         this.genome = genome;
