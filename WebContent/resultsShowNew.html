@@ -44,12 +44,22 @@
             var value = node.once('value').then(function(snapshot){
                 
                 snapshot.forEach(function(hit){
+                                        
+                    if(hit.key != "presence" && hit.key != "assembly"){
+                        
+                        var array = hit.val().split("|");
                     
-                    var array = hit.val().split("|");
-                    sequence = array[0];
-                    scoreSequence = array[2].replace("[", "").replace("]", "").replace(" ", "").split(",")
+                        sequence = array[0];
+                        scoreSequence = array[2];
+                        scoreSequence = scoreSequence.replace('[', '');
+                        scoreSequence = scoreSequence.replace(']', '');
+                        scoreSequence = scoreSequence.replace(' ', '');
+                        
+                        var scoreSequenceArray = scoreSequence.split(','); // <----- use this for coloring of squence
                     
-                    document.getElementById("sequenceDisplay").innerHTML = document.getElementById("sequenceDisplay").innerHTML + ">" + sequence + "\n\n";
+                        document.getElementById("sequenceDisplay").innerHTML = document.getElementById("sequenceDisplay").innerHTML + ">" + sequence + "\n\n";
+
+                    }
                 })
             })
         }
