@@ -19,9 +19,7 @@ public class ResultstoFirebase {
 	DatabaseReference Genespot;
 
 	public void SendtoGenespot(String jobName, Genome currentGenome, Gene currentGene) throws FileNotFoundException {
-		FileInputStream serviceAccount = new FileInputStream(ResultstoFirebase.class.getClassLoader()
-				.getResource("thegenespot-efb8a-firebase-adminsdk-1phn3-cbe3ab49a4.json").getPath()
-				.replaceAll("%20", " "));
+		FileInputStream serviceAccount = new FileInputStream("thegenespot-efb8a-firebase-adminsdk-1phn3-cbe3ab49a4.json");
 
 		FirebaseOptions options = new FirebaseOptions.Builder()
 				.setCredential(FirebaseCredentials.fromCertificate(serviceAccount))

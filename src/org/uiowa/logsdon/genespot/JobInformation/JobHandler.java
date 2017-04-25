@@ -52,7 +52,7 @@ public class JobHandler {
     private void submitGenome(Genome genome){
 
         System.out.println("Here2");
-        System.out.println(genome.getGenome());
+        System.out.println(genome.getAssembly());
         request.makeRequestTBLASTN(genome);
 
         //update GeneDatabase

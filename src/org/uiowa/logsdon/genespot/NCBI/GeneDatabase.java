@@ -24,7 +24,8 @@ public class GeneDatabase {
 
     public void update(String jobName, Genome currentGenome) throws FileNotFoundException {
 
-        FileInputStream serviceAccount = new FileInputStream(ResultstoFirebase.class.getClassLoader()
+        /*
+        FileInputStream serviceAccount = new FileInputStream(GeneDatabase.class.getClassLoader()
                 .getResource("thegenespot-efb8a-firebase-adminsdk-1phn3-cbe3ab49a4.json").getPath()
                 .replaceAll("%20", " "));
 
@@ -34,6 +35,23 @@ public class GeneDatabase {
 
         FirebaseApp.initializeApp(options);
 
+        Genespot = FirebaseDatabase.getInstance().getReference();
+
+        */
+
+        FileInputStream serviceAccount = new FileInputStream("/Users/austinward/TheGeneSpot_git/Logsdon/thegenespot-efb8a-firebase-adminsdk-1phn3-cbe3ab49a4.json");
+
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
+                .setDatabaseUrl("https://thegenespot-efb8a.firebaseio.com/").build();
+
+        try{
+
+            FirebaseApp.initializeApp(options);
+
+        }catch (IllegalStateException e){
+
+        }
 
         Genespot = FirebaseDatabase.getInstance().getReference();
         // loop through with results from genome class

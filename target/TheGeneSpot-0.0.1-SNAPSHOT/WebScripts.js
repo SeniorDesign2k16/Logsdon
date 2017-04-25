@@ -37,7 +37,22 @@ function initialize()
 
 	var gene = document.getElementById("gene_name").value;
 	var sequences =document.getElementById("fasta_text_area1").value;
-	//alert(sequences);
+
+	var i =3;
+	var j=3;
+	//alert(i+"i");
+	//alert(j+"j");
+	while(document.getElementById("gene_name"+i))
+	{
+		gene= gene +"%"+document.getElementById("gene_name"+i).value;
+		i=i+2;
+		//alert(i+"i");
+		sequences=sequences+"%"+document.getElementById("fasta_text_area"+(j)).value;
+		j=j+2;
+		//alert(j+"j");
+	}
+
+
 	
 	//[JobName, sequences,evalue,kingdom, subtype, (need genome), assembly level]
 	//var input = ["job","gene","17234",".00001","Animilia","fishes","GCA001.1","IDC"];
@@ -64,20 +79,6 @@ function callGeneSpotService(inputArray)
 }
 
 
-function getResults()
-{
-    //get jobID from user
-    var jobID = document.getElementById('jobId');
-
-    //Reference firebase database
-    var db = firebase.database();
-
-    //Attach listener at job node
-    var results = firebase.database().ref(jobID);
-    results.on('value', function(snapshot) {
-      updateResults(jobId, snapshot.val());
-    });
-}
 function readSingleFile(e) {
 	  var file = e.target.files[0];
 	  if (!file) {

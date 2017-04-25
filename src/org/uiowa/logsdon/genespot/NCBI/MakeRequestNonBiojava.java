@@ -28,7 +28,7 @@ public class MakeRequestNonBiojava {
     public void makeRequestTBLASTN(Genome genome){
 
         SequenceRetrieval sequenceRetrieval = new SequenceRetrieval();
-        DATABASE+=(genome.getTaxID()+"/" + genome.getGenome());
+        DATABASE+=(genome.getTaxID()+"/" + genome.getAssembly());
         this.genome = genome;
 
         ArrayList<Hit> hits = new ArrayList<>();
@@ -76,8 +76,7 @@ public class MakeRequestNonBiojava {
 
                 //waiting for job to complete
                 while(doc2.body().getElementById("statInfo").attr("class").equals("WAITING")){
-
-
+                    
                     Thread.sleep(60000);
 
                     //doc2 = Jsoup.connect("https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Get&RID=DWZZJM4G016&FORMAT_TYPE=xml").get();

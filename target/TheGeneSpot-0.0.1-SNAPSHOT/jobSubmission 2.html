@@ -1,10 +1,25 @@
-<!DOCTYPE>
-<html>
+<!DOCTYPE html>
+<html/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="WebScripts.js"></script>
+<script language="JavaScript" type="text/javascript" src="ajax.js"></script>
 <style>
 .box__dragndrop, .box__uploading, .box__success, .box__error {
 	display: none;
+}
+
+#outer-container {
+	position: relative;
+}
+
+#scrollable {
+	overflow-y: auto;
+	/* Styles for your scrollable div here. */
+}
+
+#fixed-button {
+	position: absolute;
+	/* Left/right and top/bottom offsets etc. */
 }
 </style>
 
@@ -37,6 +52,7 @@
 <p></p>
 
 <script src="addInput.js" language="JavaScript" type="text/javascript"></script>
+<script src="searchFile.js" language="JavaScript" type="text/javascript"></script>
 
 <div id="dynamicInput">
 	<p>Enter FASTA Protein Sequences for a Gene of Interest</p>
@@ -115,35 +131,47 @@
 	________________________________________________________________________________________________________
 </p>
 
-<p>
-	Search for Genome Assembly: <input type="text"
+<p></p>
+	<!--Search for Genome Assembly: <input type="search"
 		name="Genome Assembly Search" id="genome_assembly_search" placeholder="Organism name or taxid...">
-</p>
-<!-- defaulting for now" -->
-<p></p>
-<p></p>
+	<input type="button" value="Search" onclick="searchFile('genome_assembly_search')">-->
 
-<p></p>
+<!-- Testing search options -->
+
+<form>
+	<p>
+		<b>Organism Name or Taxid:</b> <input type="text" size="40" id="searchlive">
+	</p>
+
+	<div id="results">
+		<ul id="list">
+			<li>Results will display here</li>
+		</ul>
+	</div>
+</form>
+
+<script language="JavaScript" type="text/javascript" src="search.js"></script>
+
+<!-- End of testing search options -->
 <br />
 <input type="submit" onclick="javascript:initialize();" />
 <br />
 <hr>
-<!-- search bar stuff: works with jobSubmission2.css (in theory...maybe?) -->
-<section class="main">
-	<form class="search" method="post" action="index.html" >
-		<input type="text" name="q" placeholder="Search..." />
-		<ul class="results" >
-			<li><a href="index.html">Search Result #1<br /><span>Description...</span></a></li>
-			<li><a href="index.html">Search Result #2<br /><span>Description...</span></a></li>
-			<li><a href="index.html">Search Result #3<br /><span>Description...</span></a></li>
-			<li><a href="index.html">Search Result #4</a></li>
-		</ul>
-	</form>
-</section>
+
 
 <p>
-	<a href="about.html">About</a> | <a href="resultsPage.html">Get
+	<a href="about.html">About</a> | <a href="resultsShowNew.html">Get
 		Results</a>
 </p>
+
+<div id="outer-container">
+	<div id="scrollable">
+		<!-- Scrollable content in here. -->
+		<button>b1</button>
+		<button>b2</button>
+	</div>
+	<button id="fixed-button">The button</button>
+</div>
+
 
 </html>

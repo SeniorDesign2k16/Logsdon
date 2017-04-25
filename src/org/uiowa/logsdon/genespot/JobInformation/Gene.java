@@ -9,6 +9,7 @@ package org.uiowa.logsdon.genespot.JobInformation;
 
 import java.util.ArrayList;
 
+
 public abstract class Gene {
 
 	private final String geneName;

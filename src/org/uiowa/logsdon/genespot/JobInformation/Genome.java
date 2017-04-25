@@ -8,15 +8,15 @@ package org.uiowa.logsdon.genespot.JobInformation;/*
 
 public class Genome extends Gene{
 
-	// used for database structure
-	private final String genome; // assembly number
+	//Used for database structure
+	private final String genome;  // species name
 	private final String kingdom; // kingdom of organism
 	private final String subType; // type of organism
-	private final String taxID; // tax ID
+	private final String taxID;   //tax ID
 
-	private String assemblyType; // type of assembly -- scaffold, contig, or chromsome
+	private String assembly;  //
 
-	public Genome(String genome, String type, String subType, String assemblyType, String taxID,
+	public Genome(String genome, String type, String subType, String assembly, String taxID,
 			String geneName, ProteinQuery[] proteinQueries) {
 
 		super(geneName, proteinQueries);
@@ -24,9 +24,8 @@ public class Genome extends Gene{
 		this.genome = genome;
 		this.kingdom = type;
 		this.subType = subType;
-		this.assemblyType = assemblyType;
+		this.assembly = assembly;
 		this.taxID = taxID;
-
 	}
 
 	public String getGenome() {
@@ -44,9 +43,9 @@ public class Genome extends Gene{
 		return subType;
 	}
 
-	public String getAssemblyType() {
+	public String getAssembly() {
 
-		return assemblyType;
+		return assembly;
 	}
 
 	public String getTaxID() {
@@ -60,7 +59,7 @@ public class Genome extends Gene{
 		return String.format(
 				"Organism: %s\nTax ID: %s\nSubtype: %s\n\nAssembly: %s\nAssembly Type: %s\n\n"
 						+ "-------------------------------------\n",
-				taxID, kingdom, subType, genome, assemblyType);
+				taxID, kingdom, subType, genome, assembly);
 
 	}
 }
