@@ -52,6 +52,10 @@
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-core:1.19.3" />
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-servlet:1.19.3" />
           <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.9.1" />
+          <element id="library" level="project" name="Maven: com.firebase:firebase-client-jvm:2.2.4" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.2.2" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.2.2" />
+          <element id="library" level="project" name="Maven: com.firebase:tubesock:0.0.11" />
         </element>
       </element>
       <element id="directory" name="META-INF">
