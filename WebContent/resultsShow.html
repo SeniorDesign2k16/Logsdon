@@ -42,7 +42,7 @@
             document.getElementById("sequenceDisplay").innerHTML = address + "\n\n";
             
             var sequence = "";
-            var scoreSequence;
+            var scoreSequence = [];
             var scoreArray = [];
             var maxScore = 0;
             
@@ -51,15 +51,17 @@
             var value = node.once('value').then(function(snapshot){
                 
                 snapshot.forEach(function(hit){
-                    
+                    console.log(hit.val());
                     var array = hit.val().split("|");
                     sequence = array[0];
-                    scoreSequence = array[2].replace("[", "").replace("]", "").replace(" ", "").split(",");
+                    //console.log(scoreSequence);
+                    console.log(array[2]);
+                    scoreSequence = array[2];//.replace("[","").replace("]","").split("[, ]");
 
-                    console.log(scoreSequence);
+
                     //either traverse scoreSequence as is, or parse into single array
                     //call parseSequence before writing to document:
-                    var classedSequence = parseSequence(sequence, scoreSequence);
+                    var classedSequence = parseSequence(sequence, scoreSequence.split(", "));
                     document.getElementById("sequenceDisplay").innerHTML = document.getElementById("sequenceDisplay").innerHTML + ">" + classedSequence + "\n\n";
                 })
             })
