@@ -116,32 +116,6 @@
                         text.appendChild(ele);
                         var ele = document.createElement('br');
                         text.appendChild(ele);
-
-
-                        
-                        /*
-                        // split sequence into single character array
-                        var charArray = sequence.split("");
-                        // loop through each array, stylizing hits
-                        for(var i=0; i<(charArray.length); i++){
-                            if(scoreSequenceArray[i] != 0){
-                                var newSpan = document.createElement('span');
-                                newSpan.setAttribute('class', "hit");
-                                var nuc = document.createTextNode(charArray[i]);
-                                newSpan.appendChild(nuc);
-                                document.getElementById("sequenceDisplay").appendChild(nuc);
-                            }
-                            else{
-                                var singNuc = charArray[i];
-                                //console.log(nuc);
-                                document.getElementById("sequenceDisplay").innerHTML = document.getElementById("sequenceDisplay").innerHTML + singNuc;
-                            }
-                        }
-                        
-                        */
-
-                        document.getElementById("sequenceDisplay").innerHTML = document.getElementById("sequenceDisplay").innerHTML + "\n\n";
-
                     }
                 })
             })

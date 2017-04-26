@@ -1,4 +1,5 @@
 function readSingleFile(e) {
+
   var file = e.target.files[0];
   if (!file) {
     return;

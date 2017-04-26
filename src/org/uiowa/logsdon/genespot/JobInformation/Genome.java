@@ -14,17 +14,17 @@ public class Genome extends Gene{
 	private final String subType; // type of organism
 	private final String taxID;   //tax ID
 
-	private String assembly;  //
+	private String assembly;  //assembly number
 
 	public Genome(String genome, String type, String subType, String assembly, String taxID,
 			String geneName, ProteinQuery[] proteinQueries) {
 
 		super(geneName, proteinQueries);
 
-		this.genome = genome;
+		this.genome = genome.replace(".", "v");
 		this.kingdom = type;
 		this.subType = subType;
-		this.assembly = assembly;
+		this.assembly = assembly.replace(".", "v");
 		this.taxID = taxID;
 	}
 

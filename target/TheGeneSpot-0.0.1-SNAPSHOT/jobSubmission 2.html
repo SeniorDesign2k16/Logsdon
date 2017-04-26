@@ -1,20 +1,151 @@
 <!DOCTYPE html>
 <html/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
 <script type="text/javascript" src="WebScripts.js"></script>
 <script language="JavaScript" type="text/javascript" src="ajax.js"></script>
+<script src="addInput.js" language="JavaScript" type="text/javascript"></script>
+<script src="deleteInput.js" language="JavaScript" type="text/javascript"></script>
+<script type="text/javascript" src="ReadFile.js"></script>
+
+<script>
+    
+    function initializeDB(){
+            
+            //configure connection to firebase
+            var config = {
+                apiKey: "AIzaSyCvLxY6fjWaS2BNaYjsVlFoj-368w8V-1s",
+                authDomain: "thegenespot-efb8a.firebaseapp.com/",
+                databaseURL: "https://thegenespot-efb8a.firebaseio.com",
+                projectId: "thegenespot-efb8a",
+                storageBucket: "thegenespot-efb8a.appspot.com"
+                //messagingSenderId: "139442074898"
+            };
+            
+            firebase.initializeApp(config); //connect web app to database
+    }
+    
+    function makeTable(){
+
+    var selector = document.getElementById("select-kingdom");
+    var kingdom = selector.options[selector.selectedIndex].value;
+    console.log(kingdom);
+
+    if(kingdom == "Animals" || kingdom == "Other" || kingdom =="Protists" || kingdom == "Fungi" || kingdom == "Plants"){
+
+        var node = firebase.database().ref(kingdom);
+        var table = document.getElementById("genomeTable");
+        
+        var value = node.once('value').then(function(snapshot){
+            
+                snapshot.forEach(function(suptype){
+                    
+                    suptype.forEach(function(level){
+                                 
+                        level.forEach(function(taxId){
+                           
+                            taxId.forEach(function(assembly){
+                                
+                                assembly.forEach(function(species){
+                                    
+                                    var newRow = document.createElement('tr');
+                                    
+                                    var td1 = document.createElement('td');
+                                    var td2 = document.createElement('td');
+                                    var td3 = document.createElement('td');
+                                    var td4 = document.createElement('td');
+                                    var td5 = document.createElement('td');
+
+                                    var text1 = document.createTextNode(suptype.key);
+                                    var text2 = document.createTextNode(level.key);
+                                    var text3 = document.createTextNode(taxId.key);
+                                    var text4 = document.createTextNode(species.val());
+                                    
+                                    td1.appendChild(text4);
+                                    td2.appendChild(text1);
+                                    td3.appendChild(text3);
+                                    td4.appendChild(text2);
+
+                                    var button = document.createElement("input");
+                                    button.setAttribute('type', 'checkbox');
+                                        
+                                    newRow.appendChild(td1);
+                                    newRow.appendChild(td2);
+                                    newRow.appendChild(td3);
+                                    newRow.appendChild(td4);
+                                    newRow.appendChild(td5);
+                                    newRow.appendChild(button);
+                                    
+                                    table.appendChild(newRow);
+                        
+                                });
+                            });
+                        });
+                        
+                    });
+                    
+                });
+        });
+    }
+        
+    else{
+
+        alert("Enter one of the following valid values: Animals, Other, Protists, Fungi, Plants");
+
+    }
+}
+    
+    
+</script>
 <style>
 .box__dragndrop, .box__uploading, .box__success, .box__error {
 	display: none;
+}  
+    /*
+.datagrid table { border-collapse: collapse; text-align: left; width: 100%; } .datagrid {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 1px solid #36752D; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }.datagrid table td, .datagrid table th { padding: 3px 10px; }.datagrid table thead th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #36752D), color-stop(1, #275420) );background:-moz-linear-gradient( center top, #36752D 5%, #275420 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#36752D', endColorstr='#275420');background-color:#36752D; color:#FFFFFF; font-size: 15px; font-weight: bold; border-left: 1px solid #36752D; } .datagrid table thead th:first-child { border: none; }.datagrid table tbody td { color: #275420; border-left: 1px solid #C6FFC2;font-size: 12px;font-weight: normal; }.datagrid table tbody .alt td { background: #DFFFDE; color: #275420; }.datagrid table tbody td:first-child { border-left: none; }.datagrid table tbody tr:last-child td { border-bottom: none; }.datagrid table tfoot td div { border-top: 1px solid #36752D;background: #DFFFDE;} .datagrid table tfoot td { padding: 0; font-size: 12px } .datagrid table tfoot td div{ padding: 2px; }.datagrid table tfoot td ul { margin: 0; padding:0; list-style: none; text-align: right; }.datagrid table tfoot  li { display: inline; }.datagrid table tfoot li a { text-decoration: none; display: inline-block;  padding: 2px 8px; margin: 1px;color: #FFFFFF;border: 1px solid #36752D;-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #36752D), color-stop(1, #275420) );background:-moz-linear-gradient( center top, #36752D 5%, #275420 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#36752D', endColorstr='#275420');background-color:#36752D; }.datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { text-decoration: none;border-color: #275420; color: #FFFFFF; background: none; background-color:#36752D;}div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important;
+    */
+    
+* {
+  box-sizing: border-box;
+}
+
+
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #99e600;
 }
 </style>
 
 <head>
-<title>The Gene Spot</title>
-</head>
-
-<body>
-	<p style="text-align: center">
+    <title>The Gene Spot</title>
+    <p style="text-align: center">
 		<img
 			onmouseover="Creative Commons Attribution Share Alike 3.0 Unported license"
 			src="evolution.jpg" alt="Evolution"
@@ -23,11 +154,11 @@
 	<p style="text-align: center">
 		<i>Bioinformatics and Evolutionary Biology Tool </i>
 	</p>
+    <p></p>
 
-</body>
+</head>
 
-<p></p>
-
+<body onload="initializeDB();">
 <p>
 	Enter Job Name: <input type="text" name="Job Name" id="job_name"
 		required>
@@ -35,12 +166,37 @@
 <p>
 	________________________________________________________________________________________________________
 </p>
-<p></p>
+<p></p>    
+    <h2>Genome Selection</h2>
+    <div style="height:200px; overflow:auto; padding-bottom:7px">
+    <table id="myTable" class="fixed_header">
+        <thead>
+            <tr>
+            <th class="text">Species</th>
+            <th class="text">Taxonomy</th>
+            <th class="text">ID</th>
+            <th class="text">Level</th>
+            <th class="text">Added to Job</th>
+        <tr>
+        </thead>        
+        <tbody id="genomeTable"></tbody>
+    </table>
+    </div>
+    
+    Select Kingdom: <select id="select-kingdom">
+		<option value=""></option>
+		<option value="Animals" id="Animal">Animalia</option>
+		<option value="Plants" id="Plants">Plantae</option>
+		<option value="Fungi" id="Fungi">Fungi</option>
+		<option value="Protists" id="Protists">Protista</option>
+		<option value="Other" id="Other">Other</option>
+	</select><button onclick="makeTable();">Get Genomes!</button>
 
-<script src="addInput.js" language="JavaScript" type="text/javascript"></script>
-<script src="deleteInput.js" language="JavaScript" type="text/javascript"></script>
-<script src="searchFile.js" language="JavaScript" type="text/javascript"></script>
+<p>
+	________________________________________________________________________________________________________
+</p>
 
+<h2>Gene Selection</h2>
 <div id="dynamicInput">
 	<p>Enter FASTA Protein Sequences for a Gene of Interest</p>
 	<p style="color: red">*Each sequence MUST have a sequence header
@@ -49,14 +205,13 @@
 		<i> > db | accession_number | any_other_desired_identifiers </i>
 	</p>
 	<p>
-		--------------------------------------------------------------------------------------------------------
+		________________________________________________________________________________________________________
 	</p>
 	Gene Name: <input type="text" name="Gene Name" id="gene_name" required>
 	<input type="file" id="file-input" />
 	<h3>Contents of the file:</h3>
 	<textarea readonly name="FASTA Gene Sequences" id="fasta_text_area1"
 		cols="70" rows="5" required></textarea>
-	<script type="text/javascript" src="ReadFile.js"></script>
 
 <p></p>
         <input type="radio" name="seq_button" id="radio1" value="first_checkbox"> All Sequences Found on NCBI Database <br>
@@ -92,55 +247,11 @@
 	________________________________________________________________________________________________________
 </p>
 
-<p></p>
-<p>
-	Assembly Level: <select id="select-assembly-level">
-		<option value=""></option>
-		<option value="Chromosome" id="Chromosome">Chromosome</option>
-		<option value="Scaffold" id="Scaffold">Scaffold</option>
-		<option value="Contig" id="Contig">Contig</option>
-	</select>
-</p>
-<p></p>
-<p>
-	________________________________________________________________________________________________________
-</p>
-
-<p>
-	Select Kingdom: <select id="select-kingdom">
-		<option value=""></option>
-		<option value="Animalia" id="Animalia">Animalia</option>
-		<option value="Plantae" id="Plantae">Plantae</option>
-		<option value="Fungi" id="Fungi">Fungi</option>
-		<option value="Protista" id="Protista">Protista</option>
-		<option value="Other" id="Other-kingdom">Other</option>
-	</select>
-</p>
-<p></p>
-<p>
-	________________________________________________________________________________________________________
-</p>
-
-<p></p>
 	<!--Search for Genome Assembly: <input type="search"
 		name="Genome Assembly Search" id="genome_assembly_search" placeholder="Organism name or taxid...">
 	<input type="button" value="Search" onclick="searchFile('genome_assembly_search')">-->
 
 <!-- Testing search options -->
-
-<form>
-	<p>
-		<b>Organism Name or Taxid:</b> <input type="text" size="40" id="searchlive">
-	</p>
-
-	<div id="results">
-		<ul id="list">
-			<li>Results will display here</li>
-		</ul>
-	</div>
-</form>
-
-<script language="JavaScript" type="text/javascript" src="search.js"></script>
 
 <!-- End of testing search options -->
 <br />
@@ -150,7 +261,8 @@
 
 <p>
 	<a href="about.html">About</a> | <a href="resultsShowNew.html">Get
-		Results</a>
+        Results</a>
 </p>
 
+</body>
 </html>
