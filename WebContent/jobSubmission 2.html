@@ -35,6 +35,7 @@
 
         var node = firebase.database().ref(kingdom);
         var table = document.getElementById("genomeTable");
+        table.innerHTML="";
         
         var value = node.once('value').then(function(snapshot){
             
@@ -226,7 +227,7 @@ div.tab button.active {
 <body onload="initializeDB();">
     
     <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'JobInformation');">Job Information</button>
+        <button class="tablinks" onclick="openTab(event, 'JobInformation');" onload="openTab(event, 'JobInformation');">Job Information</button>
         <button class="tablinks" onclick="openTab(event, 'Genomes');">Genomes</button>
         <button class="tablinks" onclick="openTab(event, 'Genes');">Genes</button>
     </div>
@@ -254,7 +255,7 @@ div.tab button.active {
                         <th class="text">Taxonomy</th>
                         <th class="text">ID</th>
                         <th class="text">Level</th>
-                        <th class="text">Added to Job</th>
+                        <th class="text">Add to Job</th>
                     <tr>
                 </thead>        
                 <tbody id="genomeTable"></tbody>
