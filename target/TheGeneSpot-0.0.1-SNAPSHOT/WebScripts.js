@@ -35,16 +35,16 @@ function initialize()
 {
   //alert("Hey were connected lmao");
 
-	var jobName = document.getElementsById("job_name").value;
+	var jobName = document.getElementById("job_name").value;
 
-	if(jobName != "Animals" && jobName != "Fungi" && jobName != "Other" && jobName != "Plants" && jobName != "Protists" && jobName != ""){
+	if(jobName == "Animals" && jobName == "Fungi" && jobName == "Other" && jobName == "Plants" && jobName == "Protists" && jobName == ""){
 
 		alert("Job name is invalid!")
 	}
 
 	else{
-
-		console.log("here");
+        /*
+        console.log("here");
 
 		var gene = document.getElementById("gene_name").value;
 		var sequences =document.getElementById("fasta_text_area1").value;
@@ -69,6 +69,39 @@ function initialize()
 		//var input = ["job","gene","17234",".00001","Animilia","fishes","GCA001.1","IDC"];
 		var input=[document.getElementById("job_name").value,gene, sequences,document.getElementById('evalue').value,document.getElementById("select-kingdom").value,"Fish","GCA_000180675.1",document.getElementById("select-assembly-level").value];  //repeat for how many
 		callGeneSpotService(input);
+        */
+        var gene = document.getElementById("gene_name").value;
+	var sequences =document.getElementById("fasta_text_area1").value;
+	var i =3;
+	var j=3;
+	var genomes="";
+	//alert(i+"i");
+	//alert(j+"j");
+	//Gets genes and queries
+	while(document.getElementById("gene_name"+i))
+	{
+		gene= gene +"%"+document.getElementById("gene_name"+i).value;
+		i=i+2;
+		//alert(i+"i");
+		sequences=sequences+"%"+document.getElementById("fasta_text_area"+(j)).value;
+		j=j+2;
+		//alert(j+"j");
+	}
+	var checkboxes = document.getElementsByName("genomeSelect");
+
+	  // loop over them all
+	  for (var i=0; i<checkboxes.length; i++) {
+	     // And stick the checked ones onto an array...
+	     if (checkboxes[i].checked) {
+	        genomes=genomes+"%"+checkboxes[i].value;
+	     }
+	  }
+	  
+	
+	//[JobName, sequences,evalue,kingdom, subtype, (need genome), assembly level]
+	//var input = ["job","gene","17234",".00001","Animilia","fishes","GCA001.1","IDC"];
+  var input=[document.getElementById("job_name").value,gene, sequences,document.getElementById('evalue').value,genomes];  //repeat for how many
+  callGeneSpotService(input);
 
 	}
 }
@@ -76,7 +109,7 @@ function initialize()
 function callGeneSpotService(inputArray)
 {
 
-    var location =window.location.href+"analysis/GeneSpot"
+    var location =window.location.href+"analysis/GeneSpot";
     //Results should be the encrypted job id to be able to access the results on the web page.
     var results = $.post(location,{inputArray:inputArray},function(results){
     })
@@ -124,7 +157,7 @@ function readSingleFile(e) {
 	      
 	      lines = contents.split('\n');
 	      
-	      i = 0
+	      i = 0;
 	    
 	      //going through file
 	      while(i < lines.length){
@@ -178,18 +211,18 @@ function readSingleFile(e) {
 
 	window.onload = function(){
 	    
-	    var el = document.getElementById("file-input")
+	    var el = document.getElementById("file-input");
 	    
 	    if(el){
 	        addEventListener("change", readSingleFile, false);
 	    }
-	}
+	};
 
 
 	//https://github.com/knyga/Needleman-Wunsch-sequence-alignment-js/blob/master/sequence-alignment.js
 	function alignment(sequence1, sequence2){
 	    
-	    console.log("Aligning Sequences")
+	    console.log("Aligning Sequences");
 	    
 	    
 	    var s1 = sequence1;

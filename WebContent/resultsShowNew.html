@@ -25,7 +25,7 @@
         
         var node;
         var jobName;
-        const url = "https://www.ncbi.nlm.nih.gov/assembly/"
+        const url = "https://www.ncbi.nlm.nih.gov/assembly/";
     
         
         function initializeDB(){
@@ -81,7 +81,7 @@
                         var nonColoredSeq = "";
                         var counter = 0;
                         
-                        var text = document.getElementById("text")
+                        var text = document.getElementById("text");
 
                         
                         for(var i = 0; i < scoreSequenceArray.length; i++){
@@ -105,7 +105,7 @@
                                 var span = document.createElement('span');
                                 span.setAttribute('style', "color: red; font-size:10;");
                                 span.innerHTML = coloredSeq;
-                                coloredSeq = ""
+                                coloredSeq = "";
                                 
                                 text.appendChild(span);
                 
@@ -198,7 +198,7 @@
                                 colorButton.parentElement.style.backgroundColor = 'lightgrey';
                                 node.set("lightgrey");
                             }
-                        })
+                        });
 
                         //create name row
                         if(foundAllNames == false){
@@ -219,7 +219,7 @@
                                 
                                 link.setAttribute("href", url + gca.val().replace("v", "."));
                                 link.setAttribute("target", "_blank");
-                            })
+                            });
                             
                             //create href attribute 
                             

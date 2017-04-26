@@ -26,6 +26,7 @@ package org.uiowa.logsdon.genespot.JobInformation;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ws.rs.FormParam;
@@ -46,18 +47,15 @@ public class GeneSpotAnalysis {
 
 			throws UnsupportedEncodingException, FileNotFoundException {
 
-		// [JobName,geneNmae, sequences,evalue,kingdom, subtype, (need genome), assembly level]
+		// [JobName,geneNmae, sequences,evalue,genomes]
 		String[] inputs = datalist.toArray(new String[0]);
 		String jobName = inputs[0];
 		String[] geneName = inputs[1].split("%");
 		String[] sequences = inputs[2].split("%");
 		String evaluestring = inputs[3];
-		String kingdom = inputs[4];
-		String subtype = inputs[5];
-		String genomeName = inputs[6];
-		String assembly = inputs[7];
-		Gene[] genes = new Gene[geneName.length];
-		// change to size of genome array
+		String[] genomeInfo = inputs[4].replace(" ", "").split("%");
+		System.out.println(Arrays.toString(genomeInfo));
+
 		ArrayList<Genome> genomes = new ArrayList<Genome>();
 		double evalue = Double.parseDouble(evaluestring);
 		for (int i = 0; i < sequences.length; i++) {
@@ -77,10 +75,15 @@ public class GeneSpotAnalysis {
 
 			}
 
-			// put in Genome class
-			Genome genome = new Genome(genomeName, kingdom, subtype, assembly, "69293", geneName[i], queries);
-
-			genomes.add(genome);
+			// put in Genome class, TAX ID IS UNIQUE FOR EACH GENOME!!! so when a genome is chosen,
+			// regex all genome/tax id then seperate the other two
+			for (int k = 1; k < genomeInfo.length; k++) {
+				// kingdom, subtype, assembly, level type, taxID
+				String[] info = genomeInfo[k].split("[|]");
+				System.out.println(Arrays.toString(info));
+				Genome genome = new Genome(info[2], info[0], info[1], info[3], info[4], geneName[i], queries);
+				genomes.add(genome);
+			}
 		}
 
 		// Gasterosteus aculeatus 69293 Animals Fishes GCA_000180675.1 Contig -

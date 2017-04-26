@@ -11,6 +11,11 @@
             font-weight: bold;
             color: green;
         }
+        
+        #text {
+            font-size: 10;
+    word-wrap: break-word;
+}
     </style>
     <!-- <script src='https://code.jquery.com/jquery-2.1.1.js'></script> -->
     <script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
@@ -20,7 +25,7 @@
         
         var node;
         var jobName;
-        const url = "https://www.ncbi.nlm.nih.gov/assembly/"
+        const url = "https://www.ncbi.nlm.nih.gov/assembly/";
     
         
         function initializeDB(){
@@ -41,7 +46,7 @@
         //will work -- now needs to present the data in a pop up window
         function getSequence(address){
     
-            document.getElementById("sequenceDisplay").innerHTML = address + "\n\n";
+            //document.getElementById("sequenceDisplay").innerHTML = address + "\n\n";
             
             var sequence = "";
             var scoreSequence;
@@ -58,6 +63,7 @@
                         var array = hit.val().split("|");
                     
                         sequence = array[0];
+                        //console.log(sequence);
                         scoreSequence = array[2];
                         scoreSequence = scoreSequence.replace('[', '');
                         scoreSequence = scoreSequence.replace(']', '');
@@ -65,40 +71,51 @@
                         
                         var scoreSequenceArray = scoreSequence.split(','); // <----- use this for coloring of sequence
                         
-                        var i = 0;
-                        
-                        while(i < scoreSequenceArray.length){
-                            var currentNucScore = scoreSequenceArray[i];
-                            currentNucScore = currentNucScore.toString();
-                            console.log(currentNucScore.parseInt());
-                            
-                            i++;
-                        }
-                        
                         //Write sequence to screen
+                        /*
                         document.getElementById("sequenceDisplay").innerHTML = document.getElementById("sequenceDisplay").innerHTML + ">";
                         //document.getElementById("sequenceDisplay").appendChild();
+                        */
+                        
+                        var coloredSeq = "";
+                        var nonColoredSeq = "";
+                        var counter = 0;
+                        
+                        var text = document.getElementById("text");
 
-                        // split sequence into single character array
-                        var charArray = sequence.split("");
-                        // loop through each array, stylizing hits
-                        for(var i=0; i<(charArray.length); i++){
-                            if(scoreSequenceArray[i] != 0){
-                                var newSpan = document.createElement('span');
-                                newSpan.setAttribute('class', "hit");
-                                var nuc = document.createTextNode(charArray[i]);
-                                newSpan.appendChild(nuc);
-                                document.getElementById("sequenceDisplay").appendChild(nuc);
+                        
+                        for(var i = 0; i < scoreSequenceArray.length; i++){
+                            
+                            var currentScore = parseInt(scoreSequenceArray[i]);
+                            //color the character
+                            if(currentScore > 0){
+                                coloredSeq+=(sequence[i]);
+                    
+                                var ele = document.createTextNode(nonColoredSeq);
+                                nonColoredSeq = "";
+                                text.appendChild(ele);
+                                
                             }
+                            
+                            //non colored;
                             else{
-                                var singNuc = charArray[i];
-                                //console.log(nuc);
-                                document.getElementById("sequenceDisplay").innerHTML = document.getElementById("sequenceDisplay").innerHTML + singNuc;
+                                
+                                nonColoredSeq+=(sequence[i]);
+                                
+                                var span = document.createElement('span');
+                                span.setAttribute('style', "color: red; font-size:10;");
+                                span.innerHTML = coloredSeq;
+                                coloredSeq = "";
+                                
+                                text.appendChild(span);
+                
                             }
                         }
-
-                        document.getElementById("sequenceDisplay").innerHTML = document.getElementById("sequenceDisplay").innerHTML + "\n\n";
-
+                        
+                        var ele = document.createElement('br');
+                        text.appendChild(ele);
+                        var ele = document.createElement('br');
+                        text.appendChild(ele);
                     }
                 })
             })
@@ -181,7 +198,7 @@
                                 colorButton.parentElement.style.backgroundColor = 'lightgrey';
                                 node.set("lightgrey");
                             }
-                        })
+                        });
 
                         //create name row
                         if(foundAllNames == false){
@@ -202,7 +219,7 @@
                                 
                                 link.setAttribute("href", url + gca.val().replace("v", "."));
                                 link.setAttribute("target", "_blank");
-                            })
+                            });
                             
                             //create href attribute 
                             
@@ -281,8 +298,10 @@
             </tr>
         </table>
     </div>
-    <div>
-        <textArea type="text" id="sequenceDisplay" style="display:table-cell; width:100%; height:500px;"></textArea>
+    <h3>Scored Sequence:</h3>
+    <div id="text">
+    
     </div>
+    
 </body>
 </html>

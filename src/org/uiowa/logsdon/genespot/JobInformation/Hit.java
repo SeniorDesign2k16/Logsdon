@@ -32,16 +32,7 @@ public class Hit{
 
 	private boolean compare(Hit newHit) {
 
-		if (this.getAccesionNumber().equals(newHit.getAccesionNumber())) {
-
-			return true;
-
-		}
-
-		else {
-
-			return false;
-		}
+        return this.getAccesionNumber().equals(newHit.getAccesionNumber());
 	}
 
 	//hits comes from the gene object
