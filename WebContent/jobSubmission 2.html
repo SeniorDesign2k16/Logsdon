@@ -109,6 +109,8 @@
   box-sizing: border-box;
 }
 
+
+
 #myInput {
   background-image: url('/css/searchicon.png');
   background-position: 10px 10px;
@@ -164,8 +166,37 @@
 <p>
 	________________________________________________________________________________________________________
 </p>
-<p></p>
+<p></p>    
+    <h2>Genome Selection</h2>
+    <div style="height:200px; overflow:auto; padding-bottom:7px">
+    <table id="myTable" class="fixed_header">
+        <thead>
+            <tr>
+            <th class="text">Species</th>
+            <th class="text">Taxonomy</th>
+            <th class="text">ID</th>
+            <th class="text">Level</th>
+            <th class="text">Added to Job</th>
+        <tr>
+        </thead>        
+        <tbody id="genomeTable"></tbody>
+    </table>
+    </div>
+    
+    Select Kingdom: <select id="select-kingdom">
+		<option value=""></option>
+		<option value="Animals" id="Animal">Animalia</option>
+		<option value="Plants" id="Plants">Plantae</option>
+		<option value="Fungi" id="Fungi">Fungi</option>
+		<option value="Protists" id="Protists">Protista</option>
+		<option value="Other" id="Other">Other</option>
+	</select><button onclick="makeTable();">Get Genomes!</button>
 
+<p>
+	________________________________________________________________________________________________________
+</p>
+
+<h2>Gene Selection</h2>
 <div id="dynamicInput">
 	<p>Enter FASTA Protein Sequences for a Gene of Interest</p>
 	<p style="color: red">*Each sequence MUST have a sequence header
@@ -174,7 +205,7 @@
 		<i> > db | accession_number | any_other_desired_identifiers </i>
 	</p>
 	<p>
-		--------------------------------------------------------------------------------------------------------
+		________________________________________________________________________________________________________
 	</p>
 	Gene Name: <input type="text" name="Gene Name" id="gene_name" required>
 	<input type="file" id="file-input" />
@@ -216,42 +247,6 @@
 	________________________________________________________________________________________________________
 </p>
 
-<p></p>
-<p></p>
-<p>
-	________________________________________________________________________________________________________
-</p>
-    
-	Select Kingdom: <select id="select-kingdom">
-		<option value=""></option>
-		<option value="Animals" id="Animal">Animalia</option>
-		<option value="Plants" id="Plants">Plantae</option>
-		<option value="Fungi" id="Fungi">Fungi</option>
-		<option value="Protists" id="Protists">Protista</option>
-		<option value="Other" id="Other">Other</option>
-	</select><button onclick="makeTable();">Get Genomes!</button>
-    
-    
-    <div style="height:200px; overflow:auto; padding-top:3px">
-    <table id="myTable" class="fixed_header">
-        <thead id="header">
-            <tr>
-            <th class="text">Species</th>
-            <th class="text">Taxonomy</th>
-            <th class="text">ID</th>
-            <th class="text">Level</th>
-            <th class="text">Added to Job</th>
-        <tr>
-        </thead>        
-        <tbody id="genomeTable"></tbody>
-    </table>
-    </div>
-<p></p>
-<p>
-	________________________________________________________________________________________________________
-</p>
-
-<p></p>
 	<!--Search for Genome Assembly: <input type="search"
 		name="Genome Assembly Search" id="genome_assembly_search" placeholder="Organism name or taxid...">
 	<input type="button" value="Search" onclick="searchFile('genome_assembly_search')">-->
