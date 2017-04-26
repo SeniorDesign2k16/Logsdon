@@ -59,9 +59,13 @@
                                     var text1 = document.createTextNode(suptype.key);
                                     var text2 = document.createTextNode(level.key);
                                     var text3 = document.createTextNode(taxId.key);
-                                    var text4 = document.createTextNode(species.val());
+                                    var address = document.createElement("a");
+                                    address.setAttribute("href", ("https://www.ncbi.nlm.nih.gov/assembly/" + assembly.key.replace('v', '.')));
+                                    address.setAttribute("target", "_blank");
+
+                                    address.innerHTML = species.val();
                                     
-                                    td1.appendChild(text4);
+                                    td1.appendChild(address);
                                     td2.appendChild(text1);
                                     td3.appendChild(text3);
                                     td4.appendChild(text2);
@@ -85,15 +89,36 @@
                     });
                     
                 });
-        });
-    }
+            });
+        }
         
-    else{
+        else{
 
-        alert("Enter one of the following valid values: Animals, Other, Protists, Fungi, Plants");
+            alert("Enter one of the following valid values: Animals, Other, Protists, Fungi, Plants");
 
+        }
     }
-}
+    
+    function openTab(evt, id) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(id).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
     
     
 </script>
@@ -141,6 +166,42 @@
 #myTable tr.header, #myTable tr:hover {
   background-color: #99e600;
 }
+    
+    /* Style the tab */
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
 </style>
 
 <head>
@@ -159,93 +220,80 @@
 </head>
 
 <body onload="initializeDB();">
-<p>
-	Enter Job Name: <input type="text" name="Job Name" id="job_name"
-		required>
-</p>
-<p>
-	________________________________________________________________________________________________________
-</p>
-<p></p>    
-    <h2>Genome Selection</h2>
-    <div style="height:200px; overflow:auto; padding-bottom:7px">
-    <table id="myTable" class="fixed_header">
-        <thead>
-            <tr>
-            <th class="text">Species</th>
-            <th class="text">Taxonomy</th>
-            <th class="text">ID</th>
-            <th class="text">Level</th>
-            <th class="text">Added to Job</th>
-        <tr>
-        </thead>        
-        <tbody id="genomeTable"></tbody>
-    </table>
+    
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'JobInformation');">Job Information</button>
+        <button class="tablinks" onclick="openTab(event, 'Genomes');">Genomes</button>
+        <button class="tablinks" onclick="openTab(event, 'Genes');">Genes</button>
     </div>
     
-    Select Kingdom: <select id="select-kingdom">
-		<option value=""></option>
-		<option value="Animals" id="Animal">Animalia</option>
-		<option value="Plants" id="Plants">Plantae</option>
-		<option value="Fungi" id="Fungi">Fungi</option>
-		<option value="Protists" id="Protists">Protista</option>
-		<option value="Other" id="Other">Other</option>
-	</select><button onclick="makeTable();">Get Genomes!</button>
-
-<p>
-	________________________________________________________________________________________________________
-</p>
-
-<h2>Gene Selection</h2>
-<div id="dynamicInput">
-	<p>Enter FASTA Protein Sequences for a Gene of Interest</p>
-	<p style="color: red">*Each sequence MUST have a sequence header
+    <div id="JobInformation" class= "tabcontent">
+        <h3>Job Name</h3>
+        Enter Job Name: <input type="text" name="Job Name" id="job_name"
+		required>
+        
+        <h3>BLAST Parameters</h3>
+        Enter Word Length (Recommended: 3): <input type="number"
+		name="Word Length" id="word_length" required>
+        
+        Enter E Value (Recommended: 1E-6): <input type="number" name="Evalue"
+		id="evalue" max="1" required>
+    </div>
+    
+    <div id="Genomes" class="tabcontent">
+        <h3>Genome Selection</h3>
+        <div style="height:200px; overflow:auto; padding-bottom:7px">
+            <table id="myTable" class="fixed_header">
+                <thead>
+                    <tr>
+                        <th class="text">Species</th>
+                        <th class="text">Taxonomy</th>
+                        <th class="text">ID</th>
+                        <th class="text">Level</th>
+                        <th class="text">Added to Job</th>
+                    <tr>
+                </thead>        
+                <tbody id="genomeTable"></tbody>
+            </table>
+        </div>
+    
+        Select Kingdom: <select id="select-kingdom">
+		      <option value=""></option>
+		      <option value="Animals" id="Animal">Animalia</option>
+		      <option value="Plants" id="Plants">Plantae</option>
+		      <option value="Fungi" id="Fungi">Fungi</option>
+		      <option value="Protists" id="Protists">Protista</option>
+		      <option value="Other" id="Other">Other</option>
+	          </select><button onclick="makeTable();">Get Genomes!</button>
+    </div>
+    
+    <div id="Genes" class="tabcontent">
+        
+        <h2>Gene Selection</h2>
+        <div id="dynamicInput">
+	       <p>Enter FASTA Protein Sequences for a Gene of Interest</p>
+	       <p style="color: red">*Each sequence MUST have a sequence header
 		that matches the following format:*</p>
-	<p>
-		<i> > db | accession_number | any_other_desired_identifiers </i>
-	</p>
-	<p>
-		________________________________________________________________________________________________________
-	</p>
-	Gene Name: <input type="text" name="Gene Name" id="gene_name" required>
-	<input type="file" id="file-input" />
-	<h3>Contents of the file:</h3>
-	<textarea readonly name="FASTA Gene Sequences" id="fasta_text_area1"
+	       <p>
+		  <i> > db | accession_number | any_other_desired_identifiers </i>
+	       </p>
+	       <p>
+		__________________________________________________________________________________________________________
+	       </p>
+	   Gene Name: <input type="text" name="Gene Name" id="gene_name" required>
+	   <input type="file" id="file-input" />
+	   <h3>Contents of the file:</h3>
+	   <textarea readonly name="FASTA Gene Sequences" id="fasta_text_area1"
 		cols="70" rows="5" required></textarea>
 
-<p></p>
-        <input type="radio" name="seq_button" id="radio1" value="first_checkbox"> All Sequences Found on NCBI Database <br>
-        <input type="radio" name="seq_button" id="radio2" value="second_checkbox"> Personal Sequences Uploaded<br>
 
-    <p></p>
+        </div>
 
-</div>
-
-<input type="button" value="Delete gene"
-	   onClick="deleteInput('dynamicInput');">
-<input type="button" value="Add another gene"
-	onClick="addInput('dynamicInput');">
-
-<p>
-	________________________________________________________________________________________________________
-</p>
-<p>
-	Enter Word Length (Recommended: 3): <input type="number"
-		name="Word Length" id="word_length" required>
-</p>
-
-<p></p>
-<p>
-	________________________________________________________________________________________________________
-</p>
-
-<p>
-	Enter E Value (Recommended: 1E-6): <input type="number" name="Evalue"
-		id="evalue" max="1" required>
-</p>
-<p>
-	________________________________________________________________________________________________________
-</p>
+        <input type="button" value="Delete gene"
+	       onClick="deleteInput('dynamicInput');">
+        <input type="button" value="Add another gene"
+	       onClick="addInput('dynamicInput');">
+    </div>
 
 	<!--Search for Genome Assembly: <input type="search"
 		name="Genome Assembly Search" id="genome_assembly_search" placeholder="Organism name or taxid...">
