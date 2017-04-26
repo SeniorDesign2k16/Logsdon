@@ -35,7 +35,6 @@
 
         var node = firebase.database().ref(kingdom);
         var table = document.getElementById("genomeTable");
-        table.innerHTML = "";
         
         var value = node.once('value').then(function(snapshot){
             
@@ -60,6 +59,7 @@
                                     var text1 = document.createTextNode(suptype.key);
                                     var text2 = document.createTextNode(level.key);
                                     var text3 = document.createTextNode(taxId.key);
+                                    var text4=document.createTextNode(assembly.key);
                                     var address = document.createElement("a");
                                     address.setAttribute("href", ("https://www.ncbi.nlm.nih.gov/assembly/" + assembly.key.replace('v', '.')));
                                     address.setAttribute("target", "_blank");
@@ -73,6 +73,9 @@
 
                                     var button = document.createElement("input");
                                     button.setAttribute('type', 'checkbox');
+                                    button.setAttribute('name','genomeSelect');
+                                    //kingdom, subtype, assembly, level type, taxID
+                                    button.setAttribute('value',kingdom+"|"+suptype.key+"|"+assembly.key+"|"+level.key+"|"+taxId.key);
                                         
                                     newRow.appendChild(td1);
                                     newRow.appendChild(td2);
@@ -209,6 +212,7 @@ div.tab button.active {
     <title>The Gene Spot</title>
     <p style="text-align: center">
 		<img
+			onmouseover="Creative Commons Attribution Share Alike 3.0 Unported license"
 			src="evolution.jpg" alt="Evolution"
 			style="width: 300px; height: 150px;" align="middle">
 	<h1 style="text-align: center">The Gene Spot</h1>
@@ -222,7 +226,7 @@ div.tab button.active {
 <body onload="initializeDB();">
     
     <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'JobInformation');" onload="openTab(event, 'JobInformation');">Job Information</button>
+        <button class="tablinks" onclick="openTab(event, 'JobInformation');">Job Information</button>
         <button class="tablinks" onclick="openTab(event, 'Genomes');">Genomes</button>
         <button class="tablinks" onclick="openTab(event, 'Genes');">Genes</button>
     </div>
@@ -250,7 +254,7 @@ div.tab button.active {
                         <th class="text">Taxonomy</th>
                         <th class="text">ID</th>
                         <th class="text">Level</th>
-                        <th class="text">Add to Job</th>
+                        <th class="text">Added to Job</th>
                     <tr>
                 </thead>        
                 <tbody id="genomeTable"></tbody>
@@ -303,7 +307,7 @@ div.tab button.active {
 
 <!-- End of testing search options -->
 <br />
-<input type="submit" onclick="initialize();" />
+<input type="button" value="Submit" onClick="initialize();" />
 <br />
 <hr>
 
