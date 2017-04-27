@@ -1,5 +1,5 @@
 function readSingleFile(e) {
-
+	console.log(document.getElementById("dynamicInput").childElementCount);
   var file = e.target.files[0];
   if (!file) {
     return;
@@ -17,8 +17,8 @@ var counter = 1;
 function displayContents(contents) {
     
   console.log("-------Sequences in file-------");
-    
-  var element = document.getElementById('fasta_text_area'+counter);
+
+  var element = document.getElementById('fasta_text_area'+(counter));
  // alert(counter+"Fasta");
 
   var hold = [];
@@ -34,7 +34,7 @@ function displayContents(contents) {
       
       lines = contents.split('\n');
       
-      i = 0;
+      i = 0
     
       //going through file
       while(i < lines.length){
@@ -72,7 +72,6 @@ function displayContents(contents) {
       
       
       //do blastp sequences[0] vs sequence[1 + n] (A=B AND B=C, then A=C)
-      /*
       i = 1;
       while(i < seqeunces.length){
           
@@ -82,16 +81,25 @@ function displayContents(contents) {
       }
 
       console.log(ids);
-      */
       element.innerHTML = ids; 
       counter=counter+1;
   }
 }
 
+window.onload = function(){
+    
+    var el = document.getElementById("file-input");
+    
+    if(el){
+        addEventListener("change", readSingleFile, false);
+    }
+}
+
+
 //https://github.com/knyga/Needleman-Wunsch-sequence-alignment-js/blob/master/sequence-alignment.js
 function alignment(sequence1, sequence2){
     
-    console.log("Aligning Sequences");
+    console.log("Aligning Sequences")
     
     
     var s1 = sequence1;
