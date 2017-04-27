@@ -59,7 +59,7 @@
             var node = firebase.database().ref(jobName.concat("/").concat(address));
             
             var value = node.once('value').then(function(snapshot){
-                
+
                 var header = "";
                 var assembly = "";
                 
@@ -85,7 +85,7 @@
                         scoreSequence = scoreSequence.replace('[', '');
                         scoreSequence = scoreSequence.replace(']', '');
                         scoreSequence = scoreSequence.replace(' ', '');
-                        
+
                         var scoreSequenceArray = scoreSequence.split(','); // <----- use this for coloring of sequence
                         
                         //Write sequence to screen
@@ -155,19 +155,6 @@
             })
         }
 
-        /*
-         * functions take from CMS on stackoverflow for encoding/decoding html:
-
-        function htmlEncode(value){
-            //create a in-memory div, set it's inner text(which jQuery automatically encodes)
-            //then grab the encoded contents back out.  The div never exists on the page.
-            return $('<div/>').text(value).html();
-        }
-
-        function htmlDecode(value){
-            return $('<div/>').html(value).text();
-        }
-         */
 
         //makes table correctly -- need to work on have the color button change the background color of the cell
         function makeTable(){
@@ -266,7 +253,10 @@
                             
                             text = document.createTextNode("Get Sequence");
                             getSequenceButton.appendChild(text);
-                        
+
+                            text = document.createTextNode("Set Presence");
+                            colorButton.appendChild(text);
+
                             geneData.appendChild(getSequenceButton);
                             geneData.appendChild(colorButton);
                            
@@ -283,8 +273,10 @@
             
                             text = document.createTextNode("Get Sequence");
                             getSequenceButton.appendChild(text);
-                            
-                            
+
+                            text = document.createTextNode("Set Presence");
+                            colorButton.appendChild(text);
+
                             geneData.appendChild(getSequenceButton);
                             geneData.appendChild(colorButton);
 
