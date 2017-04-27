@@ -36,11 +36,11 @@ import javax.ws.rs.Path;
 @Path("/GeneSpot")
 public class GeneSpotAnalysis {
 
-	//create genome objects and add them to an array list
-	//create job object
-	//create jobHandler object
-	//submit job object to jobHandler object method addJob
-	//done
+	// create genome objects and add them to an array list
+	// create job object
+	// create jobHandler object
+	// submit job object to jobHandler object method addJob
+	// done
 
 	@POST
 	public String Genespot(@FormParam("inputArray[]") List<String> datalist)
@@ -78,10 +78,13 @@ public class GeneSpotAnalysis {
 			// put in Genome class, TAX ID IS UNIQUE FOR EACH GENOME!!! so when a genome is chosen,
 			// regex all genome/tax id then seperate the other two
 			for (int k = 1; k < genomeInfo.length; k++) {
-				// kingdom, subtype, assembly, level type, taxID
-				String[] info = genomeInfo[k].split("[|]");
+				// kingdom, subtype, assembly, level type, taxID, species Name
+				String[] speciesHold = genomeInfo[k].split("[|]");
+				String[] info = genomeInfo[k].replace(" ", "").split("[|]");
 				System.out.println(Arrays.toString(info));
-				Genome genome = new Genome(info[2], info[0], info[1], info[3], info[4], geneName[i], queries);
+				System.out.println(speciesHold[5]);
+				Genome genome = new Genome(info[2], info[0], info[1], info[3], info[4], geneName[i], queries,
+						speciesHold[5]);
 				genomes.add(genome);
 			}
 		}
