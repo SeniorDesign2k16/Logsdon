@@ -12,10 +12,12 @@
             color: green;
         }
         
-        #text {
-            font-size: 10;
-    word-wrap: break-word;
-}
+        .text {
+         
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
     </style>
     <!-- <script src='https://code.jquery.com/jquery-2.1.1.js'></script> -->
     <script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
@@ -46,7 +48,9 @@
         //will work -- now needs to present the data in a pop up window
         function getSequence(address){
     
+            document.getElementById("HitDiv").innerHTML = "";
             //document.getElementById("sequenceDisplay").innerHTML = address + "\n\n";
+            var hitCount = 1;
             
             var sequence = "";
             var scoreSequence;
@@ -81,8 +85,20 @@
                         var nonColoredSeq = "";
                         var counter = 0;
                         
-                        var text = document.getElementById("text");
-
+                        var outerDIV = document.getElementById("HitDiv");
+                        
+                        var label = document.createElement("label");
+                        label.innerHTML = "Hit" + hitCount;
+                        
+                        outerDIV.appendChild(label);
+                        
+                        var text = document.createElement("div");
+                        text.setAttribute("id", "text");
+                        text.setAttribute("class", "text");
+                        
+                        outerDIV.appendChild(text);
+                        
+                        
                         
                         for(var i = 0; i < scoreSequenceArray.length; i++){
                             
@@ -112,10 +128,14 @@
                             }
                         }
                         
+            
+                                                
                         var ele = document.createElement('br');
                         text.appendChild(ele);
                         var ele = document.createElement('br');
                         text.appendChild(ele);
+                        
+                        hitCount++;
                     }
                 })
             })
@@ -299,7 +319,7 @@
         </table>
     </div>
     <h3>Scored Sequence:</h3>
-    <div id="text">
+    <div id="HitDiv">
     
     </div>
     
