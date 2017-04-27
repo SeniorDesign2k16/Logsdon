@@ -12,10 +12,12 @@
             color: green;
         }
         
-        #text {
-            font-size: 10;
-    word-wrap: break-word;
-}
+        .text {
+         
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
     </style>
     <!-- <script src='https://code.jquery.com/jquery-2.1.1.js'></script> -->
     <script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
@@ -46,7 +48,9 @@
         //will work -- now needs to present the data in a pop up window
         function getSequence(address){
     
+            document.getElementById("HitDiv").innerHTML = "";
             //document.getElementById("sequenceDisplay").innerHTML = address + "\n\n";
+            var hitCount = 1;
             
             var sequence = "";
             var scoreSequence;
@@ -56,14 +60,27 @@
             
             var value = node.once('value').then(function(snapshot){
                 
+                var header = "";
+                var assembly = "";
+                
                 snapshot.forEach(function(hit){
+                            
+                    if(hit.key == "header"){
+                        
+                        header = hit.val();
+                    }
+                    
+                    else if(hit.key == "assembly"){
+                        
+                        assembly = hit.val();
+                    }
                                         
-                    if(hit.key != "presence" && hit.key != "assembly"){
+                    else if(hit.key != "presence"){
                         
                         var array = hit.val().split("|");
                     
                         sequence = array[0];
-                        //console.log(sequence);
+                        maxScore = array[1];
                         scoreSequence = array[2];
                         scoreSequence = scoreSequence.replace('[', '');
                         scoreSequence = scoreSequence.replace(']', '');
@@ -81,19 +98,39 @@
                         var nonColoredSeq = "";
                         var counter = 0;
                         
-                        var text = document.getElementById("text");
-
+                        var outerDIV = document.getElementById("HitDiv");
+                        
+                        var label = document.createElement("label");
+                        label.innerHTML = "Hit " + hitCount + ": " + header;
+                        
+                        outerDIV.appendChild(label);
+                        
+                        var text = document.createElement("div");
+                        text.setAttribute("id", "text");
+                        text.setAttribute("class", "text");
+                        
+                        outerDIV.appendChild(text);
                         
                         for(var i = 0; i < scoreSequenceArray.length; i++){
                             
                             var currentScore = parseInt(scoreSequenceArray[i]);
+                            
                             //color the character
                             if(currentScore > 0){
-                                coloredSeq+=(sequence[i]);
-                    
-                                var ele = document.createTextNode(nonColoredSeq);
+                                
+                                var ele = document.createElement('span');
+                                ele.innerHTML = nonColoredSeq;
+                                
+                                ele.setAttribute('style', "opacity: .1");
                                 nonColoredSeq = "";
                                 text.appendChild(ele);
+                                
+                                var span = document.createElement('span');
+
+                                span.setAttribute("style", "color: red; font-size:10; opacity: " + currentScore / maxScore);
+                                span.innerHTML = sequence[i];
+                                
+                                text.appendChild(span);
                                 
                             }
                             
@@ -102,20 +139,17 @@
                                 
                                 nonColoredSeq+=(sequence[i]);
                                 
-                                var span = document.createElement('span');
-                                span.setAttribute('style', "color: red; font-size:10;");
-                                span.innerHTML = coloredSeq;
-                                coloredSeq = "";
-                                
-                                text.appendChild(span);
-                
                             }
                         }
                         
+            
+                                                
                         var ele = document.createElement('br');
                         text.appendChild(ele);
                         var ele = document.createElement('br');
                         text.appendChild(ele);
+                        
+                        hitCount++;
                     }
                 })
             })
@@ -299,7 +333,7 @@
         </table>
     </div>
     <h3>Scored Sequence:</h3>
-    <div id="text">
+    <div id="HitDiv">
     
     </div>
     
