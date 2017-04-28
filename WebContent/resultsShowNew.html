@@ -63,94 +63,99 @@
                 var header = "";
                 var assembly = "";
                 
-                snapshot.forEach(function(hit){
-                            
-                    if(hit.key == "header"){
-                        
-                        header = hit.val();
-                    }
-                    
-                    else if(hit.key == "assembly"){
-                        
-                        assembly = hit.val();
-                    }
-                                        
-                    else if(hit.key != "presence"){
-                        
-                        var array = hit.val().split("|");
-                    
-                        sequence = array[0];
-                        maxScore = array[1];
-                        scoreSequence = array[2];
-                        scoreSequence = scoreSequence.replace('[', '');
-                        scoreSequence = scoreSequence.replace(']', '');
-                        scoreSequence = scoreSequence.replace(' ', '');
+                snapshot.forEach(function(hits){
 
-                        var scoreSequenceArray = scoreSequence.split(','); // <----- use this for coloring of sequence
-                        
-                        //Write sequence to screen
-                        /*
-                        document.getElementById("sequenceDisplay").innerHTML = document.getElementById("sequenceDisplay").innerHTML + ">";
-                        //document.getElementById("sequenceDisplay").appendChild();
-                        */
-                        
-                        var coloredSeq = "";
-                        var nonColoredSeq = "";
-                        var counter = 0;
-                        
-                        var outerDIV = document.getElementById("HitDiv");
-                        
-                        var label = document.createElement("label");
-                        label.innerHTML = "Hit " + hitCount + ": " + header;
-                        
-                        outerDIV.appendChild(label);
-                        
-                        var text = document.createElement("div");
-                        text.setAttribute("id", "text");
-                        text.setAttribute("class", "text");
-                        
-                        outerDIV.appendChild(text);
-                        
-                        for(var i = 0; i < scoreSequenceArray.length; i++){
-                            
-                            var currentScore = parseInt(scoreSequenceArray[i]);
-                            
-                            //color the character
-                            if(currentScore > 0){
-                                
-                                var ele = document.createElement('span');
-                                ele.innerHTML = nonColoredSeq;
-                                
-                                ele.setAttribute('style', "opacity: .1");
-                                nonColoredSeq = "";
-                                text.appendChild(ele);
-                                
-                                var span = document.createElement('span');
+                    if(hits.key == "assembly"){
 
-                                span.setAttribute("style", "color: red; font-size:10; opacity: " + currentScore / maxScore);
-                                span.innerHTML = sequence[i];
-                                
-                                text.appendChild(span);
-                                
-                            }
-                            
-                            //non colored;
-                            else{
-                                
-                                nonColoredSeq+=(sequence[i]);
-                                
-                            }
+                        assembly = hits.val();
+                    }
+
+                    hits.forEach(function(hit){
+
+                        if(hit.key == "header"){
+
+                            header = hit.val();
                         }
-                        
-            
-                                                
-                        var ele = document.createElement('br');
-                        text.appendChild(ele);
-                        var ele = document.createElement('br');
-                        text.appendChild(ele);
-                        
-                        hitCount++;
-                    }
+
+                        else{
+
+                            console.log(hit.val());
+                            
+                            var array = hit.val().split("|");
+
+                            sequence = array[0];
+                            maxScore = array[1];
+                            scoreSequence = array[2];
+                            scoreSequence = scoreSequence.replace('[', '');
+                            scoreSequence = scoreSequence.replace(']', '');
+                            scoreSequence = scoreSequence.replace(' ', '');
+
+                            var scoreSequenceArray = scoreSequence.split(','); // <----- use this for coloring of sequence
+
+                            //Write sequence to screen
+                            /*
+                             document.getElementById("sequenceDisplay").innerHTML = document.getElementById("sequenceDisplay").innerHTML + ">";
+                             //document.getElementById("sequenceDisplay").appendChild();
+                             */
+
+                            var coloredSeq = "";
+                            var nonColoredSeq = "";
+                            var counter = 0;
+
+                            var outerDIV = document.getElementById("HitDiv");
+
+                            var label = document.createElement("label");
+                            label.innerHTML = "Hit " + hitCount + ": " + header;
+
+                            outerDIV.appendChild(label);
+
+                            var text = document.createElement("div");
+                            text.setAttribute("id", "text");
+                            text.setAttribute("class", "text");
+
+                            outerDIV.appendChild(text);
+
+                            for(var i = 0; i < scoreSequenceArray.length; i++){
+
+                                var currentScore = parseInt(scoreSequenceArray[i]);
+
+                                //color the character
+                                if(currentScore > 0){
+
+                                    var ele = document.createElement('span');
+                                    ele.innerHTML = nonColoredSeq;
+
+                                    ele.setAttribute('style', "opacity: .1");
+                                    nonColoredSeq = "";
+                                    text.appendChild(ele);
+
+                                    var span = document.createElement('span');
+
+                                    span.setAttribute("style", "color: red; font-size:10; opacity: " + currentScore / maxScore);
+                                    span.innerHTML = sequence[i];
+
+                                    text.appendChild(span);
+
+                                }
+
+                                //non colored;
+                                else{
+
+                                    nonColoredSeq+=(sequence[i]);
+
+                                }
+                            }
+
+
+
+                            var ele = document.createElement('br');
+                            text.appendChild(ele);
+                            var ele = document.createElement('br');
+                            text.appendChild(ele);
+
+                            hitCount++;
+                        }
+                    })
                 })
             })
         }
